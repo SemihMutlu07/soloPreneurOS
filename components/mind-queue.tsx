@@ -6,9 +6,9 @@ import { cn } from "@/lib/utils";
 import { mindQueueItems, type MindQueueItem, type Priority } from "@/lib/mock-data";
 
 const priorityConfig: Record<Priority, { color: string; bg: string; label: string }> = {
-  critical: { color: "text-[#1a1a2e]", bg: "bg-[#fca5a5]", label: "Critical" },
-  important: { color: "text-[#1a1a2e]", bg: "bg-[#fcd34d]", label: "Important" },
-  "can-wait": { color: "text-[#1a1a2e]", bg: "bg-[#93c5fd]", label: "Can Wait" },
+  critical: { color: "text-red-400", bg: "bg-red-500/10", label: "Critical" },
+  important: { color: "text-amber-400", bg: "bg-amber-500/10", label: "Important" },
+  "can-wait": { color: "text-blue-400", bg: "bg-blue-500/10", label: "Can Wait" },
 };
 
 const STORAGE_KEY = "mind-queue-order";
@@ -45,25 +45,25 @@ export default function MindQueue() {
   }
 
   return (
-    <div className="card">
-      <div className="flex items-center gap-2 mb-4">
+    <div className="card w-full">
+      <div className="flex items-center gap-2.5 mb-5">
         <Brain className="w-5 h-5 text-accent-teal" />
-        <h2 className="text-lg font-semibold font-mono">Mind Queue</h2>
-        <span className="text-xs text-text-muted ml-auto">{items.length} items</span>
+        <h2 className="text-base font-semibold font-mono text-gray-100">Mind Queue</h2>
+        <span className="text-xs text-text-secondary ml-auto font-normal">{items.length} items</span>
       </div>
-      <div className="space-y-2">
+      <div className="space-y-2.5">
         {items.map((item, index) => {
           const config = priorityConfig[item.priority];
           return (
             <div
               key={item.id}
-              className="flex items-start gap-3 p-3 rounded-lg bg-bg/50 hover:bg-surface-hover transition-colors group"
+              className="flex items-start gap-3 p-3.5 rounded-xl bg-surface-elevated/50 hover:bg-surface-hover transition-colors group"
             >
               <div className="flex flex-col gap-0.5 pt-0.5">
                 <button
                   onClick={() => moveItem(index, "up")}
                   disabled={index === 0}
-                  className="text-text-muted hover:text-text-primary disabled:opacity-20 transition-colors"
+                  className="text-text-muted hover:text-gray-100 disabled:opacity-20 transition-colors"
                   aria-label="Move up"
                 >
                   <ChevronUp className="w-3.5 h-3.5" />
@@ -71,19 +71,19 @@ export default function MindQueue() {
                 <button
                   onClick={() => moveItem(index, "down")}
                   disabled={index === items.length - 1}
-                  className="text-text-muted hover:text-text-primary disabled:opacity-20 transition-colors"
+                  className="text-text-muted hover:text-gray-100 disabled:opacity-20 transition-colors"
                   aria-label="Move down"
                 >
                   <ChevronDown className="w-3.5 h-3.5" />
                 </button>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm text-text-primary leading-snug">{item.text}</p>
-                <div className="flex items-center gap-2 mt-1.5">
-                  <span className={cn("text-xs px-2 py-0.5 rounded-full", config.bg, config.color)}>
+                <p className="text-sm text-gray-100 leading-relaxed">{item.text}</p>
+                <div className="flex items-center gap-2.5 mt-2">
+                  <span className={cn("text-xs px-2.5 py-0.5 rounded-full font-medium", config.bg, config.color)}>
                     {config.label}
                   </span>
-                  <span className="text-xs text-text-muted">{item.category}</span>
+                  <span className="text-xs text-text-secondary">{item.category}</span>
                 </div>
               </div>
             </div>

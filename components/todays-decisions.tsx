@@ -81,11 +81,8 @@ export default function TodaysDecisions() {
     );
 
     const chosenOption = decision.options[optionIndex];
-
-    // Save to decisions-history (for morning brief)
     saveToDecisionsHistory(decision.question, chosenOption);
 
-    // Save to impact tracker
     const newImpact: DecisionImpact = {
       decisionId,
       title: decision.question,
@@ -116,9 +113,9 @@ export default function TodaysDecisions() {
 
   return (
     <div className="card">
-      <div className="flex items-center gap-2 mb-4">
+      <div className="flex items-center gap-2.5 mb-5">
         <GitBranch className="w-5 h-5 text-accent-amber" />
-        <h2 className="text-lg font-semibold font-mono">Today&apos;s Decisions</h2>
+        <h2 className="text-base font-semibold font-mono text-gray-100">Today&apos;s Decisions</h2>
       </div>
       <div className="space-y-4">
         {decisions.map((decision) => {
@@ -126,34 +123,34 @@ export default function TodaysDecisions() {
           const state = getCardState(decision, impact);
 
           return (
-            <div key={decision.id} className="p-3 rounded-xl bg-bg/50">
-              <div className="flex items-center justify-between mb-1">
-                <p className="text-sm font-medium text-text-primary">
+            <div key={decision.id} className="p-4 rounded-xl bg-surface-elevated/50">
+              <div className="flex items-start justify-between gap-2 mb-1.5">
+                <p className="text-sm font-semibold text-gray-100 flex-1 min-w-0">
                   {decision.question}
                 </p>
                 {state === "decided" && (
-                  <span className="text-[10px] font-medium text-accent-teal flex items-center gap-1">
+                  <span className="text-[10px] font-medium text-accent-teal bg-accent-teal/10 px-2 py-0.5 rounded-full flex items-center gap-1 shrink-0 mt-0.5">
                     <Check className="w-3 h-3" /> Decided
                   </span>
                 )}
                 {state === "reviewed" && (
-                  <span className="text-[10px] font-medium text-green-400 flex items-center gap-1">
+                  <span className="text-[10px] font-medium text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full flex items-center gap-1 shrink-0 mt-0.5">
                     <CheckCircle2 className="w-3 h-3" /> Reviewed
                   </span>
                 )}
               </div>
-              <p className="text-xs text-text-muted mb-3">{decision.context}</p>
+              <p className="text-xs text-text-secondary mb-3.5 leading-relaxed">{decision.context}</p>
 
               {agentSuggestions[decision.id] && state === "undecided" && (
-                <div className="flex items-center gap-1.5 mb-3 px-2 py-1.5 rounded-lg">
-                  <Sparkles className="w-3 h-3 text-accent-teal/50 shrink-0" />
-                  <p className="text-[11px] text-accent-teal/50 italic">
+                <div className="flex items-center gap-2 mb-3.5 px-3 py-2 rounded-lg bg-emerald-500/5 border border-emerald-500/10">
+                  <Sparkles className="w-3 h-3 text-emerald-400 shrink-0" />
+                  <p className="text-[11px] text-emerald-400 italic leading-relaxed">
                     Ajanin Onerisi: {agentSuggestions[decision.id]}
                   </p>
                 </div>
               )}
 
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 {decision.options.map((option, i) => {
                   const isSelected = decision.selectedOption === i;
                   return (
@@ -162,12 +159,12 @@ export default function TodaysDecisions() {
                       onClick={() => selectOption(decision.id, i)}
                       disabled={decision.selectedOption !== undefined}
                       className={cn(
-                        "w-full text-left text-sm px-3 py-2 rounded-lg transition-all",
+                        "w-full text-left text-sm px-3.5 py-2.5 rounded-xl transition-all leading-relaxed",
                         isSelected
-                          ? "bg-accent-teal/10 text-accent-teal"
+                          ? "bg-accent-teal/10 text-accent-teal border border-accent-teal/20"
                           : decision.selectedOption !== undefined
-                          ? "bg-surface-hover/30 text-text-muted cursor-default"
-                          : "bg-surface-hover/50 text-text-secondary hover:text-text-primary hover:bg-surface-hover"
+                          ? "bg-surface-hover/30 text-text-muted cursor-default border border-transparent"
+                          : "bg-surface-hover/50 text-text-secondary hover:text-gray-100 hover:bg-surface-hover border border-transparent"
                       )}
                     >
                       <span className="flex items-center gap-2">
@@ -181,8 +178,8 @@ export default function TodaysDecisions() {
 
               {/* Follow-up review prompt */}
               {state === "reviewing" && (
-                <div className="mt-3 pt-3 border-t border-white/[0.04]">
-                  <div className="flex items-center gap-1.5 mb-2">
+                <div className="mt-4 pt-4 border-t border-border">
+                  <div className="flex items-center gap-2 mb-2.5">
                     <MessageSquare className="w-3.5 h-3.5 text-accent-amber" />
                     <span className="text-xs font-medium text-accent-amber">
                       How did this turn out?
@@ -202,12 +199,12 @@ export default function TodaysDecisions() {
                         if (e.key === "Enter") submitReview(decision.id);
                       }}
                       placeholder="Quick note on the outcome..."
-                      className="flex-1 bg-surface-hover/50 text-text-primary text-xs rounded-lg px-3 py-1.5 placeholder:text-text-muted/50 focus:outline-none focus:ring-1 focus:ring-accent-amber/30 border border-white/[0.04]"
+                      className="flex-1 bg-surface-hover/50 text-gray-100 text-xs rounded-lg px-3 py-2 placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-accent-amber/30 border border-border"
                     />
                     <button
                       onClick={() => submitReview(decision.id)}
                       disabled={!reviewInputs[decision.id]?.trim()}
-                      className="text-xs px-3 py-1.5 rounded-lg bg-accent-amber/15 text-accent-amber hover:bg-accent-amber/25 transition-colors disabled:opacity-30"
+                      className="text-xs px-3.5 py-2 rounded-lg bg-accent-amber/10 text-accent-amber hover:bg-accent-amber/20 transition-colors disabled:opacity-30 font-medium"
                     >
                       Save
                     </button>
@@ -217,10 +214,10 @@ export default function TodaysDecisions() {
 
               {/* Show reviewed note */}
               {state === "reviewed" && impact?.impactNote && (
-                <div className="mt-3 pt-3 border-t border-white/[0.04]">
-                  <div className="flex items-start gap-1.5">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-green-400 shrink-0 mt-0.5" />
-                    <p className="text-xs text-text-secondary italic">
+                <div className="mt-4 pt-4 border-t border-border">
+                  <div className="flex items-start gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                    <p className="text-xs text-text-secondary italic leading-relaxed">
                       &quot;{impact.impactNote}&quot;
                     </p>
                   </div>

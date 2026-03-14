@@ -57,20 +57,20 @@ export default function AskDashboard() {
   }
 
   return (
-    <div className="sticky bottom-0 z-50 w-full">
+    <div className="fixed bottom-0 left-0 right-0 z-50">
       {/* Response panel */}
       <div
         className={cn(
           "overflow-hidden transition-all duration-300 ease-out",
-          showPanel && (answer || loading) ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          showPanel && (answer || loading) ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
         )}
       >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-2">
-          <div className="rounded-xl bg-surface-elevated border border-white/[0.06] p-4 shadow-lg">
-            <div className="flex items-start justify-between gap-3">
+        <div className="mx-auto max-w-2xl px-5 pb-3">
+          <div className="rounded-2xl bg-surface border border-border-strong p-5 shadow-xl shadow-black/20 backdrop-blur-sm max-h-72 overflow-y-auto">
+            <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
                 {loading ? (
-                  <div className="flex items-center gap-2 text-text-muted text-sm">
+                  <div className="flex items-center gap-2.5 text-text-secondary text-sm">
                     <Loader2 className="w-4 h-4 animate-spin text-accent-teal" />
                     <span className="animate-pulse">Thinking...</span>
                   </div>
@@ -83,7 +83,7 @@ export default function AskDashboard() {
               {!loading && answer && (
                 <button
                   onClick={handleClose}
-                  className="shrink-0 p-1 rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-hover transition-colors"
+                  className="shrink-0 p-1.5 rounded-lg text-text-muted hover:text-gray-100 hover:bg-surface-hover transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -94,10 +94,10 @@ export default function AskDashboard() {
       </div>
 
       {/* Input bar */}
-      <div className="bg-bg/80 backdrop-blur-md border-t border-white/[0.04] py-3">
+      <div className="bg-bg/90 backdrop-blur-md border-t border-border py-4">
         <form
           onSubmit={handleSubmit}
-          className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center gap-2"
+          className="mx-auto max-w-2xl px-5 flex items-center gap-3"
         >
           <input
             ref={inputRef}
@@ -106,12 +106,12 @@ export default function AskDashboard() {
             onChange={(e) => setQuestion(e.target.value)}
             placeholder="Ask anything about your business..."
             disabled={loading}
-            className="flex-1 bg-surface-hover/50 text-text-primary text-sm rounded-xl px-4 py-2.5 placeholder:text-text-muted/50 focus:outline-none focus:ring-1 focus:ring-accent-teal/30 disabled:opacity-50 border border-white/[0.04]"
+            className="flex-1 bg-surface text-gray-100 text-sm rounded-xl px-4 py-3 placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-accent-teal/30 disabled:opacity-50 border border-border-strong shadow-lg shadow-black/10"
           />
           <button
             type="submit"
             disabled={loading || !question.trim()}
-            className="shrink-0 p-2.5 rounded-xl bg-accent-teal/15 text-accent-teal hover:bg-accent-teal/25 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            className="shrink-0 p-3 rounded-xl bg-accent-teal/10 text-accent-teal hover:bg-accent-teal/20 transition-colors disabled:opacity-30 disabled:cursor-not-allowed border border-accent-teal/10 shadow-lg shadow-black/10"
           >
             <ArrowUp className="w-4 h-4" />
           </button>

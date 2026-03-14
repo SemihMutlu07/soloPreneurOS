@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 const BRIEF_STORAGE_KEY = "morning-brief-cache";
 const DECISIONS_STORAGE_KEY = "decisions-history";
+const IMPACT_STORAGE_KEY = "decisions-impact";
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;
 
 interface CachedBrief {
@@ -17,6 +18,12 @@ interface PreviousDecision {
   question: string;
   choice: string;
   timestamp: string;
+}
+
+interface ReviewedDecision {
+  title: string;
+  chosenOption: string;
+  impactNote: string;
 }
 
 const sectionIcons: Record<string, typeof Target> = {
@@ -56,14 +63,6 @@ function loadCachedBrief(): CachedBrief | null {
   } catch {
     return null;
   }
-}
-
-const IMPACT_STORAGE_KEY = "decisions-impact";
-
-interface ReviewedDecision {
-  title: string;
-  chosenOption: string;
-  impactNote: string;
 }
 
 function loadPreviousDecisions(): PreviousDecision[] {
@@ -112,7 +111,6 @@ function parseSections(text: string): { title: string; content: string }[] {
     } else if (currentTitle) {
       currentLines.push(line);
     } else {
-      // Content before any heading — treat as intro
       if (line.trim()) {
         currentLines.push(line);
       }
@@ -123,7 +121,6 @@ function parseSections(text: string): { title: string; content: string }[] {
     sections.push({ title: currentTitle, content: currentLines.join("\n").trim() });
   }
 
-  // If there was content before the first heading, add it as intro
   if (!sections.length && currentLines.length) {
     sections.push({ title: "", content: currentLines.join("\n").trim() });
   }
@@ -192,16 +189,16 @@ export default function MorningBrief() {
   const sections = brief ? parseSections(brief) : [];
 
   return (
-    <div className="card col-span-full">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
+    <div className="card">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+        <div className="flex items-center gap-2.5">
           <Sparkles className="w-5 h-5 text-accent-teal" />
-          <h2 className="text-lg font-semibold font-mono">Morning Brief</h2>
-          <span className="text-xs text-text-muted font-mono ml-2">/ ajan modu</span>
+          <h2 className="text-base font-semibold font-mono text-gray-100">Morning Brief</h2>
+          <span className="text-xs text-text-muted font-mono ml-1">/ ajan modu</span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           {briefTimestamp && (
-            <div className="flex items-center gap-1.5 text-text-muted">
+            <div className="flex items-center gap-1.5 text-text-secondary">
               <Clock className="w-3.5 h-3.5" />
               <span className="text-xs font-mono">
                 Generated at {formatTimestamp(briefTimestamp)}
@@ -211,7 +208,7 @@ export default function MorningBrief() {
           <button
             onClick={generateBrief}
             disabled={loading}
-            className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-xl bg-accent-teal/15 text-accent-teal hover:bg-accent-teal/25 transition-colors disabled:opacity-50 disabled:cursor-not-allowed animate-halo"
+            className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-xl bg-accent-teal/10 text-accent-teal hover:bg-accent-teal/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed animate-halo border border-accent-teal/10"
           >
             {loading ? (
               <>
@@ -229,13 +226,32 @@ export default function MorningBrief() {
       </div>
 
       {error && (
-        <div className="p-4 rounded-xl bg-accent-red/8 text-accent-red text-sm">
+        <div className="p-4 rounded-xl bg-red-500/10 text-red-400 text-sm border border-red-500/10">
           {error}
         </div>
       )}
 
-      {sections.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+      {loading && sections.length === 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className={cn(
+                "p-5 rounded-xl bg-surface-elevated/40 border-l-2 border-text-muted/30 animate-pulse",
+                i === 1 && "md:col-span-2"
+              )}
+            >
+              <div className="h-4 bg-surface-hover rounded w-1/3 mb-3" />
+              <div className="space-y-2">
+                <div className="h-3 bg-surface-hover rounded w-full" />
+                <div className="h-3 bg-surface-hover rounded w-5/6" />
+                <div className="h-3 bg-surface-hover rounded w-2/3" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : sections.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {sections.map((section, i) => {
             const IconComponent = sectionIcons[section.title];
             const accent = sectionAccents[section.title] || "border-l-text-muted";
@@ -244,32 +260,32 @@ export default function MorningBrief() {
               <div
                 key={i}
                 className={cn(
-                  "p-4 rounded-xl bg-bg/60 border-l-2 transition-colors",
+                  "p-5 rounded-xl bg-surface-elevated/40 border-l-2 transition-colors",
                   accent,
                   isFullWidth && "md:col-span-2"
                 )}
               >
                 {section.title && (
-                  <div className="flex items-center gap-2 mb-2.5">
-                    {IconComponent && <IconComponent className="w-4 h-4 text-text-muted" />}
-                    <h3 className="text-sm font-semibold font-mono text-text-primary">
+                  <div className="flex items-center gap-2.5 mb-3">
+                    {IconComponent && <IconComponent className="w-4 h-4 text-text-secondary" />}
+                    <h3 className="text-sm font-semibold font-mono text-gray-100">
                       {section.title}
                     </h3>
                   </div>
                 )}
-                <div className="space-y-1">
+                <div className="space-y-1.5">
                   {section.content.split("\n").map((line, j) => {
                     if (!line.trim()) return null;
                     if (line.startsWith("- ") || line.startsWith("* "))
                       return (
-                        <p key={j} className="text-text-secondary text-sm pl-3 py-0.5">
+                        <p key={j} className="text-text-secondary text-sm pl-4 py-0.5 leading-relaxed">
                           <span className="text-accent-teal mr-2 font-mono">-</span>
                           {line.replace(/^[-*]\s*/, "").replace(/\*\*/g, "")}
                         </p>
                       );
                     if (line.startsWith("**") || line.match(/^\*\*.+\*\*/))
                       return (
-                        <p key={j} className="text-text-primary text-sm font-medium">
+                        <p key={j} className="text-gray-100 text-sm font-medium leading-relaxed">
                           {line.replace(/\*\*/g, "")}
                         </p>
                       );
@@ -285,9 +301,11 @@ export default function MorningBrief() {
           })}
         </div>
       ) : !loading && !error ? (
-        <p className="text-text-muted text-sm italic">
-          Click &quot;Generate Brief&quot; to get your AI-powered morning briefing. Requires an Anthropic API key.
-        </p>
+        <div className="flex items-center justify-center py-12">
+          <p className="text-text-secondary text-sm">
+            Click &quot;Generate Brief&quot; to get your AI-powered morning briefing. Requires an Anthropic API key.
+          </p>
+        </div>
       ) : null}
     </div>
   );

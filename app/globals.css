@@ -2,20 +2,20 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #0e1117;
-  --color-surface: #161b22;
-  --color-surface-hover: #1c2333;
-  --color-surface-elevated: #1f2937;
-  --color-border: rgba(255, 255, 255, 0.04);
-  --color-border-strong: rgba(255, 255, 255, 0.08);
-  --color-accent-green: #22c55e;
-  --color-accent-amber: #f59e0b;
-  --color-accent-red: #ef4444;
-  --color-accent-blue: #3b82f6;
+  --color-bg: #0f1419;
+  --color-surface: #171d26;
+  --color-surface-hover: #1e2530;
+  --color-surface-elevated: #242c3a;
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-strong: rgba(255, 255, 255, 0.10);
+  --color-accent-green: #34d399;
+  --color-accent-amber: #fbbf24;
+  --color-accent-red: #f87171;
+  --color-accent-blue: #60a5fa;
   --color-accent-teal: #2dd4bf;
-  --color-text-primary: #e6edf3;
-  --color-text-secondary: #8b949e;
-  --color-text-muted: #484f58;
+  --color-text-primary: #e2e8f0;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #475569;
   --font-mono: "JetBrains Mono", monospace;
   --font-sans: "Inter", system-ui, sans-serif;
 }
@@ -33,26 +33,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes fade-in {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in {
-  animation: fade-in 0.5s ease-out forwards;
+  animation: fade-in 0.6s ease-out forwards;
 }
 
-/* Soft floating cards — no borders, subtle shadow */
+/* Cards — soft depth, generous padding */
 .card {
   background-color: var(--color-surface);
-  border: none;
-  border-radius: 14px;
-  padding: 1.25rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .card:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16), 0 12px 32px rgba(0, 0, 0, 0.12);
+  border-color: var(--color-border-strong);
 }
 
 /* Soft status pulse */
@@ -67,13 +68,13 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Generate Brief button halo */
 @keyframes halo-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.25); }
-  70% { box-shadow: 0 0 0 12px rgba(45, 212, 191, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.2); }
+  70% { box-shadow: 0 0 0 10px rgba(45, 212, 191, 0); }
   100% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0); }
 }
 
 .animate-halo {
-  animation: halo-pulse 2.5s ease-out infinite;
+  animation: halo-pulse 3s ease-out infinite;
 }
 
 /* Spinning sparkle */
@@ -88,11 +89,11 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Stagger animation delays for dashboard modules */
 .stagger-1 { animation-delay: 0.05s; }
-.stagger-2 { animation-delay: 0.1s; }
-.stagger-3 { animation-delay: 0.15s; }
-.stagger-4 { animation-delay: 0.2s; }
-.stagger-5 { animation-delay: 0.25s; }
-.stagger-6 { animation-delay: 0.3s; }
-.stagger-7 { animation-delay: 0.35s; }
-.stagger-8 { animation-delay: 0.4s; }
-.stagger-9 { animation-delay: 0.45s; }
+.stagger-2 { animation-delay: 0.12s; }
+.stagger-3 { animation-delay: 0.19s; }
+.stagger-4 { animation-delay: 0.26s; }
+.stagger-5 { animation-delay: 0.33s; }
+.stagger-6 { animation-delay: 0.40s; }
+.stagger-7 { animation-delay: 0.47s; }
+.stagger-8 { animation-delay: 0.54s; }
+.stagger-9 { animation-delay: 0.61s; }

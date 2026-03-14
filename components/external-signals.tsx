@@ -20,8 +20,8 @@ const sourceConfig: Record<
   { icon: typeof Radar; color: string; label: string }
 > = {
   "product-hunt": { icon: ArrowUpRight, color: "text-orange-400", label: "Product Hunt" },
-  reddit: { icon: MessageCircle, color: "text-orange-500", label: "Reddit" },
-  hackernews: { icon: Flame, color: "text-orange-500", label: "Hacker News" },
+  reddit: { icon: MessageCircle, color: "text-orange-400", label: "Reddit" },
+  hackernews: { icon: Flame, color: "text-amber-400", label: "Hacker News" },
 };
 
 function timeAgo(date: Date): string {
@@ -48,7 +48,6 @@ export default function ExternalSignals() {
 
         const normalized: Signal[] = [];
 
-        // Product Hunt
         const phLive = phRes.source === "live";
         for (const p of phRes.posts) {
           normalized.push({
@@ -63,7 +62,6 @@ export default function ExternalSignals() {
           });
         }
 
-        // Reddit
         const redditLive = redditRes.source === "live";
         for (const p of redditRes.posts) {
           normalized.push({
@@ -84,7 +82,6 @@ export default function ExternalSignals() {
           });
         }
 
-        // Hacker News
         const hnLive = hnRes.source === "live";
         for (const s of hnRes.stories) {
           normalized.push({
@@ -113,28 +110,26 @@ export default function ExternalSignals() {
     fetchSignals();
   }, []);
 
-  // Update "X min ago" every 30s
   useEffect(() => {
     const interval = setInterval(() => setNow(Date.now()), 30000);
     return () => clearInterval(interval);
   }, []);
 
-  // Suppress unused variable warning — `now` drives re-renders for timeAgo
   void now;
 
   if (loading) {
     return (
       <div className="card">
-        <div className="flex items-center gap-2 mb-4">
+        <div className="flex items-center gap-2.5 mb-5">
           <Radar className="w-5 h-5 text-accent-teal" />
-          <h2 className="text-lg font-semibold font-mono">External Signals</h2>
+          <h2 className="text-base font-semibold font-mono text-gray-100">External Signals</h2>
         </div>
-        <div className="space-y-2">
+        <div className="space-y-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="p-3 rounded-xl bg-bg/50 animate-pulse">
-              <div className="h-3 bg-surface-elevated rounded w-1/4 mb-2" />
-              <div className="h-4 bg-surface-elevated rounded w-3/4 mb-1" />
-              <div className="h-3 bg-surface-elevated rounded w-1/2" />
+            <div key={i} className="p-4 rounded-xl bg-surface-elevated/50 animate-pulse">
+              <div className="h-3 bg-surface-hover rounded w-1/4 mb-3" />
+              <div className="h-4 bg-surface-hover rounded w-3/4 mb-2" />
+              <div className="h-3 bg-surface-hover rounded w-1/2" />
             </div>
           ))}
         </div>
@@ -144,11 +139,16 @@ export default function ExternalSignals() {
 
   return (
     <div className="card">
-      <div className="flex items-center gap-2 mb-4">
+      <div className="flex items-center gap-2.5 mb-5">
         <Radar className="w-5 h-5 text-accent-teal" />
-        <h2 className="text-lg font-semibold font-mono">External Signals</h2>
+        <h2 className="text-base font-semibold font-mono text-gray-100">External Signals</h2>
       </div>
-      <div className="space-y-2">
+      {signals.length === 0 ? (
+        <p className="text-sm text-text-secondary py-4">
+          No signals available right now. Check back shortly.
+        </p>
+      ) : (
+      <div className="space-y-2.5">
         {signals.map((signal, idx) => {
           const config = sourceConfig[signal.source];
           const Icon = config.icon;
@@ -157,13 +157,13 @@ export default function ExternalSignals() {
             <div
               key={signal.id}
               className={cn(
-                "p-3 rounded-xl transition-colors",
+                "p-3.5 rounded-xl transition-colors",
                 isHighlighted
-                  ? "bg-surface-elevated"
-                  : "bg-bg/50 hover:bg-surface-hover"
+                  ? "bg-surface-elevated/60"
+                  : "bg-surface-elevated/30 hover:bg-surface-hover"
               )}
             >
-              <div className="flex items-center gap-2 mb-1">
+              <div className="flex items-center gap-2 mb-1.5">
                 <Icon className={cn("w-4 h-4", config.color)} />
                 <span className={cn("text-xs font-medium", config.color)}>
                   {config.label}
@@ -171,40 +171,41 @@ export default function ExternalSignals() {
                 <span
                   className={cn(
                     "inline-flex items-center gap-1 text-[10px]",
-                    signal.live ? "text-green-400" : "text-text-muted"
+                    signal.live ? "text-emerald-400" : "text-text-secondary"
                   )}
                 >
                   <span
                     className={cn(
                       "w-1.5 h-1.5 rounded-full",
-                      signal.live ? "bg-green-400" : "bg-text-muted"
+                      signal.live ? "bg-emerald-400" : "bg-text-muted"
                     )}
                   />
                   {signal.live ? "Live" : "Cached"}
                 </span>
-                <span className="text-xs text-text-muted ml-auto">
+                <span className="text-xs text-text-secondary ml-auto">
                   {signal.timestamp}
                 </span>
               </div>
-              <p className="text-sm font-medium text-text-primary">
+              <p className="text-sm font-medium text-gray-100 leading-relaxed">
                 {signal.title}
               </p>
               <p className="text-xs text-text-secondary mt-1 leading-relaxed">
                 {signal.summary}
               </p>
-              <div className="flex items-center gap-1 mt-2">
+              <div className="flex items-center gap-1.5 mt-2">
                 <TrendingUp className="w-3 h-3 text-text-muted" />
-                <span className="text-xs font-semibold font-mono text-text-primary">
+                <span className="text-xs font-semibold font-mono text-gray-100">
                   {signal.score}
                 </span>
-                <span className="text-xs text-text-muted">score</span>
+                <span className="text-xs text-text-secondary">score</span>
               </div>
             </div>
           );
         })}
       </div>
+      )}
       {fetchedAt && (
-        <p className="text-xs text-text-muted mt-3 text-right">
+        <p className="text-xs text-text-secondary mt-4 text-right">
           Updated {timeAgo(fetchedAt)}
         </p>
       )}
