@@ -75,7 +75,7 @@ export default function AskDashboard() {
                     <span className="animate-pulse">Thinking...</span>
                   </div>
                 ) : answer ? (
-                  <div className="text-sm text-text-secondary leading-relaxed whitespace-pre-wrap">
+                  <div className="text-[13px] text-text-secondary leading-relaxed whitespace-pre-wrap">
                     {answer}
                   </div>
                 ) : null}
@@ -83,7 +83,7 @@ export default function AskDashboard() {
               {!loading && answer && (
                 <button
                   onClick={handleClose}
-                  className="shrink-0 p-1.5 rounded-lg text-text-muted hover:text-gray-100 hover:bg-surface-hover transition-colors"
+                  className="shrink-0 p-1.5 rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-hover transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -94,7 +94,7 @@ export default function AskDashboard() {
       </div>
 
       {/* Input bar */}
-      <div className="bg-bg/90 backdrop-blur-md border-t border-border py-4">
+      <div className="bg-bg/90 backdrop-blur-md border-t border-border py-3">
         <form
           onSubmit={handleSubmit}
           className="mx-auto max-w-2xl px-5 flex items-center gap-3"
@@ -106,12 +106,12 @@ export default function AskDashboard() {
             onChange={(e) => setQuestion(e.target.value)}
             placeholder="Ask anything about your business..."
             disabled={loading}
-            className="flex-1 bg-surface text-gray-100 text-sm rounded-xl px-4 py-3 placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-accent-teal/30 disabled:opacity-50 border border-border-strong shadow-lg shadow-black/10"
+            className="flex-1 bg-surface text-text-primary text-sm rounded-xl px-4 py-2.5 placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-accent-teal/20 disabled:opacity-50 border border-border-strong"
           />
           <button
             type="submit"
             disabled={loading || !question.trim()}
-            className="shrink-0 p-3 rounded-xl bg-accent-teal/10 text-accent-teal hover:bg-accent-teal/20 transition-colors disabled:opacity-30 disabled:cursor-not-allowed border border-accent-teal/10 shadow-lg shadow-black/10"
+            className="shrink-0 p-2.5 rounded-xl bg-accent-teal/8 text-accent-teal hover:bg-accent-teal/15 transition-colors disabled:opacity-30 disabled:cursor-not-allowed border border-accent-teal/8"
           >
             <ArrowUp className="w-4 h-4" />
           </button>

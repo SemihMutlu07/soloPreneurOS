@@ -20,7 +20,6 @@ export default function Home() {
     setShowOnboarding(!hasCompletedOnboarding());
   }, []);
 
-  // Don't render anything until we've checked localStorage
   if (showOnboarding === null) {
     return null;
   }
@@ -31,16 +30,16 @@ export default function Home() {
         <OnboardingFlow onComplete={() => setShowOnboarding(false)} />
       )}
 
-      <main className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 py-10 pb-28">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24">
         <DashboardHeader />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
-          {/* Row 1: Chief of Staff spans full width */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {/* Chief of Staff — full width */}
           <div className="col-span-full opacity-0 animate-fade-in stagger-1">
             <ChiefOfStaff />
           </div>
 
-          {/* Row 2: Daily Ops (tall left) | Market Scout (center) | Calendar (right) */}
+          {/* 3-col: Daily Ops (tall) | Market Scout | Calendar */}
           <div className="opacity-0 animate-fade-in stagger-2 lg:row-span-2 flex">
             <DailyOps />
           </div>
@@ -51,7 +50,7 @@ export default function Home() {
             <CalendarView />
           </div>
 
-          {/* Row 3: Lead Pipeline + Founder Stories */}
+          {/* Lead Pipeline + Founder Stories (fill row 3) */}
           <div className="opacity-0 animate-fade-in stagger-5">
             <LeadPipeline />
           </div>
@@ -59,12 +58,12 @@ export default function Home() {
             <FounderStories />
           </div>
 
-          {/* Coming Soon section */}
-          <div className="col-span-full opacity-0 animate-fade-in stagger-7">
-            <h2 className="text-sm font-semibold font-mono text-text-secondary mb-4">
+          {/* Coming Soon — full width, 2x2 grid inside */}
+          <div className="col-span-full opacity-0 animate-fade-in stagger-7 mt-2">
+            <h3 className="text-xs font-medium text-text-muted uppercase tracking-wider mb-3">
               More agents coming soon
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <ComingSoonAgents />
             </div>
           </div>
@@ -72,14 +71,13 @@ export default function Home() {
 
         {!showOnboarding && <AskDashboard />}
 
-        {/* Reset onboarding */}
-        <div className="text-center mt-16">
+        <div className="text-center mt-12">
           <button
             onClick={() => {
               clearProfile();
               setShowOnboarding(true);
             }}
-            className="text-xs text-text-muted hover:text-text-secondary transition-colors"
+            className="text-[11px] text-text-muted hover:text-text-secondary transition-colors"
           >
             Reset Onboarding
           </button>

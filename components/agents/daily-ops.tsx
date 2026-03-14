@@ -23,9 +23,9 @@ interface AnalysisResult {
 const STORAGE_KEY = "daily-ops-tasks";
 
 const priorityConfig: Record<TaskItem["priority"], { color: string; bg: string; label: string; next: TaskItem["priority"] }> = {
-  critical: { color: "text-red-400", bg: "bg-red-500/10", label: "Critical", next: "important" },
-  important: { color: "text-amber-400", bg: "bg-amber-500/10", label: "Important", next: "can-wait" },
-  "can-wait": { color: "text-blue-400", bg: "bg-blue-500/10", label: "Can Wait", next: "critical" },
+  critical: { color: "text-accent-red", bg: "bg-accent-red/8", label: "Critical", next: "important" },
+  important: { color: "text-accent-amber", bg: "bg-accent-amber/8", label: "Important", next: "can-wait" },
+  "can-wait": { color: "text-accent-blue", bg: "bg-accent-blue/8", label: "Can Wait", next: "critical" },
 };
 
 function loadTasks(): TaskItem[] {
@@ -123,49 +123,49 @@ export default function DailyOps() {
       lastRun={lastRun}
       onRun={runAnalysis}
     >
-      <div className="flex items-center gap-2 mb-4">
+      <div className="flex items-center gap-2 mb-3">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && addTask()}
           placeholder="Add a task..."
-          className="flex-1 bg-surface-elevated/50 text-sm text-gray-100 placeholder:text-text-muted rounded-lg px-3 py-2 border border-border-subtle focus:outline-none focus:border-accent-teal/50"
+          className="flex-1 bg-surface-elevated/30 text-sm text-text-primary placeholder:text-text-muted rounded-lg px-3 py-2 border border-border focus:outline-none focus:border-accent-teal/30 transition-colors"
         />
       </div>
 
       {tasks.length > 0 && (
-        <p className="text-xs text-text-secondary mb-3 font-mono">
+        <p className="text-[11px] text-text-muted mb-2.5">
           {activeTasks.length} active / {completedTasks.length} completed
         </p>
       )}
 
-      <div className="space-y-1.5">
+      <div className="space-y-1 card-scroll">
         {activeTasks.map((task) => {
           const config = priorityConfig[task.priority];
           return (
             <div
               key={task.id}
-              className="flex items-center gap-2.5 p-2.5 rounded-lg bg-surface-elevated/50 hover:bg-surface-hover transition-colors group"
+              className="flex items-center gap-2.5 p-2.5 rounded-lg bg-surface-elevated/30 hover:bg-surface-hover transition-colors group"
             >
               <input
                 type="checkbox"
                 checked={false}
                 onChange={() => toggleTask(task.id)}
-                className="w-4 h-4 rounded border-border-subtle accent-accent-teal shrink-0"
+                className="w-3.5 h-3.5 rounded border-border-strong accent-accent-teal shrink-0"
               />
-              <span className="flex-1 text-sm text-gray-100 leading-relaxed min-w-0 truncate">
+              <span className="flex-1 text-[13px] text-text-primary leading-snug min-w-0 truncate">
                 {task.text}
               </span>
               <button
                 onClick={() => cyclePriority(task.id)}
-                className={cn("text-xs px-2 py-0.5 rounded-full font-medium shrink-0", config.bg, config.color)}
+                className={cn("text-[10px] px-2 py-0.5 rounded-full font-medium shrink-0", config.bg, config.color)}
               >
                 {config.label}
               </button>
               <button
                 onClick={() => deleteTask(task.id)}
-                className="text-text-muted hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100 shrink-0"
+                className="text-text-muted hover:text-accent-red transition-colors opacity-0 group-hover:opacity-100 shrink-0"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -176,20 +176,20 @@ export default function DailyOps() {
         {completedTasks.map((task) => (
           <div
             key={task.id}
-            className="flex items-center gap-2.5 p-2.5 rounded-lg bg-surface-elevated/30 group"
+            className="flex items-center gap-2.5 p-2.5 rounded-lg bg-surface-elevated/15 group"
           >
             <input
               type="checkbox"
               checked={true}
               onChange={() => toggleTask(task.id)}
-              className="w-4 h-4 rounded border-border-subtle accent-accent-teal shrink-0"
+              className="w-3.5 h-3.5 rounded border-border-strong accent-accent-teal shrink-0"
             />
-            <span className="flex-1 text-sm text-text-muted line-through leading-relaxed min-w-0 truncate">
+            <span className="flex-1 text-[13px] text-text-muted line-through leading-snug min-w-0 truncate">
               {task.text}
             </span>
             <button
               onClick={() => deleteTask(task.id)}
-              className="text-text-muted hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100 shrink-0"
+              className="text-text-muted hover:text-accent-red transition-colors opacity-0 group-hover:opacity-100 shrink-0"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -198,31 +198,31 @@ export default function DailyOps() {
       </div>
 
       {tasks.length === 0 && (
-        <p className="text-sm text-text-secondary py-4 text-center">
-          No tasks yet. Add one above to get started.
+        <p className="text-sm text-text-muted py-4 text-center">
+          No tasks yet. Add one above.
         </p>
       )}
 
       {analysis && (
-        <div className="mt-4 space-y-3">
-          <div className="p-3.5 rounded-xl bg-surface-elevated/40 border-l-2 border-l-accent-teal">
-            <h4 className="text-xs font-semibold font-mono text-accent-teal mb-2">
-              Agent&apos;s take:
+        <div className="mt-3 space-y-2.5">
+          <div className="p-3 rounded-xl bg-surface-elevated/30 border-l-2 border-l-accent-teal">
+            <h4 className="text-[11px] font-semibold text-accent-teal mb-1.5 uppercase tracking-wide">
+              Agent&apos;s take
             </h4>
-            <p className="text-sm text-text-secondary leading-relaxed">
+            <p className="text-[13px] text-text-secondary leading-relaxed">
               {analysis.analysis}
             </p>
           </div>
 
           {analysis.suggestedOrder.length > 0 && (
-            <div className="p-3.5 rounded-xl bg-surface-elevated/40">
-              <h4 className="text-xs font-semibold font-mono text-gray-100 mb-2">
-                Suggested order:
+            <div className="p-3 rounded-xl bg-surface-elevated/30">
+              <h4 className="text-[11px] font-semibold text-text-primary mb-1.5 uppercase tracking-wide">
+                Suggested order
               </h4>
-              <ol className="space-y-1">
+              <ol className="space-y-0.5">
                 {analysis.suggestedOrder.map((item, i) => (
-                  <li key={i} className="text-sm text-text-secondary leading-relaxed">
-                    <span className="text-accent-teal font-mono mr-2">{i + 1}.</span>
+                  <li key={i} className="text-[13px] text-text-secondary leading-relaxed">
+                    <span className="text-accent-teal font-mono mr-1.5">{i + 1}.</span>
                     {item}
                   </li>
                 ))}
@@ -231,13 +231,13 @@ export default function DailyOps() {
           )}
 
           {analysis.blockers.length > 0 && (
-            <div className="p-3.5 rounded-xl bg-amber-500/5 border-l-2 border-l-accent-amber">
-              <h4 className="text-xs font-semibold font-mono text-amber-400 mb-2">
-                Blockers:
+            <div className="p-3 rounded-xl bg-accent-amber/3 border-l-2 border-l-accent-amber">
+              <h4 className="text-[11px] font-semibold text-accent-amber mb-1.5 uppercase tracking-wide">
+                Blockers
               </h4>
-              <ul className="space-y-1">
+              <ul className="space-y-0.5">
                 {analysis.blockers.map((b, i) => (
-                  <li key={i} className="text-sm text-amber-300/80 leading-relaxed">
+                  <li key={i} className="text-[13px] text-amber-200/70 leading-relaxed">
                     {b}
                   </li>
                 ))}

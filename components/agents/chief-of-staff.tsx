@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Brain, Target, Zap, AlertTriangle, Globe, UserCheck, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { getAgentResult, setAgentResult, isStale } from "@/lib/agent-store";
+import { getAgentResult, setAgentResult } from "@/lib/agent-store";
 import AgentCardWrapper from "./agent-card-wrapper";
 
 const BRIEF_STORAGE_KEY = "morning-brief-cache";
@@ -42,7 +42,7 @@ const sectionAccents: Record<string, string> = {
   "Quick Wins": "border-l-accent-teal",
   "Watch Out": "border-l-accent-amber",
   "Market Pulse": "border-l-accent-blue",
-  "Lead Action": "border-l-[#a78bfa]",
+  "Lead Action": "border-l-[#c4b5fd]",
   "Yesterday's Decisions → Today's Actions": "border-l-accent-teal",
 };
 
@@ -155,11 +155,9 @@ export default function ChiefOfStaff() {
       const previousDecisions = loadPreviousDecisions();
       const reviewedDecisions = loadReviewedDecisions();
 
-      // Read Market Scout results from agent store
       const marketScoutResult = getAgentResult("market-scout");
       const signals = marketScoutResult?.data?.signals || [];
 
-      // Read daily-ops tasks from localStorage
       let tasks: { id: string; text: string; priority: string; completed: boolean }[] = [];
       try {
         const raw = localStorage.getItem("daily-ops-tasks");
@@ -197,7 +195,6 @@ export default function ChiefOfStaff() {
     }
   }, []);
 
-  // Auto-generate on first visit when no cached brief exists
   useEffect(() => {
     if (autoTriggered && !brief && status !== "running") {
       generateBrief();
@@ -206,7 +203,6 @@ export default function ChiefOfStaff() {
 
   const sections = brief ? parseSections(brief) : [];
 
-  // Count context sources for "Synthesized from" line
   const marketScoutResult = typeof window !== "undefined" ? getAgentResult("market-scout") : null;
   const signalCount = marketScoutResult?.data?.signals?.length || 0;
   let taskCount = 0;
@@ -227,13 +223,13 @@ export default function ChiefOfStaff() {
       onRun={generateBrief}
     >
       {error && (
-        <div className="p-4 rounded-xl bg-red-500/10 text-red-400 text-sm border border-red-500/10 mb-4">
+        <div className="p-3 rounded-xl bg-accent-red/5 text-accent-red text-sm border border-accent-red/10 mb-4">
           {error}
         </div>
       )}
 
       {(signalCount > 0 || taskCount > 0) && brief && (
-        <p className="text-xs text-text-muted mb-4 font-mono">
+        <p className="text-[11px] text-text-muted mb-3">
           Synthesized from: {signalCount > 0 && `${signalCount} Market Scout signals`}
           {signalCount > 0 && taskCount > 0 && " + "}
           {taskCount > 0 && `${taskCount} tasks`}
@@ -241,22 +237,22 @@ export default function ChiefOfStaff() {
       )}
 
       {briefTimestamp && brief && (
-        <p className="text-xs text-text-secondary mb-4 font-mono">
+        <p className="text-[11px] text-text-muted mb-3">
           Generated at {formatTimestamp(briefTimestamp)}
         </p>
       )}
 
       {status === "running" && sections.length === 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {[1, 2, 3, 4].map((i) => (
             <div
               key={i}
               className={cn(
-                "p-5 rounded-xl bg-surface-elevated/40 border-l-2 border-text-muted/30 animate-pulse",
+                "p-4 rounded-xl bg-surface-elevated/30 border-l-2 border-text-muted/20 animate-pulse",
                 i === 1 && "md:col-span-2"
               )}
             >
-              <div className="h-4 bg-surface-hover rounded w-1/3 mb-3" />
+              <div className="h-3.5 bg-surface-hover rounded w-1/3 mb-3" />
               <div className="space-y-2">
                 <div className="h-3 bg-surface-hover rounded w-full" />
                 <div className="h-3 bg-surface-hover rounded w-5/6" />
@@ -266,7 +262,7 @@ export default function ChiefOfStaff() {
           ))}
         </div>
       ) : sections.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {sections.map((section, i) => {
             const IconComponent = sectionIcons[section.title];
             const accent = sectionAccents[section.title] || "border-l-text-muted";
@@ -275,37 +271,37 @@ export default function ChiefOfStaff() {
               <div
                 key={i}
                 className={cn(
-                  "p-5 rounded-xl bg-surface-elevated/40 border-l-2 transition-colors",
+                  "p-4 rounded-xl bg-surface-elevated/30 border-l-2 transition-colors",
                   accent,
                   isFullWidth && "md:col-span-2"
                 )}
               >
                 {section.title && (
-                  <div className="flex items-center gap-2.5 mb-3">
-                    {IconComponent && <IconComponent className="w-4 h-4 text-text-secondary" />}
-                    <h3 className="text-sm font-semibold font-mono text-gray-100">
+                  <div className="flex items-center gap-2 mb-2">
+                    {IconComponent && <IconComponent className="w-3.5 h-3.5 text-text-muted" />}
+                    <h3 className="text-xs font-semibold text-text-primary uppercase tracking-wide">
                       {section.title}
                     </h3>
                   </div>
                 )}
-                <div className="space-y-1.5">
+                <div className="space-y-1">
                   {section.content.split("\n").map((line, j) => {
                     if (!line.trim()) return null;
                     if (line.startsWith("- ") || line.startsWith("* "))
                       return (
-                        <p key={j} className="text-text-secondary text-sm pl-4 py-0.5 leading-relaxed">
-                          <span className="text-accent-teal mr-2 font-mono">-</span>
+                        <p key={j} className="text-text-secondary text-[13px] pl-3 py-0.5 leading-relaxed">
+                          <span className="text-accent-teal mr-1.5">-</span>
                           {line.replace(/^[-*]\s*/, "").replace(/\*\*/g, "")}
                         </p>
                       );
                     if (line.startsWith("**") || line.match(/^\*\*.+\*\*/))
                       return (
-                        <p key={j} className="text-gray-100 text-sm font-medium leading-relaxed">
+                        <p key={j} className="text-text-primary text-[13px] font-medium leading-relaxed">
                           {line.replace(/\*\*/g, "")}
                         </p>
                       );
                     return (
-                      <p key={j} className="text-text-secondary text-sm leading-relaxed">
+                      <p key={j} className="text-text-secondary text-[13px] leading-relaxed">
                         {line}
                       </p>
                     );
@@ -316,9 +312,9 @@ export default function ChiefOfStaff() {
           })}
         </div>
       ) : status !== "running" && !error ? (
-        <div className="flex items-center justify-center py-12">
-          <p className="text-text-secondary text-sm">
-            Click Run to get your AI-powered morning briefing. Requires an Anthropic API key.
+        <div className="flex items-center justify-center py-10">
+          <p className="text-text-muted text-sm">
+            Click Run to get your AI-powered morning briefing.
           </p>
         </div>
       ) : null}

@@ -52,13 +52,13 @@ export default function AgentCardWrapper({
       data-agent-id={agentId}
     >
       {/* Header */}
-      <div className="flex items-center justify-between mb-5">
+      <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2.5">
           {icon}
-          <h2 className="text-base font-semibold font-mono text-gray-100">
+          <h2 className="text-sm font-semibold text-text-primary">
             {agentName}
           </h2>
-          <span className="flex items-center gap-1.5 text-xs text-text-secondary">
+          <span className="flex items-center gap-1.5 text-[11px] text-text-muted">
             <span className={cn("w-1.5 h-1.5 rounded-full", dotClass)} />
             {status === "running" ? (
               <span className="flex items-center gap-1">
@@ -72,15 +72,15 @@ export default function AgentCardWrapper({
         </div>
         <div className="flex items-center gap-3">
           {lastRun && (
-            <span className="text-xs text-text-muted font-mono">
-              Last ran: {formatLastRun(lastRun)}
+            <span className="text-[11px] text-text-muted font-mono">
+              {formatLastRun(lastRun)}
             </span>
           )}
           {onRun && !comingSoon && (
             <button
               onClick={onRun}
               disabled={status === "running"}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-accent-teal/10 text-accent-teal hover:bg-accent-teal/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium rounded-lg bg-accent-teal/8 text-accent-teal hover:bg-accent-teal/15 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {status === "running" ? (
                 <Loader2 className="w-3 h-3 animate-spin" />

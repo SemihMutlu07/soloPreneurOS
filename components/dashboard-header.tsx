@@ -28,20 +28,20 @@ export default function DashboardHeader() {
   });
 
   return (
-    <div className="mb-10">
-      <header className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between pb-5">
+    <div className="mb-8">
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between pb-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight font-mono text-gray-100">
+          <h1 className="text-2xl font-bold tracking-tight text-text-primary">
             soloPreneur<span className="text-accent-teal">OS</span>
           </h1>
-          <div className="flex items-center gap-1.5 mt-2">
+          <div className="flex items-center gap-1.5 mt-1.5">
             <span className="text-text-muted text-xs">soloPreneurOS</span>
             <ChevronRight className="w-3 h-3 text-text-muted" />
-            <span className="text-text-secondary text-xs font-mono">
-              {profile ? profile.productName : "/denemeler/ajan-modu"}
+            <span className="text-text-secondary text-xs">
+              {profile ? profile.productName : "dashboard"}
             </span>
           </div>
-          <p className="text-text-muted text-xs mt-1.5">
+          <p className="text-text-muted text-xs mt-1">
             {profile && (
               <span className="text-text-secondary">
                 Welcome back, {profile.name}
@@ -51,33 +51,27 @@ export default function DashboardHeader() {
             {today}
           </p>
         </div>
-        <div className="flex items-center gap-8">
-          <div className="flex items-center gap-2.5 text-sm text-text-secondary">
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2 text-sm">
             <Activity className="w-4 h-4 text-accent-teal" />
-            <span>
-              <span className="text-gray-100 font-semibold">{companyInfo.students.toLocaleString()}</span>{" "}
-              <span className="text-text-secondary">students</span>
-            </span>
+            <span className="font-semibold font-mono text-text-primary">{companyInfo.students.toLocaleString()}</span>
+            <span className="text-text-secondary text-xs">students</span>
           </div>
-          <div className="flex items-center gap-2.5 text-sm text-text-secondary">
+          <div className="flex items-center gap-2 text-sm">
             <Zap className="w-4 h-4 text-accent-amber" />
-            <span>
-              <span className="text-gray-100 font-semibold">${companyInfo.mrr.toLocaleString()}</span>{" "}
-              <span className="text-text-secondary">MRR</span>
-            </span>
+            <span className="font-semibold font-mono text-text-primary">${companyInfo.mrr.toLocaleString()}</span>
+            <span className="text-text-secondary text-xs">MRR</span>
           </div>
           {profile && activeAgentCount > 0 && (
-            <div className="flex items-center gap-2 text-sm text-text-secondary">
+            <div className="flex items-center gap-2 text-sm">
               <Bot className="w-4 h-4 text-accent-blue" />
-              <span>
-                <span className="text-gray-100 font-semibold">{activeAgentCount}</span>{" "}
-                <span className="text-text-secondary">agents</span>
-              </span>
+              <span className="font-semibold font-mono text-text-primary">{activeAgentCount}</span>
+              <span className="text-text-secondary text-xs">agents</span>
             </div>
           )}
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-accent-green animate-soft-pulse" />
-            <span className="text-xs text-text-secondary">All systems operational</span>
+            <div className="w-1.5 h-1.5 rounded-full bg-accent-green animate-soft-pulse" />
+            <span className="text-xs text-text-secondary">Operational</span>
           </div>
           <button
             onClick={() => {
@@ -88,22 +82,19 @@ export default function DashboardHeader() {
             title="Reset & Show Onboarding"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            Reset
           </button>
         </div>
       </header>
 
       {/* Overnight sync bar */}
-      <div className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-surface border border-border">
-        <Radio className="w-3.5 h-3.5 text-accent-teal/50" />
-        <p className="text-xs font-mono text-text-secondary leading-relaxed">
-          Last AI sync: <span className="text-gray-100">03:47 AM</span>
-          <span className="mx-2.5 text-text-muted">·</span>
-          <span className="text-gray-100">3 new signals</span>
-          <span className="mx-2.5 text-text-muted">·</span>
-          <span className="text-gray-100">1 lead activity</span>
-          <span className="mx-2.5 text-text-muted">·</span>
-          Next sync: <span className="text-gray-100">tonight at 2:00 AM</span>
+      <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-surface border border-border">
+        <Radio className="w-3.5 h-3.5 text-accent-teal/40" />
+        <p className="text-xs text-text-secondary leading-relaxed">
+          Last sync: <span className="text-text-primary font-medium">03:47 AM</span>
+          <span className="mx-2 text-text-muted">&middot;</span>
+          <span className="font-mono text-text-primary">3</span> signals
+          <span className="mx-2 text-text-muted">&middot;</span>
+          <span className="font-mono text-text-primary">1</span> lead activity
         </p>
       </div>
     </div>

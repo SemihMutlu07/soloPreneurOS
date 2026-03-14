@@ -42,7 +42,7 @@ export default function ComingSoonAgents() {
           status="coming-soon"
           comingSoon
         >
-          <p className="text-sm text-text-secondary leading-relaxed">
+          <p className="text-[13px] text-text-secondary leading-relaxed">
             {agent.description}
           </p>
         </AgentCardWrapper>

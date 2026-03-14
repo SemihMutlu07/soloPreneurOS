@@ -21,9 +21,9 @@ const sourceConfig: Record<
   Signal["source"],
   { icon: typeof Radar; color: string; label: string }
 > = {
-  "product-hunt": { icon: ArrowUpRight, color: "text-orange-400", label: "Product Hunt" },
-  reddit: { icon: MessageCircle, color: "text-orange-400", label: "Reddit" },
-  hackernews: { icon: Flame, color: "text-amber-400", label: "Hacker News" },
+  "product-hunt": { icon: ArrowUpRight, color: "text-orange-300", label: "Product Hunt" },
+  reddit: { icon: MessageCircle, color: "text-orange-300", label: "Reddit" },
+  hackernews: { icon: Flame, color: "text-amber-300", label: "Hacker News" },
 };
 
 function formatUtc(utc: number): string {
@@ -141,27 +141,27 @@ export default function MarketScout() {
       onRun={fetchSignals}
     >
       {signals.length > 0 && !loading && (
-        <p className="text-xs text-text-secondary mb-4 font-mono">
-          Found {signals.length} signals, {highPriorityCount} high-priority
+        <p className="text-[11px] text-text-muted mb-3">
+          {signals.length} signals, {highPriorityCount} high-priority
         </p>
       )}
 
       {loading && signals.length === 0 ? (
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="p-4 rounded-xl bg-surface-elevated/50 animate-pulse">
-              <div className="h-3 bg-surface-hover rounded w-1/4 mb-3" />
-              <div className="h-4 bg-surface-hover rounded w-3/4 mb-2" />
-              <div className="h-3 bg-surface-hover rounded w-1/2" />
+            <div key={i} className="p-3 rounded-xl bg-surface-elevated/30 animate-pulse">
+              <div className="h-2.5 bg-surface-hover rounded w-1/4 mb-2.5" />
+              <div className="h-3 bg-surface-hover rounded w-3/4 mb-1.5" />
+              <div className="h-2.5 bg-surface-hover rounded w-1/2" />
             </div>
           ))}
         </div>
       ) : signals.length === 0 ? (
-        <p className="text-sm text-text-secondary py-4">
-          No signals available right now. Click Run to refresh.
+        <p className="text-sm text-text-muted py-4">
+          No signals available. Click Run to refresh.
         </p>
       ) : (
-        <div className="space-y-2.5">
+        <div className="space-y-2 card-scroll">
           {signals.map((signal, idx) => {
             const config = sourceConfig[signal.source];
             const Icon = config.icon;
@@ -175,49 +175,49 @@ export default function MarketScout() {
                 key={signal.id}
                 {...linkProps}
                 className={cn(
-                  "block p-3.5 rounded-xl transition-colors",
+                  "block p-3 rounded-xl transition-colors",
                   isHighlighted
-                    ? "bg-surface-elevated/60"
-                    : "bg-surface-elevated/30 hover:bg-surface-hover",
+                    ? "bg-surface-elevated/50"
+                    : "bg-surface-elevated/20 hover:bg-surface-hover",
                   signal.url && "cursor-pointer"
                 )}
               >
-                <div className="flex items-center gap-2 mb-1.5">
-                  <Icon className={cn("w-4 h-4", config.color)} />
-                  <span className={cn("text-xs font-medium", config.color)}>
+                <div className="flex items-center gap-2 mb-1">
+                  <Icon className={cn("w-3.5 h-3.5", config.color)} />
+                  <span className={cn("text-[11px] font-medium", config.color)}>
                     {config.label}
                   </span>
                   <span
                     className={cn(
                       "inline-flex items-center gap-1 text-[10px]",
-                      signal.live ? "text-emerald-400" : "text-text-secondary"
+                      signal.live ? "text-emerald-300" : "text-text-muted"
                     )}
                   >
                     <span
                       className={cn(
                         "w-1.5 h-1.5 rounded-full",
-                        signal.live ? "bg-emerald-400" : "bg-text-muted"
+                        signal.live ? "bg-emerald-300" : "bg-text-muted"
                       )}
                     />
                     {signal.live ? "Live" : "Cached"}
                   </span>
-                  <span className="text-xs text-text-secondary ml-auto flex items-center gap-1.5">
+                  <span className="text-[11px] text-text-muted ml-auto flex items-center gap-1">
                     {signal.timestamp}
-                    {signal.url && <ExternalLink className="w-3 h-3 text-text-muted" />}
+                    {signal.url && <ExternalLink className="w-3 h-3" />}
                   </span>
                 </div>
-                <p className="text-sm font-medium text-gray-100 leading-relaxed">
+                <p className="text-[13px] font-medium text-text-primary leading-snug">
                   {signal.title}
                 </p>
-                <p className="text-xs text-text-secondary mt-1 leading-relaxed">
+                <p className="text-[11px] text-text-secondary mt-0.5 leading-relaxed">
                   {signal.summary}
                 </p>
-                <div className="flex items-center gap-1.5 mt-2">
+                <div className="flex items-center gap-1.5 mt-1.5">
                   <TrendingUp className="w-3 h-3 text-text-muted" />
-                  <span className="text-xs font-semibold font-mono text-gray-100">
+                  <span className="text-[11px] font-semibold font-mono text-text-primary">
                     {signal.score}
                   </span>
-                  <span className="text-xs text-text-secondary">score</span>
+                  <span className="text-[11px] text-text-muted">score</span>
                 </div>
               </Wrapper>
             );
