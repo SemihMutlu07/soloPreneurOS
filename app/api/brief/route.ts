@@ -21,11 +21,13 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // Read previousDecisions from request body (sent from client localStorage)
+  // Read previousDecisions and reviewedDecisions from request body (sent from client localStorage)
   let previousDecisions: { question: string; choice: string; timestamp: string }[] = [];
+  let reviewedDecisions: { title: string; chosenOption: string; impactNote: string }[] = [];
   try {
     const body = await request.json();
     previousDecisions = body.previousDecisions || [];
+    reviewedDecisions = body.reviewedDecisions || [];
   } catch {
     // No body or invalid JSON — that's fine
   }
@@ -132,7 +134,9 @@ ${teacherInsightCommentary.map((c) => `- ${c}`).join("\n")}
 LEAD PIPELINE:
 ${leads.map((l) => `- ${l.name} | ${l.school} | $${l.value.toLocaleString()} | Stage: ${l.stage} | Last contact: ${l.lastContact}`).join("\n")}
 
-${previousDecisions.length > 0 ? `PREVIOUS DECISIONS (made by the founder):\n${previousDecisions.map((d) => `- "${d.question}" → Chose: "${d.choice}" (decided: ${d.timestamp})`).join("\n")}` : "PREVIOUS DECISIONS: None yet."}`;
+${previousDecisions.length > 0 ? `PREVIOUS DECISIONS (made by the founder):\n${previousDecisions.map((d) => `- "${d.question}" → Chose: "${d.choice}" (decided: ${d.timestamp})`).join("\n")}` : "PREVIOUS DECISIONS: None yet."}
+
+${reviewedDecisions.length > 0 ? `REVIEWED DECISIONS (with founder's outcome notes):\n${reviewedDecisions.map((d) => `- "${d.title}" → Chose: "${d.chosenOption}" → Outcome: "${d.impactNote}"`).join("\n")}` : ""}`;
 
   try {
     const response = await fetch("https://api.anthropic.com/v1/messages", {

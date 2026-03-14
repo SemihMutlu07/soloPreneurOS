@@ -58,12 +58,38 @@ function loadCachedBrief(): CachedBrief | null {
   }
 }
 
+const IMPACT_STORAGE_KEY = "decisions-impact";
+
+interface ReviewedDecision {
+  title: string;
+  chosenOption: string;
+  impactNote: string;
+}
+
 function loadPreviousDecisions(): PreviousDecision[] {
   if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem(DECISIONS_STORAGE_KEY);
     if (!raw) return [];
     return JSON.parse(raw);
+  } catch {
+    return [];
+  }
+}
+
+function loadReviewedDecisions(): ReviewedDecision[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(IMPACT_STORAGE_KEY);
+    if (!raw) return [];
+    const impacts = JSON.parse(raw);
+    return impacts
+      .filter((i: { impactNote: string | null }) => i.impactNote)
+      .map((i: { title: string; chosenOption: string; impactNote: string }) => ({
+        title: i.title,
+        chosenOption: i.chosenOption,
+        impactNote: i.impactNote,
+      }));
   } catch {
     return [];
   }
@@ -130,10 +156,11 @@ export default function MorningBrief() {
     setError(null);
     try {
       const previousDecisions = loadPreviousDecisions();
+      const reviewedDecisions = loadReviewedDecisions();
       const res = await fetch("/api/brief", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ previousDecisions }),
+        body: JSON.stringify({ previousDecisions, reviewedDecisions }),
       });
       if (!res.ok) {
         const data = await res.json();
