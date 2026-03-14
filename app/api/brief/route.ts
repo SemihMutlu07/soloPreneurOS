@@ -24,10 +24,12 @@ export async function POST(request: NextRequest) {
   // Read previousDecisions and reviewedDecisions from request body (sent from client localStorage)
   let previousDecisions: { question: string; choice: string; timestamp: string }[] = [];
   let reviewedDecisions: { title: string; chosenOption: string; impactNote: string }[] = [];
+  let agentContext: { signals?: any[]; tasks?: any[] } = {};
   try {
     const body = await request.json();
     previousDecisions = body.previousDecisions || [];
     reviewedDecisions = body.reviewedDecisions || [];
+    agentContext = body.agentContext || {};
   } catch {
     // No body or invalid JSON — that's fine
   }
@@ -63,57 +65,78 @@ Reference any decisions the founder made recently. If they decided something, co
 
 Keep the entire brief under 400 words. Every sentence should be actionable or provide critical context. Cut anything that doesn't earn its place.`;
 
-  // Fetch live signals from Reddit and Hacker News
-  let liveSignals = "";
-  try {
-    const baseUrl = new URL(request.url).origin;
-    const [redditRes, hnRes] = await Promise.all([
-      fetch(`${baseUrl}/api/signals/reddit`).then((r) => r.json()),
-      fetch(`${baseUrl}/api/signals/hackernews`).then((r) => r.json()),
-    ]);
+  // Use agent context signals if provided, otherwise fetch live
+  let signalsSection = "";
+  if (agentContext.signals?.length) {
+    signalsSection = agentContext.signals
+      .map(
+        (s: { source?: string; title: string; score?: number; summary?: string }) =>
+          `- [${(s.source || "unknown").toUpperCase()}] ${s.title} (score: ${s.score ?? 0})${s.summary ? `\n  ${s.summary}` : ""}`
+      )
+      .join("\n");
+  } else {
+    let liveSignals = "";
+    try {
+      const baseUrl = new URL(request.url).origin;
+      const [redditRes, hnRes] = await Promise.all([
+        fetch(`${baseUrl}/api/signals/reddit`).then((r) => r.json()),
+        fetch(`${baseUrl}/api/signals/hackernews`).then((r) => r.json()),
+      ]);
 
-    const parts: string[] = [];
+      const parts: string[] = [];
 
-    if (redditRes.posts?.length) {
-      parts.push(
-        ...redditRes.posts.map(
-          (p: { title: string; score: number; num_comments?: number; subreddit?: string }) =>
-            `- [REDDIT${p.subreddit ? ` r/${p.subreddit}` : ""}] ${p.title} (score: ${p.score}${p.num_comments != null ? `, ${p.num_comments} comments` : ""})`
-        )
-      );
+      if (redditRes.posts?.length) {
+        parts.push(
+          ...redditRes.posts.map(
+            (p: { title: string; score: number; num_comments?: number; subreddit?: string }) =>
+              `- [REDDIT${p.subreddit ? ` r/${p.subreddit}` : ""}] ${p.title} (score: ${p.score}${p.num_comments != null ? `, ${p.num_comments} comments` : ""})`
+          )
+        );
+      }
+
+      if (hnRes.stories?.length) {
+        parts.push(
+          ...hnRes.stories.map(
+            (s: { title: string; score: number; descendants?: number }) =>
+              `- [HACKER NEWS] ${s.title} (score: ${s.score}${s.descendants != null ? `, ${s.descendants} comments` : ""})`
+          )
+        );
+      }
+
+      if (parts.length) {
+        liveSignals = parts.join("\n");
+      }
+    } catch {
+      // Fall back to mock signals below
     }
 
-    if (hnRes.stories?.length) {
-      parts.push(
-        ...hnRes.stories.map(
-          (s: { title: string; score: number; descendants?: number }) =>
-            `- [HACKER NEWS] ${s.title} (score: ${s.score}${s.descendants != null ? `, ${s.descendants} comments` : ""})`
-        )
-      );
-    }
-
-    if (parts.length) {
-      liveSignals = parts.join("\n");
-    }
-  } catch {
-    // Fall back to mock signals below
+    signalsSection = liveSignals
+      ? liveSignals
+      : externalSignals
+          .map(
+            (s) =>
+              `- [${s.source.toUpperCase()}] ${s.title} (score: ${s.score}, ${s.timestamp})\n  ${s.summary}`
+          )
+          .join("\n");
   }
 
-  const signalsSection = liveSignals
-    ? liveSignals
-    : externalSignals
+  // Append agent tasks to mind queue section if provided
+  const agentTasksSection = agentContext.tasks?.length
+    ? "\n\nFOUNDER'S TASK LIST (from Daily Ops agent):\n" +
+      agentContext.tasks
         .map(
-          (s) =>
-            `- [${s.source.toUpperCase()}] ${s.title} (score: ${s.score}, ${s.timestamp})\n  ${s.summary}`
+          (t: { text: string; priority?: string; completed?: boolean }) =>
+            `- [${(t.priority || "important").toUpperCase()}]${t.completed ? " [DONE]" : ""} ${t.text}`
         )
-        .join("\n");
+        .join("\n")
+    : "";
 
   const contextData = `
 COMPANY: ${companyInfo.name} — ${companyInfo.tagline}
 Metrics: ${companyInfo.students} students, ${companyInfo.teachers} teachers, ${companyInfo.schools} schools, $${companyInfo.mrr} MRR
 
 MIND QUEUE (founder's priorities):
-${mindQueueItems.map((item) => `- [${item.priority.toUpperCase()}] [${item.category}] ${item.text}`).join("\n")}
+${mindQueueItems.map((item) => `- [${item.priority.toUpperCase()}] [${item.category}] ${item.text}`).join("\n")}${agentTasksSection}
 
 DECISIONS PENDING TODAY:
 ${todaysDecisions.map((d) => `- ${d.question}\n  Options: ${d.options.join(" | ")}\n  Context: ${d.context}`).join("\n")}

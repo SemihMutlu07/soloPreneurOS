@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Sparkles, Loader2, Clock, Target, Zap, AlertTriangle, Globe, UserCheck, ArrowRight } from "lucide-react";
+import { Brain, Target, Zap, AlertTriangle, Globe, UserCheck, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getAgentResult, setAgentResult, isStale } from "@/lib/agent-store";
+import AgentCardWrapper from "./agent-card-wrapper";
 
 const BRIEF_STORAGE_KEY = "morning-brief-cache";
 const DECISIONS_STORAGE_KEY = "decisions-history";
@@ -128,13 +130,11 @@ function parseSections(text: string): { title: string; content: string }[] {
   return sections;
 }
 
-export default function MorningBrief() {
+export default function ChiefOfStaff() {
   const [brief, setBrief] = useState<string | null>(null);
   const [briefTimestamp, setBriefTimestamp] = useState<number | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<"idle" | "running" | "success" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
-  const [hasCached, setHasCached] = useState(false);
-
   const [autoTriggered, setAutoTriggered] = useState(false);
 
   useEffect(() => {
@@ -142,22 +142,40 @@ export default function MorningBrief() {
     if (cached) {
       setBrief(cached.text);
       setBriefTimestamp(cached.timestamp);
-      setHasCached(true);
+      setStatus("success");
     } else {
       setAutoTriggered(true);
     }
   }, []);
 
   const generateBrief = useCallback(async () => {
-    setLoading(true);
+    setStatus("running");
     setError(null);
     try {
       const previousDecisions = loadPreviousDecisions();
       const reviewedDecisions = loadReviewedDecisions();
+
+      // Read Market Scout results from agent store
+      const marketScoutResult = getAgentResult("market-scout");
+      const signals = marketScoutResult?.data?.signals || [];
+
+      // Read daily-ops tasks from localStorage
+      let tasks: { id: string; text: string; priority: string; completed: boolean }[] = [];
+      try {
+        const raw = localStorage.getItem("daily-ops-tasks");
+        if (raw) tasks = JSON.parse(raw);
+      } catch {
+        // ignore
+      }
+
       const res = await fetch("/api/brief", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ previousDecisions, reviewedDecisions }),
+        body: JSON.stringify({
+          previousDecisions,
+          reviewedDecisions,
+          agentContext: { signals, tasks },
+        }),
       });
       if (!res.ok) {
         const data = await res.json();
@@ -167,71 +185,68 @@ export default function MorningBrief() {
       const now = Date.now();
       setBrief(data.brief);
       setBriefTimestamp(now);
-      setHasCached(true);
       localStorage.setItem(
         BRIEF_STORAGE_KEY,
         JSON.stringify({ text: data.brief, timestamp: now })
       );
+      setAgentResult("chief-of-staff", { brief: data.brief }, "success", "Brief generated");
+      setStatus("success");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
-    } finally {
-      setLoading(false);
+      setStatus("error");
     }
   }, []);
 
   // Auto-generate on first visit when no cached brief exists
   useEffect(() => {
-    if (autoTriggered && !brief && !loading) {
+    if (autoTriggered && !brief && status !== "running") {
       generateBrief();
     }
-  }, [autoTriggered, brief, loading, generateBrief]);
+  }, [autoTriggered, brief, status, generateBrief]);
 
   const sections = brief ? parseSections(brief) : [];
 
-  return (
-    <div className="card">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
-        <div className="flex items-center gap-2.5">
-          <Sparkles className="w-5 h-5 text-accent-teal" />
-          <h2 className="text-base font-semibold font-mono text-gray-100">Morning Brief</h2>
-          <span className="text-xs text-text-muted font-mono ml-1">/ ajan modu</span>
-        </div>
-        <div className="flex items-center gap-4">
-          {briefTimestamp && (
-            <div className="flex items-center gap-1.5 text-text-secondary">
-              <Clock className="w-3.5 h-3.5" />
-              <span className="text-xs font-mono">
-                Generated at {formatTimestamp(briefTimestamp)}
-              </span>
-            </div>
-          )}
-          <button
-            onClick={generateBrief}
-            disabled={loading}
-            className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-xl bg-accent-teal/10 text-accent-teal hover:bg-accent-teal/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed animate-halo border border-accent-teal/10"
-          >
-            {loading ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Generating...
-              </>
-            ) : (
-              <>
-                <Sparkles className="w-4 h-4 animate-gentle-spin" />
-                {hasCached ? "Regenerate" : "Generate Brief"}
-              </>
-            )}
-          </button>
-        </div>
-      </div>
+  // Count context sources for "Synthesized from" line
+  const marketScoutResult = typeof window !== "undefined" ? getAgentResult("market-scout") : null;
+  const signalCount = marketScoutResult?.data?.signals?.length || 0;
+  let taskCount = 0;
+  try {
+    const raw = typeof window !== "undefined" ? localStorage.getItem("daily-ops-tasks") : null;
+    if (raw) taskCount = JSON.parse(raw).length;
+  } catch {
+    // ignore
+  }
 
+  return (
+    <AgentCardWrapper
+      agentId="chief-of-staff"
+      agentName="Chief of Staff"
+      icon={<Brain className="w-5 h-5 text-accent-teal" />}
+      status={status}
+      lastRun={briefTimestamp ? new Date(briefTimestamp).toISOString() : undefined}
+      onRun={generateBrief}
+    >
       {error && (
-        <div className="p-4 rounded-xl bg-red-500/10 text-red-400 text-sm border border-red-500/10">
+        <div className="p-4 rounded-xl bg-red-500/10 text-red-400 text-sm border border-red-500/10 mb-4">
           {error}
         </div>
       )}
 
-      {loading && sections.length === 0 ? (
+      {(signalCount > 0 || taskCount > 0) && brief && (
+        <p className="text-xs text-text-muted mb-4 font-mono">
+          Synthesized from: {signalCount > 0 && `${signalCount} Market Scout signals`}
+          {signalCount > 0 && taskCount > 0 && " + "}
+          {taskCount > 0 && `${taskCount} tasks`}
+        </p>
+      )}
+
+      {briefTimestamp && brief && (
+        <p className="text-xs text-text-secondary mb-4 font-mono">
+          Generated at {formatTimestamp(briefTimestamp)}
+        </p>
+      )}
+
+      {status === "running" && sections.length === 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[1, 2, 3, 4].map((i) => (
             <div
@@ -300,13 +315,13 @@ export default function MorningBrief() {
             );
           })}
         </div>
-      ) : !loading && !error ? (
+      ) : status !== "running" && !error ? (
         <div className="flex items-center justify-center py-12">
           <p className="text-text-secondary text-sm">
-            Click &quot;Generate Brief&quot; to get your AI-powered morning briefing. Requires an Anthropic API key.
+            Click Run to get your AI-powered morning briefing. Requires an Anthropic API key.
           </p>
         </div>
       ) : null}
-    </div>
+    </AgentCardWrapper>
   );
 }

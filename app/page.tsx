@@ -2,12 +2,10 @@
 
 import { useState, useEffect } from "react";
 import DashboardHeader from "@/components/dashboard-header";
-import MorningBrief from "@/components/morning-brief";
-import MindQueue from "@/components/mind-queue";
-import TodaysDecisions from "@/components/todays-decisions";
-import ExternalSignals from "@/components/external-signals";
-import StudentInsights from "@/components/student-insights";
-import TeacherInsights from "@/components/teacher-insights";
+import ChiefOfStaff from "@/components/agents/chief-of-staff";
+import DailyOps from "@/components/agents/daily-ops";
+import MarketScout from "@/components/agents/market-scout";
+import ComingSoonAgents from "@/components/agents/coming-soon-agents";
 import CalendarView from "@/components/calendar-view";
 import LeadPipeline from "@/components/lead-pipeline";
 import FounderStories from "@/components/founder-stories";
@@ -37,43 +35,42 @@ export default function Home() {
         <DashboardHeader />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
-          {/* Row 1: Morning Brief spans full width */}
+          {/* Row 1: Chief of Staff spans full width */}
           <div className="col-span-full opacity-0 animate-fade-in stagger-1">
-            <MorningBrief />
+            <ChiefOfStaff />
           </div>
 
-          {/* Row 2: Core modules */}
+          {/* Row 2: Daily Ops (tall left) | Market Scout (center) | Calendar (right) */}
           <div className="opacity-0 animate-fade-in stagger-2 lg:row-span-2 flex">
-            <MindQueue />
+            <DailyOps />
           </div>
           <div className="opacity-0 animate-fade-in stagger-3">
-            <TodaysDecisions />
+            <MarketScout />
           </div>
           <div className="opacity-0 animate-fade-in stagger-4">
-            <ExternalSignals />
-          </div>
-
-          {/* Row 3: Insights */}
-          <div className="opacity-0 animate-fade-in stagger-5">
-            <StudentInsights />
-          </div>
-          <div className="opacity-0 animate-fade-in stagger-6">
-            <TeacherInsights />
-          </div>
-
-          {/* Row 4: Calendar + Pipeline + Stories */}
-          <div className="opacity-0 animate-fade-in stagger-7">
             <CalendarView />
           </div>
-          <div className="opacity-0 animate-fade-in stagger-8">
+
+          {/* Row 3: Lead Pipeline + Founder Stories */}
+          <div className="opacity-0 animate-fade-in stagger-5">
             <LeadPipeline />
           </div>
-          <div className="opacity-0 animate-fade-in stagger-9">
+          <div className="opacity-0 animate-fade-in stagger-6">
             <FounderStories />
+          </div>
+
+          {/* Coming Soon section */}
+          <div className="col-span-full opacity-0 animate-fade-in stagger-7">
+            <h2 className="text-sm font-semibold font-mono text-text-secondary mb-4">
+              More agents coming soon
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
+              <ComingSoonAgents />
+            </div>
           </div>
         </div>
 
-        <AskDashboard />
+        {!showOnboarding && <AskDashboard />}
 
         {/* Reset onboarding */}
         <div className="text-center mt-16">
