@@ -8,7 +8,7 @@ export default function StudentInsights() {
   return (
     <div className="card">
       <div className="flex items-center gap-2 mb-4">
-        <GraduationCap className="w-5 h-5 text-accent-green" />
+        <GraduationCap className="w-5 h-5 text-accent-teal" />
         <h2 className="text-lg font-semibold font-mono">Student Insights</h2>
       </div>
 
@@ -34,7 +34,7 @@ export default function StudentInsights() {
       <div className="space-y-2">
         <p className="text-xs font-medium text-text-muted uppercase tracking-wider">AI Commentary</p>
         {studentInsightCommentary.map((comment, i) => (
-          <p key={i} className="text-xs text-text-secondary leading-relaxed pl-3 border-l-2 border-accent-green/30">
+          <p key={i} className="text-xs text-text-secondary leading-relaxed pl-3 border-l-2 border-accent-teal/30">
             {comment}
           </p>
         ))}

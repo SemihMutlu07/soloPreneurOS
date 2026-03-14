@@ -15,15 +15,24 @@ export default function ExternalSignals() {
   return (
     <div className="card">
       <div className="flex items-center gap-2 mb-4">
-        <Radar className="w-5 h-5 text-accent-green" />
+        <Radar className="w-5 h-5 text-accent-teal" />
         <h2 className="text-lg font-semibold font-mono">External Signals</h2>
       </div>
-      <div className="space-y-3">
-        {externalSignals.map((signal) => {
+      <div className="space-y-2">
+        {externalSignals.map((signal, idx) => {
           const config = sourceConfig[signal.source];
           const Icon = config.icon;
+          const isHighlighted = idx === 0; // Product Hunt card — simulated hover
           return (
-            <div key={signal.id} className="p-3 rounded-lg bg-bg/50 hover:bg-surface-hover transition-colors">
+            <div
+              key={signal.id}
+              className={cn(
+                "p-3 rounded-xl transition-colors",
+                isHighlighted
+                  ? "bg-surface-elevated"
+                  : "bg-bg/50 hover:bg-surface-hover"
+              )}
+            >
               <div className="flex items-center gap-2 mb-1">
                 <Icon className={cn("w-4 h-4", config.color)} />
                 <span className={cn("text-xs font-medium", config.color)}>{config.label}</span>
@@ -33,7 +42,10 @@ export default function ExternalSignals() {
               <p className="text-xs text-text-secondary mt-1 leading-relaxed">{signal.summary}</p>
               <div className="flex items-center gap-1 mt-2">
                 <TrendingUp className="w-3 h-3 text-text-muted" />
-                <span className="text-xs text-text-muted">Score: {signal.score}</span>
+                <span className="text-xs font-semibold font-mono text-text-primary">
+                  {signal.score}
+                </span>
+                <span className="text-xs text-text-muted">score</span>
               </div>
             </div>
           );

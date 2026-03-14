@@ -30,13 +30,14 @@ export default function MorningBrief() {
     <div className="card col-span-full">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-accent-amber" />
+          <Sparkles className="w-5 h-5 text-accent-teal" />
           <h2 className="text-lg font-semibold font-mono">Morning Brief</h2>
+          <span className="text-xs text-text-muted font-mono ml-2">/ ajan modu</span>
         </div>
         <button
           onClick={generateBrief}
           disabled={loading}
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-accent-green/10 text-accent-green border border-accent-green/20 hover:bg-accent-green/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-xl bg-accent-teal/15 text-accent-teal hover:bg-accent-teal/25 transition-colors disabled:opacity-50 disabled:cursor-not-allowed animate-halo"
         >
           {loading ? (
             <>
@@ -45,7 +46,7 @@ export default function MorningBrief() {
             </>
           ) : (
             <>
-              <Sparkles className="w-4 h-4" />
+              <Sparkles className="w-4 h-4 animate-gentle-spin" />
               Generate Brief
             </>
           )}
@@ -53,7 +54,7 @@ export default function MorningBrief() {
       </div>
 
       {error && (
-        <div className="p-4 rounded-lg bg-accent-red/10 border border-accent-red/20 text-accent-red text-sm">
+        <div className="p-4 rounded-xl bg-accent-red/8 text-accent-red text-sm">
           {error}
         </div>
       )}
@@ -71,7 +72,7 @@ export default function MorningBrief() {
             if (line.startsWith("- ") || line.startsWith("* "))
               return (
                 <p key={i} className="text-text-secondary text-sm pl-4 py-0.5">
-                  <span className="text-accent-green mr-2">-</span>
+                  <span className="text-accent-teal mr-2">-</span>
                   {line.replace(/^[-*]\s*/, "")}
                 </p>
               );

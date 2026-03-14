@@ -22,7 +22,7 @@ export default function LeadPipeline() {
   return (
     <div className="card">
       <div className="flex items-center gap-2 mb-1">
-        <DollarSign className="w-5 h-5 text-accent-green" />
+        <DollarSign className="w-5 h-5 text-accent-teal" />
         <h2 className="text-lg font-semibold font-mono">Lead Pipeline</h2>
         <span className="text-xs text-text-muted ml-auto">
           ${totalValue.toLocaleString()} pipeline

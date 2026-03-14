@@ -1,9 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { GitBranch, Check } from "lucide-react";
+import { GitBranch, Check, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { todaysDecisions, type Decision } from "@/lib/mock-data";
+
+const agentSuggestions: Record<string, string> = {
+  "dec-1": "Yes, buyume carpanini tetikler.",
+  "dec-2": "AI chatbot, olceklenebilir ve maliyet-etkin.",
+  "dec-3": "Real-time collaboration, en yuksek oy ve retansiyon etkisi.",
+};
 
 export default function TodaysDecisions() {
   const [decisions, setDecisions] = useState<Decision[]>(todaysDecisions);
@@ -24,11 +30,21 @@ export default function TodaysDecisions() {
       </div>
       <div className="space-y-4">
         {decisions.map((decision) => (
-          <div key={decision.id} className="p-3 rounded-lg bg-bg/50">
+          <div key={decision.id} className="p-3 rounded-xl bg-bg/50">
             <p className="text-sm font-medium text-text-primary mb-1">
               {decision.question}
             </p>
             <p className="text-xs text-text-muted mb-3">{decision.context}</p>
+
+            {agentSuggestions[decision.id] && (
+              <div className="flex items-center gap-1.5 mb-3 px-2 py-1.5 rounded-lg">
+                <Sparkles className="w-3 h-3 text-accent-teal/50 shrink-0" />
+                <p className="text-[11px] text-accent-teal/50 italic">
+                  Ajanin Onerisi: {agentSuggestions[decision.id]}
+                </p>
+              </div>
+            )}
+
             <div className="space-y-1.5">
               {decision.options.map((option, i) => {
                 const isSelected = decision.selectedOption === i;
@@ -37,10 +53,10 @@ export default function TodaysDecisions() {
                     key={i}
                     onClick={() => selectOption(decision.id, i)}
                     className={cn(
-                      "w-full text-left text-sm px-3 py-2 rounded-lg border transition-all",
+                      "w-full text-left text-sm px-3 py-2 rounded-lg transition-all",
                       isSelected
-                        ? "border-accent-green/40 bg-accent-green/10 text-accent-green"
-                        : "border-border hover:border-border-strong text-text-secondary hover:text-text-primary"
+                        ? "bg-accent-teal/10 text-accent-teal"
+                        : "bg-surface-hover/50 text-text-secondary hover:text-text-primary hover:bg-surface-hover"
                     )}
                   >
                     <span className="flex items-center gap-2">

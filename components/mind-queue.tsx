@@ -6,9 +6,9 @@ import { cn } from "@/lib/utils";
 import { mindQueueItems, type MindQueueItem, type Priority } from "@/lib/mock-data";
 
 const priorityConfig: Record<Priority, { color: string; bg: string; label: string }> = {
-  critical: { color: "text-accent-red", bg: "bg-accent-red/10", label: "Critical" },
-  important: { color: "text-accent-amber", bg: "bg-accent-amber/10", label: "Important" },
-  "can-wait": { color: "text-accent-blue", bg: "bg-accent-blue/10", label: "Can Wait" },
+  critical: { color: "text-[#1a1a2e]", bg: "bg-[#fca5a5]", label: "Critical" },
+  important: { color: "text-[#1a1a2e]", bg: "bg-[#fcd34d]", label: "Important" },
+  "can-wait": { color: "text-[#1a1a2e]", bg: "bg-[#93c5fd]", label: "Can Wait" },
 };
 
 const STORAGE_KEY = "mind-queue-order";
@@ -47,7 +47,7 @@ export default function MindQueue() {
   return (
     <div className="card">
       <div className="flex items-center gap-2 mb-4">
-        <Brain className="w-5 h-5 text-accent-blue" />
+        <Brain className="w-5 h-5 text-accent-teal" />
         <h2 className="text-lg font-semibold font-mono">Mind Queue</h2>
         <span className="text-xs text-text-muted ml-auto">{items.length} items</span>
       </div>
