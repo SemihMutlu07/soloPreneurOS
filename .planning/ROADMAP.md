@@ -93,7 +93,11 @@ Plans:
   1. GET /api/intelligence/insights returns the current insight list ordered by severity and recency
   2. GET /api/intelligence/nudges?module=sales returns only insights tagged with the sales module
   3. POST /api/intelligence/dismiss with a valid insight ID marks that insight as dismissed and it no longer appears in subsequent GET responses
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 06-01-PLAN.md — Implement GET /api/intelligence/insights and GET /api/intelligence/nudges (read endpoints)
+- [ ] 06-02-PLAN.md — Implement POST /api/intelligence/dismiss and POST /api/intelligence/trigger with shared pipeline lib
 
 ### Phase 7: Dashboard Intelligence Feed
 **Goal**: Users can scan all cross-module AI alerts from a central feed on the home dashboard
@@ -119,5 +123,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 3. Rule Engine | 0/3 | Not started | - |
 | 4. Insights Schema and Cron | 0/TBD | Not started | - |
 | 5. LLM Orchestrator | 0/TBD | Not started | - |
-| 6. Intelligence API Routes | 0/TBD | Not started | - |
+| 6. Intelligence API Routes | 0/2 | Not started | - |
 | 7. Dashboard Intelligence Feed | 0/TBD | Not started | - |
