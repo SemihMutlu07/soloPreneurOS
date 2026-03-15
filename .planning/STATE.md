@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-finance-migration/01-01-PLAN.md
-last_updated: "2026-03-15T12:36:44.259Z"
+stopped_at: Completed 03-rule-engine/03-01-PLAN.md
+last_updated: "2026-03-15T12:38:04.290Z"
 last_activity: "2026-03-15 — Executed 01-02: Finance seed script with stable UUID upsert pattern"
 progress:
   total_phases: 7
-  completed_phases: 0
-  total_plans: 13
-  completed_plans: 4
+  completed_phases: 1
+  total_plans: 14
+  completed_plans: 6
   percent: 23
 ---
 
@@ -54,6 +54,8 @@ Progress: [██░░░░░░░░] 23%
 | Phase 04-insights-schema-and-cron P02 | 8 | 2 tasks | 4 files |
 | Phase 01-finance-migration P02 | 5 | 1 task | 1 file |
 | Phase 01-finance-migration P01 | 1 | 2 tasks | 3 files |
+| Phase 04-insights-schema-and-cron P03 | 165 | 1 tasks | 3 files |
+| Phase 03-rule-engine P01 | 4 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -77,6 +79,10 @@ Recent decisions affecting current work:
 - [Phase 01-finance-migration]: Admin client (not server client) used for Finance routes to bypass RLS — app has no user auth
 - [Phase 01-finance-migration]: FINANCE_USER_ID hardcoded as 00000000-0000-0000-0000-000000000001 — single solopreneur, no multi-tenancy
 - [Phase 01-finance-migration]: expenses and tax-provisions routes are GET-only in Phase 1 — seeded/calculated data, not user-created
+- [Phase 04-insights-schema-and-cron]: Stubs created for buildCrossModuleSnapshot and runRuleEngine in lib/intelligence/ — allows cron route to compile and run before Phase 2/3 complete
+- [Phase 04-insights-schema-and-cron]: CRON_SECRET bearer auth is always the first cron handler operation — 401 returned before any Supabase calls
+- [Phase 03-rule-engine]: RuleInsight is separate from InsightCandidate — rule engine outputs RuleInsight, cron maps to InsightCandidate for persistence
+- [Phase 03-rule-engine]: CrossModuleSnapshot fields renamed to hire/recent_activity/generated_at — canonical contract for all rule functions
 
 ### Pending Todos
 
@@ -90,6 +96,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T12:36:44.257Z
-Stopped at: Completed 01-finance-migration/01-01-PLAN.md
+Last session: 2026-03-15T12:38:04.288Z
+Stopped at: Completed 03-rule-engine/03-01-PLAN.md
 Resume file: None

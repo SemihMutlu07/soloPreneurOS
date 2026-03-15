@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 1: Finance Migration** - Migrate Finance data from localStorage to Supabase so server-side intelligence can read it
 - [ ] **Phase 2: Unified Data Layer** - Build CrossModuleSnapshot type and data aggregator that reads all three modules from Supabase
 - [ ] **Phase 3: Rule Engine** - Implement all 7 deterministic cross-module pattern rules (R1–R7)
-- [ ] **Phase 4: Insights Schema and Cron** - Create cross_module_insights table and wire daily intelligence cron pipeline
+- [x] **Phase 4: Insights Schema and Cron** - Create cross_module_insights table and wire daily intelligence cron pipeline (completed 2026-03-15)
 - [ ] **Phase 5: LLM Orchestrator** - Add Claude-powered narrative synthesis and insight deduplication on top of rule results
 - [ ] **Phase 6: Intelligence API Routes** - Expose persisted insights via GET/POST routes consumed by UI
 - [ ] **Phase 7: Dashboard Intelligence Feed** - Central insight feed on home dashboard with severity, freshness, dismiss, and evidence
@@ -129,8 +129,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 |-------|----------------|--------|-----------|
 | 1. Finance Migration | 2/3 | In Progress|  |
 | 2. Unified Data Layer | 0/2 | Not started | - |
-| 3. Rule Engine | 0/3 | Not started | - |
-| 4. Insights Schema and Cron | 2/3 | In Progress|  |
+| 3. Rule Engine | 1/3 | In Progress|  |
+| 4. Insights Schema and Cron | 3/3 | Complete   | 2026-03-15 |
 | 5. LLM Orchestrator | 0/TBD | Not started | - |
 | 6. Intelligence API Routes | 0/2 | Not started | - |
 | 7. Dashboard Intelligence Feed | 0/TBD | Not started | - |

@@ -28,8 +28,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **INFRA-01**: cross_module_insights Supabase table stores insights with severity, module_tags, evidence, and dismissal state
 - [x] **INFRA-02**: Insight records use content-addressed IDs to prevent duplicates across cron runs
-- [ ] **INFRA-03**: Intelligence cron job runs daily, executing data aggregation then rule engine then persist pipeline
-- [ ] **INFRA-04**: Cron endpoint validates bearer token authorization (CRON_SECRET pattern)
+- [x] **INFRA-03**: Intelligence cron job runs daily, executing data aggregation then rule engine then persist pipeline
+- [x] **INFRA-04**: Cron endpoint validates bearer token authorization (CRON_SECRET pattern)
 
 ### LLM Analysis
 
@@ -96,8 +96,8 @@ Deferred to future release. Tracked but not in current roadmap.
 | RULE-07 | Phase 3 | Pending |
 | INFRA-01 | Phase 4 | Complete |
 | INFRA-02 | Phase 4 | Complete |
-| INFRA-03 | Phase 4 | Pending |
-| INFRA-04 | Phase 4 | Pending |
+| INFRA-03 | Phase 4 | Complete |
+| INFRA-04 | Phase 4 | Complete |
 | LLM-01 | Phase 5 | Pending |
 | LLM-02 | Phase 5 | Pending |
 | DASH-01 | Phase 7 | Pending |
