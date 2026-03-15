@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-unified-data-layer-02-02-PLAN.md
-last_updated: "2026-03-15T12:43:48.206Z"
+stopped_at: Completed 01-finance-migration/01-03-PLAN.md
+last_updated: "2026-03-15T12:44:14.104Z"
 last_activity: "2026-03-15 — Executed 01-02: Finance seed script with stable UUID upsert pattern"
 progress:
   total_phases: 7
@@ -59,6 +59,7 @@ Progress: [██░░░░░░░░] 23%
 | Phase 02-unified-data-layer P01 | 4 | 2 tasks | 5 files |
 | Phase 03-rule-engine P02 | 3 | 1 tasks | 8 files |
 | Phase 02-unified-data-layer P02 | 2 | 2 tasks | 2 files |
+| Phase 01-finance-migration P03 | 5 | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -94,6 +95,8 @@ Recent decisions affecting current work:
 - [Phase 02-unified-data-layer]: Field names use hire/recent_activity/generated_at aligned with types.ts (not plan code samples which used old names)
 - [Phase 02-unified-data-layer]: fetchHiringModule fetches active roles (roles.active=true) — HireSnapshot.roles required by Phase 03 rule R3
 - [Phase 02-unified-data-layer]: Runway query is non-fatal (try/catch inside fetchFinanceModule) — runway: null does not cause finance module failure
+- [Phase 01-finance-migration]: Static runway/tax-provision/KDV-paid data defined as inline constants in Finance page — keep static as simplest approach per user decision
+- [Phase 01-finance-migration]: Brief route Finance section is non-blocking — Supabase failure omits section rather than crashing the brief
 
 ### Pending Todos
 
@@ -107,6 +110,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T12:43:48.205Z
-Stopped at: Completed 02-unified-data-layer-02-02-PLAN.md
+Last session: 2026-03-15T12:44:14.102Z
+Stopped at: Completed 01-finance-migration/01-03-PLAN.md
 Resume file: None
