@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { ChevronDown, ChevronRight } from "lucide-react";
 import DashboardHeader from "@/components/dashboard-header";
 import ChiefOfStaff from "@/components/agents/chief-of-staff";
 import DailyOps from "@/components/agents/daily-ops";
@@ -15,10 +16,20 @@ import { hasCompletedOnboarding, clearProfile } from "@/lib/profile-store";
 
 export default function Home() {
   const [showOnboarding, setShowOnboarding] = useState<boolean | null>(null);
+  const [chiefOpen, setChiefOpen] = useState<boolean>(false);
 
   useEffect(() => {
     setShowOnboarding(!hasCompletedOnboarding());
+    const stored = localStorage.getItem("chief-of-staff-open");
+    setChiefOpen(stored === null ? false : stored === "true");
   }, []);
+
+  const toggleChief = () => {
+    setChiefOpen((prev) => {
+      localStorage.setItem("chief-of-staff-open", String(!prev));
+      return !prev;
+    });
+  };
 
   if (showOnboarding === null) {
     return null;
@@ -34,9 +45,16 @@ export default function Home() {
         <DashboardHeader />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {/* Chief of Staff — full width */}
+          {/* Chief of Staff — collapsible full width */}
           <div className="col-span-full opacity-0 animate-fade-in stagger-1">
-            <ChiefOfStaff />
+            <button
+              onClick={toggleChief}
+              className="flex items-center gap-1.5 text-xs text-text-muted hover:text-text-secondary transition-colors mb-2"
+            >
+              {chiefOpen ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
+              Chief of Staff
+            </button>
+            {chiefOpen && <ChiefOfStaff />}
           </div>
 
           {/* 3-col: Daily Ops (tall) | Market Scout | Calendar */}

@@ -58,6 +58,9 @@ export default function AskDashboard() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50">
+      {/* Gradient mask — fades content behind the bar */}
+      <div className="pointer-events-none h-16 bg-gradient-to-t from-bg to-transparent -translate-y-full" />
+
       {/* Response panel */}
       <div
         className={cn(

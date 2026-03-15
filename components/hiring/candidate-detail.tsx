@@ -2,7 +2,7 @@ import type { CandidateWithEvaluation } from "@/lib/hiring-types";
 import { EvaluationCard } from "./evaluation-card";
 import { HumanDecision } from "./human-decision";
 import { DuplicateBadge } from "./duplicate-badge";
-import { ArrowLeft, FileText, Mail, Calendar } from "lucide-react";
+import { ArrowLeft, FileText, Mail, Calendar, Loader2 } from "lucide-react";
 import Link from "next/link";
 
 interface CandidateDetailProps {
@@ -55,10 +55,15 @@ export function CandidateDetail({ candidate }: CandidateDetailProps) {
       )}
 
       {!candidate.evaluation && (
-        <div className="card text-center py-8">
-          <p className="text-text-muted">
-            Evaluation pending — will be processed in the next cron cycle.
-          </p>
+        <div className="card flex flex-col items-center gap-4 py-12">
+          <div className="relative w-10 h-10">
+            <div className="absolute inset-0 rounded-full border-2 border-accent-orange/20" />
+            <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-accent-orange animate-gentle-spin" />
+          </div>
+          <div className="text-center">
+            <p className="text-text-secondary text-sm font-medium">Evaluation pending</p>
+            <p className="text-text-muted text-xs mt-1">Will be processed in the next cron cycle</p>
+          </div>
         </div>
       )}
 
@@ -74,6 +79,7 @@ export function CandidateDetail({ candidate }: CandidateDetailProps) {
             candidateId={candidate.id}
             candidateName={candidate.name}
             currentStatus={candidate.status}
+            decisionResult={candidate.decision_result}
           />
         </div>
       )}

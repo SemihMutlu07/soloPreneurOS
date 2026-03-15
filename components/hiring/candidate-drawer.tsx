@@ -67,17 +67,17 @@ export function CandidateDrawer({ candidateId, onClose }: CandidateModalProps) {
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+        className="fixed inset-0 z-40 bg-black/60 backdrop-blur-md"
         onClick={handleClose}
       />
 
       {/* Centered modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div
-          className={`bg-bg border border-border rounded-2xl flex flex-col
+          className={`bg-bg border border-border-strong rounded-2xl flex flex-col
             w-[80vw] max-h-[85vh]
             max-md:w-[95vw] max-md:max-h-[90vh]
-            shadow-2xl
+            shadow-2xl shadow-black/40
             ${closing ? "animate-modal-out" : "animate-modal-in"}`}
         >
           {/* Header */}
@@ -151,10 +151,15 @@ export function CandidateDrawer({ candidateId, onClose }: CandidateModalProps) {
                 )}
 
                 {!candidate.evaluation && (
-                  <div className="card text-center py-8">
-                    <p className="text-text-muted text-sm">
-                      Evaluation pending — will be processed in the next cron cycle.
-                    </p>
+                  <div className="card flex flex-col items-center gap-4 py-12">
+                    <div className="relative w-10 h-10">
+                      <div className="absolute inset-0 rounded-full border-2 border-accent-orange/20" />
+                      <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-accent-orange animate-gentle-spin" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-text-secondary text-sm font-medium">Evaluation pending</p>
+                      <p className="text-text-muted text-xs mt-1">Will be processed in the next cron cycle</p>
+                    </div>
                   </div>
                 )}
               </>

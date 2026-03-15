@@ -88,7 +88,7 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
   const govCredit = stopajAmount;
 
   const inputClass =
-    "w-full px-4 py-2.5 bg-surface border border-border rounded-lg text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-orange";
+    "w-full px-4 py-2.5 bg-surface border border-border-strong rounded-lg text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-orange focus:ring-2 focus:ring-accent-orange/20 transition-colors";
 
   const handleSave = async () => {
     const payload = {
@@ -304,7 +304,7 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
         <div className="space-y-3">
           <div className="flex justify-between">
             <span className="text-sm text-text-secondary">Brüt Tutar</span>
-            <span className="text-sm font-mono text-text-primary">
+            <span className="text-sm font-mono text-text-primary tabular-nums text-right">
               {fmt(amount)} ₺
             </span>
           </div>
@@ -312,7 +312,7 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
             <span className="text-sm text-text-secondary">
               KDV (%{kdvRate})
             </span>
-            <span className="text-sm font-mono text-text-primary">
+            <span className="text-sm font-mono text-text-primary tabular-nums text-right">
               +{fmt(kdvAmount)} ₺
             </span>
           </div>
@@ -321,7 +321,7 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
               <span className="text-sm text-text-secondary">
                 Stopaj (%{stopajRate})
               </span>
-              <span className="text-sm font-mono text-accent-red">
+              <span className="text-sm font-mono text-accent-red tabular-nums text-right">
                 -{fmt(stopajAmount)} ₺
               </span>
             </div>
@@ -331,7 +331,7 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
               <span className="text-sm font-medium text-text-primary">
                 Müşteri Öder
               </span>
-              <span className="text-sm font-mono font-semibold text-text-primary">
+              <span className="text-sm font-mono font-semibold text-text-primary tabular-nums text-right">
                 {fmt(customerPays)} ₺
               </span>
             </div>
@@ -339,7 +339,7 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
               <span className="text-sm font-medium text-accent-green">
                 Senin Alacağın
               </span>
-              <span className="text-sm font-mono font-semibold text-accent-green">
+              <span className="text-sm font-mono font-semibold text-accent-green tabular-nums text-right">
                 {fmt(youReceive)} ₺
               </span>
             </div>
@@ -348,7 +348,7 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
                 <span className="text-sm font-medium text-accent-blue">
                   Devlet Kredisi
                 </span>
-                <span className="text-sm font-mono font-semibold text-accent-blue">
+                <span className="text-sm font-mono font-semibold text-accent-blue tabular-nums text-right">
                   {fmt(govCredit)} ₺
                 </span>
               </div>

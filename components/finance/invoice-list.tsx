@@ -1,3 +1,4 @@
+import { FileText } from "lucide-react";
 import type { Invoice } from "@/lib/finance-types";
 
 interface InvoiceListProps {
@@ -54,9 +55,11 @@ export function InvoiceList({ invoices }: InvoiceListProps) {
           </div>
         ))}
         {recent.length === 0 && (
-          <p className="py-4 text-center text-text-muted text-sm">
-            Henüz fatura yok
-          </p>
+          <div className="py-10 flex flex-col items-center gap-3">
+            <FileText className="w-8 h-8 text-text-muted/40" strokeWidth={1.5} />
+            <p className="text-text-muted text-sm">Henüz fatura yok</p>
+            <p className="text-xs text-text-muted/60">Soldaki formu kullanarak ilk faturanı oluştur</p>
+          </div>
         )}
       </div>
     </div>
