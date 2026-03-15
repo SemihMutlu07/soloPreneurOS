@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: planning
-stopped_at: Completed 04-insights-schema-and-cron/04-02-PLAN.md
-last_updated: "2026-03-15T12:33:27.406Z"
-last_activity: 2026-03-15 — Roadmap created; 7 phases defined with success criteria (Phase 8 nudges deferred)
+status: executing
+stopped_at: Completed 01-finance-migration/01-02-PLAN.md
+last_updated: "2026-03-15T12:36:36.808Z"
+last_activity: "2026-03-15 — Executed 01-02: Finance seed script with stable UUID upsert pattern"
 progress:
   total_phases: 7
   completed_phases: 0
   total_plans: 13
-  completed_plans: 2
-  percent: 0
+  completed_plans: 4
+  percent: 23
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-15)
 ## Current Position
 
 Phase: 1 of 7 (Finance Migration)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-03-15 — Roadmap created; 7 phases defined with success criteria (Phase 8 nudges deferred)
+Plan: 2 of 3 in current phase (01-02 complete)
+Status: In progress
+Last activity: 2026-03-15 — Executed 01-02: Finance seed script with stable UUID upsert pattern
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██░░░░░░░░] 23%
 
 ## Performance Metrics
 
@@ -52,6 +52,8 @@ Progress: [░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 04-insights-schema-and-cron P01 | 2 | 1 tasks | 2 files |
 | Phase 04-insights-schema-and-cron P02 | 8 | 2 tasks | 4 files |
+| Phase 01-finance-migration P02 | 5 | 1 task | 1 file |
+| Phase 01-finance-migration P01 | 1 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -69,6 +71,9 @@ Recent decisions affecting current work:
 - [Phase 04-insights-schema-and-cron]: content-addressed PK: SHA256(rule_id + calendar_date) enables idempotent daily upserts
 - [Phase 04-insights-schema-and-cron]: SHA256 content-addressed IDs (ruleId-calendarDate) prevent duplicate insight rows across daily cron runs
 - [Phase 04-insights-schema-and-cron]: dismissed_at omitted from upsert payload to preserve dismissed state — Supabase only updates columns present in the payload
+- [Phase 01-finance-migration P02]: Seed data defined inline (not imported from mock-data.ts) to avoid path alias resolution outside Next.js context
+- [Phase 01-finance-migration P02]: Stable deterministic UUIDs (00000000-0000-0000-000X-00000000000Y) used for idempotent seeding via upsert onConflict: id
+- [Phase 01-finance-migration P02]: FINANCE_USER_ID = "00000000-0000-0000-0000-000000000001" as canonical placeholder user ID for seeded Finance data
 
 ### Pending Todos
 
@@ -82,6 +87,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T12:33:27.404Z
-Stopped at: Completed 04-insights-schema-and-cron/04-02-PLAN.md
+Last session: 2026-03-15T12:39:00Z
+Stopped at: Completed 01-finance-migration/01-02-PLAN.md
 Resume file: None

@@ -127,7 +127,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Finance Migration | 0/3 | Not started | - |
+| 1. Finance Migration | 2/3 | In Progress|  |
 | 2. Unified Data Layer | 0/2 | Not started | - |
 | 3. Rule Engine | 0/3 | Not started | - |
 | 4. Insights Schema and Cron | 2/3 | In Progress|  |
