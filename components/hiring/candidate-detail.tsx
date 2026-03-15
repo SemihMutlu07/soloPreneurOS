@@ -1,6 +1,6 @@
 import type { CandidateWithEvaluation } from "@/lib/hiring-types";
 import { EvaluationCard } from "./evaluation-card";
-import { InterviewAction } from "./interview-action";
+import { HumanDecision } from "./human-decision";
 import { DuplicateBadge } from "./duplicate-badge";
 import { ArrowLeft, FileText, Mail, Calendar } from "lucide-react";
 import Link from "next/link";
@@ -10,9 +10,7 @@ interface CandidateDetailProps {
 }
 
 export function CandidateDetail({ candidate }: CandidateDetailProps) {
-  const showInterview =
-    candidate.evaluation?.recommendation === "GÖRÜŞ" &&
-    candidate.status !== "reviewed";
+  const showDecision = candidate.evaluation !== null;
 
   return (
     <div className="space-y-6">
@@ -64,14 +62,18 @@ export function CandidateDetail({ candidate }: CandidateDetailProps) {
         </div>
       )}
 
-      {showInterview && (
+      {showDecision && (
         <div className="card">
           <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wide mb-3">
-            Next Step
+            Your Decision
           </h3>
-          <InterviewAction
+          <p className="text-xs text-text-muted mb-4">
+            GÖRÜŞ AL sends an interview email automatically. GEÇME and BEKLET update the status only.
+          </p>
+          <HumanDecision
             candidateId={candidate.id}
             candidateName={candidate.name}
+            currentStatus={candidate.status}
           />
         </div>
       )}

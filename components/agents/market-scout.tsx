@@ -21,9 +21,9 @@ const sourceConfig: Record<
   Signal["source"],
   { icon: typeof Radar; color: string; label: string }
 > = {
-  "product-hunt": { icon: ArrowUpRight, color: "text-orange-300", label: "Product Hunt" },
-  reddit: { icon: MessageCircle, color: "text-orange-300", label: "Reddit" },
-  hackernews: { icon: Flame, color: "text-amber-300", label: "Hacker News" },
+  "product-hunt": { icon: ArrowUpRight, color: "text-accent-orange", label: "Product Hunt" },
+  reddit: { icon: MessageCircle, color: "text-accent-orange", label: "Reddit" },
+  hackernews: { icon: Flame, color: "text-accent-amber", label: "Hacker News" },
 };
 
 function formatUtc(utc: number): string {
@@ -135,7 +135,7 @@ export default function MarketScout() {
     <AgentCardWrapper
       agentId="market-scout"
       agentName="Market Scout"
-      icon={<Radar className="w-5 h-5 text-accent-teal" />}
+      icon={<Radar className="w-5 h-5 text-accent-orange" />}
       status={status}
       lastRun={lastRun}
       onRun={fetchSignals}
@@ -190,13 +190,13 @@ export default function MarketScout() {
                   <span
                     className={cn(
                       "inline-flex items-center gap-1 text-[10px]",
-                      signal.live ? "text-emerald-300" : "text-text-muted"
+                      signal.live ? "text-accent-green" : "text-text-muted"
                     )}
                   >
                     <span
                       className={cn(
                         "w-1.5 h-1.5 rounded-full",
-                        signal.live ? "bg-emerald-300" : "bg-text-muted"
+                        signal.live ? "bg-accent-green" : "bg-text-muted"
                       )}
                     />
                     {signal.live ? "Live" : "Cached"}

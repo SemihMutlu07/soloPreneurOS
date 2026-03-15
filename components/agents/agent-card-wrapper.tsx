@@ -28,7 +28,7 @@ function formatLastRun(timestamp: string): string {
 
 const statusConfig = {
   idle: { label: "Ready", dotClass: "bg-text-muted" },
-  running: { label: "Running...", dotClass: "bg-accent-teal animate-soft-pulse" },
+  running: { label: "Running...", dotClass: "bg-accent-orange animate-soft-pulse" },
   success: { label: "Ready", dotClass: "bg-accent-green" },
   error: { label: "Error", dotClass: "bg-accent-red" },
   "coming-soon": { label: "Coming Soon", dotClass: "bg-text-muted" },
@@ -80,7 +80,7 @@ export default function AgentCardWrapper({
             <button
               onClick={onRun}
               disabled={status === "running"}
-              className="flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium rounded-lg bg-accent-teal/8 text-accent-teal hover:bg-accent-teal/15 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium rounded-lg bg-accent-orange/8 text-accent-orange hover:bg-accent-orange/15 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {status === "running" ? (
                 <Loader2 className="w-3 h-3 animate-spin" />

@@ -31,8 +31,8 @@ export default function FounderStories() {
         <p className="text-[11px] text-text-muted mt-0.5">{story.role}</p>
       </div>
 
-      <div className="p-3 rounded-xl bg-accent-teal/5 border border-accent-teal/8">
-        <p className="text-[11px] text-accent-teal leading-relaxed">
+      <div className="p-3 rounded-xl bg-accent-orange/5 border border-accent-orange/8">
+        <p className="text-[11px] text-accent-orange leading-relaxed">
           <span className="font-semibold">Takeaway:</span> {story.takeaway}
         </p>
       </div>

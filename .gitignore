@@ -8,3 +8,7 @@ npm-debug.log*
 .env*.local
 *.tsbuildinfo
 next-env.d.ts
+rubrics/
+tasks/
+supabase/
+.env.local

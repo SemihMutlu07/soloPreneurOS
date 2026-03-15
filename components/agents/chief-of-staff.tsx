@@ -39,11 +39,11 @@ const sectionIcons: Record<string, typeof Target> = {
 
 const sectionAccents: Record<string, string> = {
   "Top Priority": "border-l-accent-red",
-  "Quick Wins": "border-l-accent-teal",
+  "Quick Wins": "border-l-accent-orange",
   "Watch Out": "border-l-accent-amber",
   "Market Pulse": "border-l-accent-blue",
-  "Lead Action": "border-l-[#c4b5fd]",
-  "Yesterday's Decisions → Today's Actions": "border-l-accent-teal",
+  "Lead Action": "border-l-accent-orange",
+  "Yesterday's Decisions → Today's Actions": "border-l-accent-orange",
 };
 
 function formatTimestamp(ts: number): string {
@@ -217,7 +217,7 @@ export default function ChiefOfStaff() {
     <AgentCardWrapper
       agentId="chief-of-staff"
       agentName="Chief of Staff"
-      icon={<Brain className="w-5 h-5 text-accent-teal" />}
+      icon={<Brain className="w-5 h-5 text-accent-orange" />}
       status={status}
       lastRun={briefTimestamp ? new Date(briefTimestamp).toISOString() : undefined}
       onRun={generateBrief}
@@ -290,7 +290,7 @@ export default function ChiefOfStaff() {
                     if (line.startsWith("- ") || line.startsWith("* "))
                       return (
                         <p key={j} className="text-text-secondary text-[13px] pl-3 py-0.5 leading-relaxed">
-                          <span className="text-accent-teal mr-1.5">-</span>
+                          <span className="text-accent-orange mr-1.5">-</span>
                           {line.replace(/^[-*]\s*/, "").replace(/\*\*/g, "")}
                         </p>
                       );

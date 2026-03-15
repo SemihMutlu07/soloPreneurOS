@@ -118,7 +118,7 @@ export default function DailyOps() {
     <AgentCardWrapper
       agentId="daily-ops"
       agentName="Daily Ops"
-      icon={<ListChecks className="w-5 h-5 text-accent-teal" />}
+      icon={<ListChecks className="w-5 h-5 text-accent-orange" />}
       status={status}
       lastRun={lastRun}
       onRun={runAnalysis}
@@ -130,7 +130,7 @@ export default function DailyOps() {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && addTask()}
           placeholder="Add a task..."
-          className="flex-1 bg-surface-elevated/30 text-sm text-text-primary placeholder:text-text-muted rounded-lg px-3 py-2 border border-border focus:outline-none focus:border-accent-teal/30 transition-colors"
+          className="flex-1 bg-surface-elevated/30 text-sm text-text-primary placeholder:text-text-muted rounded-lg px-3 py-2 border border-border focus:outline-none focus:border-accent-orange/30 transition-colors"
         />
       </div>
 
@@ -152,7 +152,7 @@ export default function DailyOps() {
                 type="checkbox"
                 checked={false}
                 onChange={() => toggleTask(task.id)}
-                className="w-3.5 h-3.5 rounded border-border-strong accent-accent-teal shrink-0"
+                className="w-3.5 h-3.5 rounded border-border-strong accent-accent-orange shrink-0"
               />
               <span className="flex-1 text-[13px] text-text-primary leading-snug min-w-0 truncate">
                 {task.text}
@@ -182,7 +182,7 @@ export default function DailyOps() {
               type="checkbox"
               checked={true}
               onChange={() => toggleTask(task.id)}
-              className="w-3.5 h-3.5 rounded border-border-strong accent-accent-teal shrink-0"
+              className="w-3.5 h-3.5 rounded border-border-strong accent-accent-orange shrink-0"
             />
             <span className="flex-1 text-[13px] text-text-muted line-through leading-snug min-w-0 truncate">
               {task.text}
@@ -205,8 +205,8 @@ export default function DailyOps() {
 
       {analysis && (
         <div className="mt-3 space-y-2.5">
-          <div className="p-3 rounded-xl bg-surface-elevated/30 border-l-2 border-l-accent-teal">
-            <h4 className="text-[11px] font-semibold text-accent-teal mb-1.5 uppercase tracking-wide">
+          <div className="p-3 rounded-xl bg-surface-elevated/30 border-l-2 border-l-accent-orange">
+            <h4 className="text-[11px] font-semibold text-accent-orange mb-1.5 uppercase tracking-wide">
               Agent&apos;s take
             </h4>
             <p className="text-[13px] text-text-secondary leading-relaxed">
@@ -222,7 +222,7 @@ export default function DailyOps() {
               <ol className="space-y-0.5">
                 {analysis.suggestedOrder.map((item, i) => (
                   <li key={i} className="text-[13px] text-text-secondary leading-relaxed">
-                    <span className="text-accent-teal font-mono mr-1.5">{i + 1}.</span>
+                    <span className="text-accent-orange font-mono mr-1.5">{i + 1}.</span>
                     {item}
                   </li>
                 ))}

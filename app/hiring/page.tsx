@@ -1,6 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { StatsBar } from "@/components/hiring/stats-bar";
-import { CandidateTable } from "@/components/hiring/candidate-table";
+import { HiringPageClient } from "@/components/hiring/hiring-page-client";
 import type { CandidateWithEvaluation } from "@/lib/hiring-types";
 
 export default async function HiringPage() {
@@ -36,8 +35,7 @@ export default async function HiringPage() {
         </p>
       </div>
 
-      <StatsBar candidates={candidates} />
-      <CandidateTable candidates={candidates} />
+      <HiringPageClient candidates={candidates} />
     </div>
   );
 }

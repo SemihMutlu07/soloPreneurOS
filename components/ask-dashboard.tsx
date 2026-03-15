@@ -71,7 +71,7 @@ export default function AskDashboard() {
               <div className="flex-1 min-w-0">
                 {loading ? (
                   <div className="flex items-center gap-2.5 text-text-secondary text-sm">
-                    <Loader2 className="w-4 h-4 animate-spin text-accent-teal" />
+                    <Loader2 className="w-4 h-4 animate-spin text-accent-orange" />
                     <span className="animate-pulse">Thinking...</span>
                   </div>
                 ) : answer ? (
@@ -106,12 +106,12 @@ export default function AskDashboard() {
             onChange={(e) => setQuestion(e.target.value)}
             placeholder="Ask anything about your business..."
             disabled={loading}
-            className="flex-1 bg-surface text-text-primary text-sm rounded-xl px-4 py-2.5 placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-accent-teal/20 disabled:opacity-50 border border-border-strong"
+            className="flex-1 bg-surface text-text-primary text-sm rounded-xl px-4 py-2.5 placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-accent-orange/20 disabled:opacity-50 border border-border-strong"
           />
           <button
             type="submit"
             disabled={loading || !question.trim()}
-            className="shrink-0 p-2.5 rounded-xl bg-accent-teal/8 text-accent-teal hover:bg-accent-teal/15 transition-colors disabled:opacity-30 disabled:cursor-not-allowed border border-accent-teal/8"
+            className="shrink-0 p-2.5 rounded-xl bg-accent-orange/8 text-accent-orange hover:bg-accent-orange/15 transition-colors disabled:opacity-30 disabled:cursor-not-allowed border border-accent-orange/8"
           >
             <ArrowUp className="w-4 h-4" />
           </button>

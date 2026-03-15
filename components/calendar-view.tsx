@@ -6,7 +6,7 @@ import { calendarEvents, type CalendarEvent } from "@/lib/mock-data";
 
 const typeConfig: Record<CalendarEvent["type"], { color: string; bg: string }> = {
   meeting: { color: "border-l-accent-blue", bg: "bg-accent-blue/5" },
-  focus: { color: "border-l-emerald-300", bg: "bg-emerald-500/5" },
+  focus: { color: "border-l-accent-green", bg: "bg-accent-green/5" },
   break: { color: "border-l-text-muted", bg: "bg-surface-elevated/20" },
   external: { color: "border-l-accent-amber", bg: "bg-accent-amber/5" },
 };

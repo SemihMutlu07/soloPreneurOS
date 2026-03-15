@@ -7,7 +7,7 @@ import { leads, type LeadStage } from "@/lib/mock-data";
 const stageConfig: Record<LeadStage, { label: string; color: string; border: string }> = {
   new: { label: "New", color: "text-accent-blue", border: "border-accent-blue/20" },
   contacted: { label: "Contacted", color: "text-accent-amber", border: "border-accent-amber/20" },
-  demo: { label: "Demo", color: "text-purple-300", border: "border-purple-300/20" },
+  demo: { label: "Demo", color: "text-accent-orange", border: "border-accent-orange/20" },
   won: { label: "Won", color: "text-accent-green", border: "border-accent-green/20" },
   lost: { label: "Lost", color: "text-text-muted", border: "border-text-muted/20" },
 };
@@ -22,7 +22,7 @@ export default function LeadPipeline() {
   return (
     <div className="card">
       <div className="flex items-center gap-2.5 mb-1">
-        <DollarSign className="w-5 h-5 text-accent-teal" />
+        <DollarSign className="w-5 h-5 text-accent-orange" />
         <h2 className="text-sm font-semibold text-text-primary">Lead Pipeline</h2>
         <span className="text-[11px] text-text-muted ml-auto">
           <span className="font-mono">${totalValue.toLocaleString()}</span> pipeline

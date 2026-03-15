@@ -17,10 +17,10 @@ export default function HiringLayout({
             >
               <Home size={18} />
             </Link>
-            <span className="text-border">/</span>
+            <span className="text-text-muted">/</span>
             <Link
               href="/hiring"
-              className="flex items-center gap-2 text-text-primary font-medium"
+              className="flex items-center gap-2 text-accent-orange font-medium"
             >
               <Users size={18} />
               Hire-OS

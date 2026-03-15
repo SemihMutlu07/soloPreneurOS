@@ -63,7 +63,7 @@ export function EvaluationCard({ evaluation }: EvaluationCardProps) {
       {/* Critical Question */}
       {evaluation.critical_question && (
         <div>
-          <h4 className="text-xs font-medium text-accent-amber flex items-center gap-1.5 mb-2">
+          <h4 className="text-xs font-medium text-accent-orange flex items-center gap-1.5 mb-2">
             <HelpCircle size={14} />
             Critical Question
           </h4>

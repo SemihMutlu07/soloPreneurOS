@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import type { CandidateWithEvaluation } from "@/lib/hiring-types";
 import { RECOMMENDATION_COLORS } from "@/lib/constants";
@@ -9,11 +8,12 @@ import { DuplicateBadge } from "./duplicate-badge";
 
 interface CandidateTableProps {
   candidates: CandidateWithEvaluation[];
+  onSelectCandidate?: (id: string) => void;
 }
 
 type SortKey = "name" | "role" | "applied_at" | "status" | "recommendation";
 
-export function CandidateTable({ candidates }: CandidateTableProps) {
+export function CandidateTable({ candidates, onSelectCandidate }: CandidateTableProps) {
   const [sortKey, setSortKey] = useState<SortKey>("applied_at");
   const [sortAsc, setSortAsc] = useState(false);
   const [filterRole, setFilterRole] = useState("");
@@ -28,6 +28,10 @@ export function CandidateTable({ candidates }: CandidateTableProps) {
       setSortKey(key);
       setSortAsc(true);
     }
+  }
+
+  function handleSelect(id: string) {
+    onSelectCandidate?.(id);
   }
 
   const filtered = candidates.filter((c) => {
@@ -88,7 +92,8 @@ export function CandidateTable({ candidates }: CandidateTableProps) {
         </select>
       </div>
 
-      <div className="overflow-x-auto">
+      {/* Desktop: Table */}
+      <div className="hidden md:block overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-border text-left text-text-secondary">
@@ -128,15 +133,13 @@ export function CandidateTable({ candidates }: CandidateTableProps) {
             {sorted.map((c) => (
               <tr
                 key={c.id}
-                className="border-b border-border/50 hover:bg-surface-hover transition-colors"
+                onClick={() => handleSelect(c.id)}
+                className="border-b border-border/50 hover:bg-surface-hover transition-colors cursor-pointer"
               >
                 <td className="py-3 pr-4">
-                  <Link
-                    href={`/hiring/candidate/${c.id}`}
-                    className="text-text-primary hover:text-accent-teal transition-colors"
-                  >
+                  <span className="text-text-primary">
                     {c.name}
-                  </Link>
+                  </span>
                   {c.previous_application_id && <DuplicateBadge />}
                 </td>
                 <td className="py-3 pr-4 text-text-secondary">{c.role}</td>
@@ -173,6 +176,50 @@ export function CandidateTable({ candidates }: CandidateTableProps) {
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile: Card view */}
+      <div className="md:hidden space-y-2">
+        {sorted.map((c) => (
+          <div
+            key={c.id}
+            onClick={() => handleSelect(c.id)}
+            className="p-3 rounded-xl bg-surface-hover/50 border border-border/50 hover:border-accent-orange/30 transition-colors cursor-pointer"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="text-sm font-medium text-text-primary truncate">
+                  {c.name}
+                </span>
+                {c.previous_application_id && <DuplicateBadge />}
+              </div>
+              {c.evaluation?.recommendation ? (
+                <span
+                  className={`font-semibold text-xs shrink-0 ${RECOMMENDATION_COLORS[c.evaluation.recommendation] || ""}`}
+                >
+                  {c.evaluation.recommendation}
+                </span>
+              ) : (
+                <span className="text-text-muted text-xs shrink-0">—</span>
+              )}
+            </div>
+            <div className="flex items-center gap-3 mt-1.5 text-xs text-text-secondary">
+              <span>{c.role}</span>
+              <span className="text-text-muted">&middot;</span>
+              <span className="px-1.5 py-0.5 bg-surface-elevated rounded text-[10px]">
+                {c.status}
+              </span>
+              <span className="text-text-muted ml-auto font-mono">
+                {new Date(c.applied_at).toLocaleDateString()}
+              </span>
+            </div>
+          </div>
+        ))}
+        {sorted.length === 0 && (
+          <p className="py-8 text-center text-text-muted text-sm">
+            No candidates found
+          </p>
+        )}
       </div>
     </div>
   );
