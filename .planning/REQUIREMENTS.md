@@ -16,13 +16,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Rule Engine
 
-- [ ] **RULE-01**: Rule R1 fires when runway < 60 days AND hot leads exist in pipeline (Finance + Sales)
-- [ ] **RULE-02**: Rule R2 fires when open hire roles exist AND runway < 90 days (Finance + Hire)
-- [ ] **RULE-03**: Rule R3 fires when deals close AND candidates advance simultaneously (Sales + Hire)
-- [ ] **RULE-04**: Rule R4 fires when no invoices sent in 14 days AND no leads marked won (Finance + Sales)
-- [ ] **RULE-05**: Rule R5 fires when candidate pipeline stalls 7+ days AND capacity gap exists (Hire)
-- [ ] **RULE-06**: Rule R6 fires when large invoice overdue AND upcoming payroll cost (Finance)
-- [ ] **RULE-07**: Rule R7 fires when multiple hot leads AND no reply sent in 48 hours (Sales)
+- [x] **RULE-01**: Rule R1 fires when runway < 60 days AND hot leads exist in pipeline (Finance + Sales)
+- [x] **RULE-02**: Rule R2 fires when open hire roles exist AND runway < 90 days (Finance + Hire)
+- [x] **RULE-03**: Rule R3 fires when deals close AND candidates advance simultaneously (Sales + Hire)
+- [x] **RULE-04**: Rule R4 fires when no invoices sent in 14 days AND no leads marked won (Finance + Sales)
+- [x] **RULE-05**: Rule R5 fires when candidate pipeline stalls 7+ days AND capacity gap exists (Hire)
+- [x] **RULE-06**: Rule R6 fires when large invoice overdue AND upcoming payroll cost (Finance)
+- [x] **RULE-07**: Rule R7 fires when multiple hot leads AND no reply sent in 48 hours (Sales)
 
 ### Intelligence Infrastructure
 
@@ -87,13 +87,13 @@ Deferred to future release. Tracked but not in current roadmap.
 | DATA-02 | Phase 1 | Complete |
 | DATA-03 | Phase 2 | Pending |
 | DATA-04 | Phase 2 | Pending |
-| RULE-01 | Phase 3 | Pending |
-| RULE-02 | Phase 3 | Pending |
-| RULE-03 | Phase 3 | Pending |
-| RULE-04 | Phase 3 | Pending |
-| RULE-05 | Phase 3 | Pending |
-| RULE-06 | Phase 3 | Pending |
-| RULE-07 | Phase 3 | Pending |
+| RULE-01 | Phase 3 | Complete |
+| RULE-02 | Phase 3 | Complete |
+| RULE-03 | Phase 3 | Complete |
+| RULE-04 | Phase 3 | Complete |
+| RULE-05 | Phase 3 | Complete |
+| RULE-06 | Phase 3 | Complete |
+| RULE-07 | Phase 3 | Complete |
 | INFRA-01 | Phase 4 | Complete |
 | INFRA-02 | Phase 4 | Complete |
 | INFRA-03 | Phase 4 | Complete |
