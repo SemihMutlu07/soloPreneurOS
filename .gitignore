@@ -10,5 +10,6 @@ npm-debug.log*
 next-env.d.ts
 rubrics/
 tasks/
-supabase/
+supabase/*
+!supabase/migrations/
 .env.local
