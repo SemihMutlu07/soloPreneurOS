@@ -1,12 +1,13 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import type { InsightCandidate } from "@/lib/intelligence-types";
 
+// Create a stable shared mock for messages.create — defined once, controlled per test
+const mockCreate = vi.fn();
+
 vi.mock("@anthropic-ai/sdk", () => ({
-  default: vi.fn().mockImplementation(() => ({
-    messages: {
-      create: vi.fn(),
-    },
-  })),
+  default: class MockAnthropic {
+    messages = { create: mockCreate };
+  },
 }));
 
 vi.mock("@/lib/supabase/admin", () => ({
@@ -33,18 +34,15 @@ const mockFiredInsights: InsightCandidate[] = [
   },
 ];
 
-describe("claude-narrative", () => {
-  let Anthropic: ReturnType<typeof vi.fn>;
-  let mockCreate: ReturnType<typeof vi.fn>;
+import {
+  generateNarrative,
+  buildMetricsText,
+  narrativeInsightId,
+} from "@/lib/claude-narrative";
 
-  beforeEach(async () => {
-    vi.clearAllMocks();
-    const sdk = await import("@anthropic-ai/sdk");
-    Anthropic = sdk.default as unknown as ReturnType<typeof vi.fn>;
-    mockCreate = vi.fn();
-    Anthropic.mockImplementation(() => ({
-      messages: { create: mockCreate },
-    }));
+describe("claude-narrative", () => {
+  beforeEach(() => {
+    mockCreate.mockReset();
   });
 
   describe("generateNarrative", () => {
@@ -53,7 +51,6 @@ describe("claude-narrative", () => {
         content: [{ type: "text", text: "Sentence one. Sentence two." }],
       });
 
-      const { generateNarrative } = await import("@/lib/claude-narrative");
       const result = await generateNarrative(mockSnapshot, mockFiredInsights);
 
       expect(result).toBe("Sentence one. Sentence two.");
@@ -63,14 +60,12 @@ describe("claude-narrative", () => {
     it("Test 2 (LLM-01): returns empty string (no throw) when Anthropic SDK throws an error", async () => {
       mockCreate.mockRejectedValue(new Error("API error"));
 
-      const { generateNarrative } = await import("@/lib/claude-narrative");
       const result = await generateNarrative(mockSnapshot, mockFiredInsights);
 
       expect(result).toBe("");
     });
 
     it("Test 3 (LLM-01): returns empty string when firedInsights is empty — guard condition", async () => {
-      const { generateNarrative } = await import("@/lib/claude-narrative");
       const result = await generateNarrative(mockSnapshot, []);
 
       expect(result).toBe("");
@@ -80,16 +75,14 @@ describe("claude-narrative", () => {
   });
 
   describe("buildMetricsText", () => {
-    it("Test 4 (LLM-02): output does not contain '[object Object]' or array brackets", async () => {
-      const { buildMetricsText } = await import("@/lib/claude-narrative");
+    it("Test 4 (LLM-02): output does not contain '[object Object]' or array brackets", () => {
       const result = buildMetricsText(mockSnapshot, mockFiredInsights);
 
       expect(result).not.toContain("[object Object]");
       expect(result).not.toMatch(/^\[.*\]$/m);
     });
 
-    it("Test 5 (LLM-02): output contains runwayDays value from the snapshot", async () => {
-      const { buildMetricsText } = await import("@/lib/claude-narrative");
+    it("Test 5 (LLM-02): output contains runwayDays value from the snapshot", () => {
       const result = buildMetricsText(mockSnapshot, mockFiredInsights);
 
       expect(result).toContain("45");
@@ -97,8 +90,7 @@ describe("claude-narrative", () => {
   });
 
   describe("narrativeInsightId", () => {
-    it("Test 6: returns the same value for the same calendarDate string (determinism)", async () => {
-      const { narrativeInsightId } = await import("@/lib/claude-narrative");
+    it("Test 6: returns the same value for the same calendarDate string (determinism)", () => {
       const id1 = narrativeInsightId("2026-03-15");
       const id2 = narrativeInsightId("2026-03-15");
 
