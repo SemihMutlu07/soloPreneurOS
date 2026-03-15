@@ -46,7 +46,11 @@ Plans:
   1. A single function call returns a CrossModuleSnapshot containing lead pipeline state, candidate pipeline state, invoice/expense state, and runway metrics
   2. The CrossModuleSnapshot type is the sole interface between data sources and all intelligence logic — no module reads raw Supabase directly from rule or LLM code
   3. Missing or empty module data (e.g., zero invoices) produces a valid snapshot with null/empty fields rather than a runtime error
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Install vitest, define CrossModuleSnapshot types, create test scaffold
+- [ ] 02-02-PLAN.md — Implement buildCrossModuleSnapshot() with three module fetchers and passing unit tests
 
 ### Phase 3: Rule Engine
 **Goal**: Seven deterministic cross-module pattern rules produce actionable insights from a CrossModuleSnapshot
@@ -124,7 +128,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Finance Migration | 0/3 | Not started | - |
-| 2. Unified Data Layer | 0/TBD | Not started | - |
+| 2. Unified Data Layer | 0/2 | Not started | - |
 | 3. Rule Engine | 0/3 | Not started | - |
 | 4. Insights Schema and Cron | 0/TBD | Not started | - |
 | 5. LLM Orchestrator | 0/TBD | Not started | - |
