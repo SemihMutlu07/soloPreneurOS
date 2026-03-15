@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-finance-migration/01-02-PLAN.md
-last_updated: "2026-03-15T12:36:36.808Z"
+stopped_at: Completed 01-finance-migration/01-01-PLAN.md
+last_updated: "2026-03-15T12:36:44.259Z"
 last_activity: "2026-03-15 — Executed 01-02: Finance seed script with stable UUID upsert pattern"
 progress:
   total_phases: 7
@@ -74,6 +74,9 @@ Recent decisions affecting current work:
 - [Phase 01-finance-migration P02]: Seed data defined inline (not imported from mock-data.ts) to avoid path alias resolution outside Next.js context
 - [Phase 01-finance-migration P02]: Stable deterministic UUIDs (00000000-0000-0000-000X-00000000000Y) used for idempotent seeding via upsert onConflict: id
 - [Phase 01-finance-migration P02]: FINANCE_USER_ID = "00000000-0000-0000-0000-000000000001" as canonical placeholder user ID for seeded Finance data
+- [Phase 01-finance-migration]: Admin client (not server client) used for Finance routes to bypass RLS — app has no user auth
+- [Phase 01-finance-migration]: FINANCE_USER_ID hardcoded as 00000000-0000-0000-0000-000000000001 — single solopreneur, no multi-tenancy
+- [Phase 01-finance-migration]: expenses and tax-provisions routes are GET-only in Phase 1 — seeded/calculated data, not user-created
 
 ### Pending Todos
 
@@ -87,6 +90,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T12:39:00Z
-Stopped at: Completed 01-finance-migration/01-02-PLAN.md
+Last session: 2026-03-15T12:36:44.257Z
+Stopped at: Completed 01-finance-migration/01-01-PLAN.md
 Resume file: None
