@@ -10,9 +10,9 @@ import type { CrossModuleSnapshot } from "./types";
  */
 export async function buildCrossModuleSnapshot(): Promise<CrossModuleSnapshot> {
   return {
-    timestamp: new Date().toISOString(),
-    sales: { leads: [], activities: [] },
-    hiring: { candidates: [] },
+    generated_at: new Date().toISOString(),
+    sales: { leads: [], recent_activity: [] },
+    hire: { candidates: [], roles: [] },
     finance: { invoices: [], expenses: [], runway: null },
     errors: [],
   };
