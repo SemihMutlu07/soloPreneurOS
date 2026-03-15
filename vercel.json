@@ -1,0 +1,6 @@
+{
+  "crons": [
+    { "path": "/api/cron/scan-gmail", "schedule": "0 2 * * *" },
+    { "path": "/api/cron/evaluate", "schedule": "0 3 * * *" }
+  ]
+}
