@@ -67,9 +67,6 @@ export default function AiAssistantBar({ context }: AiAssistantBarProps) {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50">
-      {/* Gradient mask — fades content behind the bar */}
-      <div className="pointer-events-none h-16 bg-gradient-to-t from-bg to-transparent -translate-y-full" />
-
       {/* Response panel */}
       <div
         className={cn(
@@ -116,7 +113,7 @@ export default function AiAssistantBar({ context }: AiAssistantBarProps) {
       </div>
 
       {/* Input bar */}
-      <div className="bg-bg/90 backdrop-blur-md border-t border-border py-3">
+      <div className="bg-bg border-t border-border py-3">
         <form
           onSubmit={handleSubmit}
           className="mx-auto max-w-2xl px-5 flex items-center gap-3"
