@@ -7,24 +7,8 @@ interface InvoiceFormProps {
   onSave: (invoice: Invoice) => void;
 }
 
-const STORAGE_KEY = "finance_invoices";
-
 const fmt = (n: number) =>
   new Intl.NumberFormat("tr-TR").format(Math.round(n));
-
-function loadInvoices(): Invoice[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveInvoices(invoices: Invoice[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(invoices));
-}
 
 function generatePdfHtml(inv: {
   clientName: string;
@@ -89,14 +73,14 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
   const [stopajRate, setStopajRate] = useState(20);
   const [invoiceType, setInvoiceType] = useState<InvoiceType>("e-arsiv");
 
-  // FIX 2: e-SMM forces stopaj on
+  // e-SMM forces stopaj on
   useEffect(() => {
     if (invoiceType === "e-smm") {
       setStopajEnabled(true);
     }
   }, [invoiceType]);
 
-  // FIX 2: correct calculations
+  // correct calculations
   const kdvAmount = amount * (kdvRate / 100);
   const stopajAmount = stopajEnabled ? amount * (stopajRate / 100) : 0;
   const customerPays = amount + kdvAmount - stopajAmount;
@@ -106,10 +90,8 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
   const inputClass =
     "w-full px-4 py-2.5 bg-surface border border-border rounded-lg text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-orange";
 
-  const handleSave = () => {
-    const invoice: Invoice = {
-      id: `inv-${Date.now()}`,
-      user_id: "user-1",
+  const handleSave = async () => {
+    const payload = {
       client_name: clientName,
       client_vkn: clientVkn || null,
       description,
@@ -120,19 +102,34 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
       stopaj_amount: stopajEnabled ? stopajAmount : null,
       net_amount: customerPays,
       invoice_type: invoiceType,
-      status: "beklemede",
-      created_at: new Date().toISOString(),
+      status: "beklemede" as const,
     };
 
-    // FIX 4: persist to localStorage
-    const existing = loadInvoices();
-    existing.unshift(invoice);
-    saveInvoices(existing);
-
-    onSave(invoice);
+    try {
+      const res = await fetch("/api/finance/invoices", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("Kaydetme başarısız");
+      const invoice = await res.json();
+      onSave(invoice);
+      // Reset form fields after successful save
+      setClientName("");
+      setClientVkn("");
+      setDescription("");
+      setAmount(0);
+      setKdvRate(20);
+      setStopajEnabled(false);
+      setStopajRate(20);
+      setInvoiceType("e-arsiv");
+    } catch {
+      // Show a simple alert for now — loading state can be improved later
+      alert("Fatura kaydedilemedi. Lütfen tekrar deneyin.");
+    }
   };
 
-  // FIX 1: generate PDF via print window
+  // generate PDF via print window
   const handlePdf = () => {
     const html = generatePdfHtml({
       clientName,
@@ -299,7 +296,7 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
         </div>
       </div>
 
-      {/* FIX 3: sticky calculation panel */}
+      {/* sticky calculation panel */}
       <div className="card h-fit sticky top-6">
         <h3 className="text-sm font-medium text-text-secondary mb-4">
           Hesaplama
