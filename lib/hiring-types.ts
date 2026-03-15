@@ -6,6 +6,7 @@ export interface Candidate {
   applied_at: string;
   pdf_url: string;
   status: "pending" | "analyzed" | "reviewed";
+  decision_result: "GÖRÜŞ" | "GEÇME" | "BEKLET" | null;
   previous_application_id: string | null;
   gmail_message_id: string | null;
   created_at: string;

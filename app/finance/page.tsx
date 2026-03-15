@@ -46,9 +46,12 @@ export default function FinancePage() {
 
   useEffect(() => {
     fetch("/api/finance/invoices")
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
       .then((data) => {
-        setInvoices(data);
+        setInvoices(Array.isArray(data) ? data : []);
         setLoading(false);
       })
       .catch(() => {

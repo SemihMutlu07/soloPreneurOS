@@ -8,6 +8,7 @@ interface HumanDecisionProps {
   candidateId: string;
   candidateName: string;
   currentStatus: string;
+  decisionResult?: string | null;
   onDecisionMade?: () => void;
 }
 
@@ -19,7 +20,13 @@ const DECISIONS: { key: Decision; icon: typeof UserCheck; color: string; bg: str
   { key: "BEKLET", icon: Pause, color: "text-accent-amber", bg: "bg-accent-amber/15 border border-accent-amber/40 hover:bg-accent-amber/25 hover:border-accent-amber/60", activeBg: "bg-accent-amber text-bg border border-accent-amber" },
 ];
 
-export function HumanDecision({ candidateId, candidateName, currentStatus, onDecisionMade }: HumanDecisionProps) {
+const CHIP_STYLES: Record<string, string> = {
+  GÖRÜŞ: "bg-accent-green/15 text-accent-green border border-accent-green/40",
+  GEÇME: "bg-accent-red/15 text-accent-red border border-accent-red/40",
+  BEKLET: "bg-accent-amber/15 text-accent-amber border border-accent-amber/40",
+};
+
+export function HumanDecision({ candidateId, candidateName, currentStatus, decisionResult, onDecisionMade }: HumanDecisionProps) {
   const [selected, setSelected] = useState<Decision | null>(null);
   const [confirming, setConfirming] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,7 +42,7 @@ export function HumanDecision({ candidateId, candidateName, currentStatus, onDec
       const patchRes = await fetch(`/api/hiring/candidates/${candidateId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: "reviewed" }),
+        body: JSON.stringify({ status: "reviewed", decision_result: selected }),
       });
 
       if (!patchRes.ok) {
@@ -53,11 +60,25 @@ export function HumanDecision({ candidateId, candidateName, currentStatus, onDec
     }
   }
 
-  if (currentStatus === "reviewed") {
+  if (currentStatus === "reviewed" && !done) {
+    const decision = decisionResult as Decision | null;
+    const decisionConfig = DECISIONS.find((d) => d.key === decision);
+    const label = decision ? (RECOMMENDATION_LABELS[decision] || decision) : null;
+    const Icon = decisionConfig?.icon ?? Check;
+
     return (
-      <div className="flex items-center gap-2 text-text-muted text-sm h-11">
-        <Check size={14} />
-        Decision recorded
+      <div className="flex items-center gap-2 text-sm h-11">
+        {decision ? (
+          <span className={`flex items-center gap-2 px-3 py-1 rounded-lg font-semibold text-sm ${CHIP_STYLES[decision]}`}>
+            <Icon size={14} />
+            {label}
+          </span>
+        ) : (
+          <div className="flex items-center gap-2 text-text-muted">
+            <Check size={14} />
+            Decision recorded
+          </div>
+        )}
       </div>
     );
   }

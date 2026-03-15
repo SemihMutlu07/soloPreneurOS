@@ -1,6 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { buildCrossModuleSnapshot } from "@/lib/intelligence/data-aggregator";
-import { runRuleEngine } from "@/lib/intelligence/rule-engine";
+import { runAllRules } from "@/lib/intelligence/rules";
 import { persistInsights } from "@/lib/persist-insights";
 import {
   generateNarrative,
@@ -31,7 +31,7 @@ export async function runIntelligencePipeline(): Promise<PipelineResult> {
   }
 
   // Step 2: rules
-  const candidates = await runRuleEngine(snapshot);
+  const candidates = runAllRules(snapshot);
   result.insights_generated = candidates.length;
 
   // Step 3: persist

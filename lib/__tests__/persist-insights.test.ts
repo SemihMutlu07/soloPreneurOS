@@ -1,49 +1,59 @@
 /**
- * Type-level and behavioral tests for persist-insights.ts
- * These are compile-time assertions — tsc must pass when implementation is correct.
- *
- * Note: Runtime behavior of persistInsights (Supabase upsert) is verified manually
- * against the DB. Here we verify: types, exports, and buildInsightId determinism.
+ * Tests for persist-insights.ts
+ * - buildInsightId: determinism, length, collision avoidance (pure function, no mocks)
+ * - persistInsights: Supabase call is mocked to avoid env dependency
  */
+import { describe, test, expect, vi } from "vitest";
+
+// Mock Supabase admin client before importing the module under test
+vi.mock("@/lib/supabase/admin", () => ({
+  createAdminClient: () => ({
+    from: () => ({
+      upsert: vi.fn().mockResolvedValue({ error: null }),
+    }),
+  }),
+}));
+
 import { buildInsightId, persistInsights } from "@/lib/persist-insights";
 import type { InsightCandidate, PersistResult } from "@/lib/intelligence-types";
 
-// buildInsightId must be exported and accept two strings
-const id1: string = buildInsightId("R1", "2026-03-15");
-const id2: string = buildInsightId("R1", "2026-03-15");
+describe("buildInsightId", () => {
+  test("is deterministic — same inputs produce same output", () => {
+    const id1 = buildInsightId("R1", "2026-03-15");
+    const id2 = buildInsightId("R1", "2026-03-15");
+    expect(id1).toBe(id2);
+  });
 
-// Determinism: same inputs must produce the same output
-// This is validated at runtime but expressed here for documentation
-if (id1 !== id2) {
-  throw new Error("buildInsightId is not deterministic");
-}
+  test("returns a 64-char hex string (SHA256)", () => {
+    const id = buildInsightId("R1", "2026-03-15");
+    expect(id).toHaveLength(64);
+    expect(id).toMatch(/^[0-9a-f]{64}$/);
+  });
 
-// buildInsightId should return a 64-char hex string (SHA256)
-if (id1.length !== 64) {
-  throw new Error(`Expected 64 char hex, got ${id1.length}`);
-}
+  test("different inputs produce different IDs", () => {
+    const id1 = buildInsightId("R1", "2026-03-15");
+    const id2 = buildInsightId("R2", "2026-03-15");
+    expect(id1).not.toBe(id2);
+  });
+});
 
-// Different inputs produce different IDs
-const id3: string = buildInsightId("R2", "2026-03-15");
-if (id1 === id3) {
-  throw new Error("buildInsightId collision between R1 and R2");
-}
+describe("persistInsights", () => {
+  test("returns zero upserted for empty array", async () => {
+    const result = await persistInsights([]);
+    expect(result).toEqual({ upserted: 0, errors: [] });
+  });
 
-// persistInsights must be exported and accept InsightCandidate[]
-// Return type must be Promise<PersistResult>
-const _candidates: InsightCandidate[] = [
-  {
-    rule_id: "R1",
-    severity: "critical",
-    module_tags: ["sales", "finance"],
-    evidence: "2 hot leads stalled and runway < 60 days.",
-  },
-];
-
-// Type-check: persistInsights must accept array and return Promise<PersistResult>
-const _resultPromise: Promise<PersistResult> = persistInsights(_candidates);
-
-// Also accepts empty array
-const _emptyPromise: Promise<PersistResult> = persistInsights([]);
-
-export {};
+  test("accepts InsightCandidate[] and returns PersistResult", async () => {
+    const candidates: InsightCandidate[] = [
+      {
+        rule_id: "R1",
+        severity: "critical",
+        module_tags: ["sales", "finance"],
+        evidence: "2 hot leads stalled and runway < 60 days.",
+      },
+    ];
+    const result: PersistResult = await persistInsights(candidates);
+    expect(result.upserted).toBe(1);
+    expect(result.errors).toEqual([]);
+  });
+});

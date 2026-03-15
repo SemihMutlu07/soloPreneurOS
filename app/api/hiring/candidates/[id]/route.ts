@@ -38,7 +38,7 @@ export async function PATCH(
   const supabase = await createClient();
   const body = await request.json();
 
-  const { status } = body;
+  const { status, decision_result } = body;
   if (!status || !["pending", "analyzed", "reviewed"].includes(status)) {
     return NextResponse.json(
       { error: "Invalid status" },
@@ -46,9 +46,16 @@ export async function PATCH(
     );
   }
 
+  if (decision_result !== undefined && !["GÖRÜŞ", "GEÇME", "BEKLET"].includes(decision_result)) {
+    return NextResponse.json({ error: "Invalid decision_result" }, { status: 400 });
+  }
+
+  const updatePayload: Record<string, string> = { status };
+  if (decision_result !== undefined) updatePayload.decision_result = decision_result;
+
   const { error } = await supabase
     .from("candidates")
-    .update({ status })
+    .update(updatePayload)
     .eq("id", id);
 
   if (error) {

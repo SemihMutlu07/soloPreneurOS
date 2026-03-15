@@ -1,8 +1,8 @@
 /**
  * Type-level tests for intelligence-types.ts
- * These are compile-time assertions — if the types are correct, tsc passes.
- * If the types are wrong or missing, tsc fails.
+ * Compile-time assertions wrapped in vitest so the runner recognizes them.
  */
+import { describe, test, expect } from "vitest";
 import type {
   InsightSeverity,
   InsightCandidate,
@@ -10,44 +10,63 @@ import type {
   PersistResult,
 } from "@/lib/intelligence-types";
 
-// InsightSeverity must be the union "critical" | "warning" | "info"
-const _s1: InsightSeverity = "critical";
-const _s2: InsightSeverity = "warning";
-const _s3: InsightSeverity = "info";
+describe("intelligence-types", () => {
+  test("InsightSeverity accepts critical, warning, info", () => {
+    const s1: InsightSeverity = "critical";
+    const s2: InsightSeverity = "warning";
+    const s3: InsightSeverity = "info";
+    expect([s1, s2, s3]).toEqual(["critical", "warning", "info"]);
+  });
 
-// InsightCandidate shape
-const _candidate: InsightCandidate = {
-  rule_id: "R1",
-  severity: "critical",
-  module_tags: ["sales", "finance"],
-  evidence: "2 hot leads with no reply in 48h and runway at 45 days.",
-};
+  test("InsightCandidate shape is valid", () => {
+    const candidate: InsightCandidate = {
+      rule_id: "R1",
+      severity: "critical",
+      module_tags: ["sales", "finance"],
+      evidence: "2 hot leads with no reply in 48h and runway at 45 days.",
+    };
+    expect(candidate.rule_id).toBe("R1");
+    expect(candidate.module_tags).toHaveLength(2);
+  });
 
-// CrossModuleInsight extends InsightCandidate and adds id, generated_at, dismissed_at, created_at
-const _insight: CrossModuleInsight = {
-  rule_id: "R1",
-  severity: "warning",
-  module_tags: ["sales"],
-  evidence: "Sample evidence.",
-  id: "abc123",
-  generated_at: "2026-03-15T00:00:00Z",
-  dismissed_at: null,
-  created_at: "2026-03-15T00:00:00Z",
-};
+  test("CrossModuleInsight extends InsightCandidate", () => {
+    const insight: CrossModuleInsight = {
+      rule_id: "R1",
+      severity: "warning",
+      module_tags: ["sales"],
+      evidence: "Sample evidence.",
+      id: "abc123",
+      generated_at: "2026-03-15T00:00:00Z",
+      dismissed_at: null,
+      created_at: "2026-03-15T00:00:00Z",
+    };
+    // CrossModuleInsight is assignable to InsightCandidate
+    const asCandidate: InsightCandidate = insight;
+    expect(asCandidate.rule_id).toBe("R1");
+  });
 
-// dismissed_at can also be a string
-const _insightDismissed: CrossModuleInsight = {
-  ..._insight,
-  dismissed_at: "2026-03-15T10:00:00Z",
-};
+  test("CrossModuleInsight dismissed_at can be string or null", () => {
+    const active: CrossModuleInsight = {
+      rule_id: "R1",
+      severity: "info",
+      module_tags: ["hiring"],
+      evidence: "e",
+      id: "a",
+      generated_at: "2026-03-15T00:00:00Z",
+      dismissed_at: null,
+      created_at: "2026-03-15T00:00:00Z",
+    };
+    const dismissed: CrossModuleInsight = {
+      ...active,
+      dismissed_at: "2026-03-15T10:00:00Z",
+    };
+    expect(active.dismissed_at).toBeNull();
+    expect(dismissed.dismissed_at).toBe("2026-03-15T10:00:00Z");
+  });
 
-// PersistResult shape
-const _result: PersistResult = {
-  upserted: 0,
-  errors: [],
-};
-
-// Ensure CrossModuleInsight is assignable to InsightCandidate (extends check)
-const _asCandidate: InsightCandidate = _insight;
-
-export {};
+  test("PersistResult shape is valid", () => {
+    const result: PersistResult = { upserted: 0, errors: [] };
+    expect(result.upserted).toBe(0);
+    expect(result.errors).toEqual([]);
+  });
+});

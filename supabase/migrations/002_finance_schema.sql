@@ -1,6 +1,6 @@
 create table invoices (
   id uuid primary key default uuid_generate_v4(),
-  user_id uuid not null references auth.users(id),
+  user_id uuid not null,
   client_name text not null,
   client_vkn text,
   description text not null,
@@ -19,7 +19,7 @@ create table invoices (
 
 create table tax_provisions (
   id uuid primary key default uuid_generate_v4(),
-  user_id uuid not null references auth.users(id),
+  user_id uuid not null,
   period text not null,
   kdv_payable numeric not null,
   gecici_vergi_estimate numeric not null,
@@ -30,7 +30,7 @@ create table tax_provisions (
 
 create table expenses (
   id uuid primary key default uuid_generate_v4(),
-  user_id uuid not null references auth.users(id),
+  user_id uuid not null,
   description text not null,
   amount numeric not null,
   kdv_paid numeric not null default 0,

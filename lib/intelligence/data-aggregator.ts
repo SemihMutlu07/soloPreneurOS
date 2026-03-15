@@ -82,13 +82,12 @@ async function fetchFinanceModule(supabase: SupabaseClient): Promise<FinanceSnap
   if (expensesResult.error) throw expensesResult.error;
 
   // Runway is non-fatal — failure returns runway: null, does NOT cause finance module to fail
-  // TODO: confirm table name from Phase 1 output (expected: "runway_data")
   let runway = null;
   try {
     const { data } = await supabase
       .from("runway_data")
       .select("*")
-      .order("created_at", { ascending: false })
+      .order("updated_at", { ascending: false })
       .limit(1);
     runway = data?.[0] ?? null;
   } catch {
