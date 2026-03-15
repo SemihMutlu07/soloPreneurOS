@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Phase 1 context gathered
-last_updated: "2026-03-15T12:23:28.423Z"
+stopped_at: Completed 04-insights-schema-and-cron-04-01-PLAN.md
+last_updated: "2026-03-15T12:32:03.661Z"
 last_activity: 2026-03-15 — Roadmap created; 7 phases defined with success criteria (Phase 8 nudges deferred)
 progress:
   total_phases: 7
   completed_phases: 0
-  total_plans: 2
-  completed_plans: 0
+  total_plans: 13
+  completed_plans: 1
   percent: 0
 ---
 
@@ -50,6 +50,7 @@ Progress: [░░░░░░░░░░] 0%
 - Trend: -
 
 *Updated after each plan completion*
+| Phase 04-insights-schema-and-cron P01 | 2 | 1 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -62,6 +63,9 @@ Recent decisions affecting current work:
 - Both dashboard + in-module nudges: Central view for overview, contextual nudges for in-flow awareness
 - Alerts only, no auto-actions: Build trust in AI insights before letting it take actions
 - Extend existing agent card pattern: Reuse proven UI pattern from dashboard agents
+- [Phase 04-insights-schema-and-cron]: severity constrained to critical/warning/info via CHECK constraint (not enum) for extensibility
+- [Phase 04-insights-schema-and-cron]: module_tags as text[] native Postgres array — extensible without migration
+- [Phase 04-insights-schema-and-cron]: content-addressed PK: SHA256(rule_id + calendar_date) enables idempotent daily upserts
 
 ### Pending Todos
 
@@ -75,6 +79,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T12:23:28.421Z
-Stopped at: Phase 1 context gathered
-Resume file: .planning/phases/01-finance-migration/01-CONTEXT.md
+Last session: 2026-03-15T12:32:03.659Z
+Stopped at: Completed 04-insights-schema-and-cron-04-01-PLAN.md
+Resume file: None
