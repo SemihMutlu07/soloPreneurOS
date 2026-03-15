@@ -122,7 +122,11 @@ Plans:
   3. Clicking dismiss on an insight card removes it from the feed immediately without a page reload
   4. Clicking the refresh button triggers a new analysis run and updates the feed with fresh results
   5. When no cross-module patterns are detected, the feed shows a clear empty state message rather than a blank area
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 07-01-PLAN.md — Build InsightCard and IntelligenceFeed components (severity badges, freshness, dismiss, skeleton, empty state)
+- [ ] 07-02-PLAN.md — Wire IntelligenceFeed into app/page.tsx replacing ComingSoonAgents; browser verification
 
 ## Progress
 
@@ -137,4 +141,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 4. Insights Schema and Cron | 3/3 | Complete   | 2026-03-15 |
 | 5. LLM Orchestrator | 1/2 | In Progress|  |
 | 6. Intelligence API Routes | 1/2 | Complete    | 2026-03-15 |
-| 7. Dashboard Intelligence Feed | 0/TBD | Not started | - |
+| 7. Dashboard Intelligence Feed | 0/2 | Not started | - |
