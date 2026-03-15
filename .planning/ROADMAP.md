@@ -136,5 +136,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 3. Rule Engine | 3/3 | Complete    | 2026-03-15 |
 | 4. Insights Schema and Cron | 3/3 | Complete   | 2026-03-15 |
 | 5. LLM Orchestrator | 1/2 | In Progress|  |
-| 6. Intelligence API Routes | 0/2 | Not started | - |
+| 6. Intelligence API Routes | 1/2 | In Progress|  |
 | 7. Dashboard Intelligence Feed | 0/TBD | Not started | - |

@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 05-llm-orchestrator/05-01-PLAN.md
-last_updated: "2026-03-15T12:54:20.354Z"
+stopped_at: Completed 06-intelligence-api-routes/06-01-PLAN.md
+last_updated: "2026-03-15T12:56:51.414Z"
 last_activity: "2026-03-15 — Executed 01-02: Finance seed script with stable UUID upsert pattern"
 progress:
   total_phases: 7
   completed_phases: 4
   total_plans: 15
-  completed_plans: 12
+  completed_plans: 13
   percent: 23
 ---
 
@@ -62,6 +62,7 @@ Progress: [██░░░░░░░░] 23%
 | Phase 01-finance-migration P03 | 5 | 3 tasks | 6 files |
 | Phase 03-rule-engine P03 | 3 | 3 tasks | 7 files |
 | Phase 05-llm-orchestrator P01 | 319 | 2 tasks | 2 files |
+| Phase 06-intelligence-api-routes P01 | 2 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -104,6 +105,8 @@ Recent decisions affecting current work:
 - [Phase 05-llm-orchestrator]: NarrativeMetrics interface introduced — cron handler computes scalar counts from CrossModuleSnapshot before calling buildMetricsText, keeping narrative module free of raw array access
 - [Phase 05-llm-orchestrator]: Class-based Anthropic mock in Vitest tests — vi.fn() as constructor triggers Vitest warning and unreliable new Anthropic() behavior; class mock is stable across clearAllMocks
 - [Phase 05-llm-orchestrator]: claude-haiku-4-5-20251001 model for narrative generation — lighter/cheaper task than candidate evaluation (which uses Sonnet)
+- [Phase 06-intelligence-api-routes]: Severity sort done in JS (not SQL) — Supabase JS client lacks ORDER BY CASE; stable sort preserves DB-ordered created_at within each tier
+- [Phase 06-intelligence-api-routes]: No auth check on intelligence routes — middleware protects calling pages per existing project pattern
 
 ### Pending Todos
 
@@ -117,6 +120,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T12:53:41.136Z
-Stopped at: Completed 05-llm-orchestrator/05-01-PLAN.md
+Last session: 2026-03-15T12:56:51.411Z
+Stopped at: Completed 06-intelligence-api-routes/06-01-PLAN.md
 Resume file: None
