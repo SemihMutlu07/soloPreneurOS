@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 04-insights-schema-and-cron-04-01-PLAN.md
-last_updated: "2026-03-15T12:32:03.661Z"
+stopped_at: Completed 04-insights-schema-and-cron/04-02-PLAN.md
+last_updated: "2026-03-15T12:33:27.406Z"
 last_activity: 2026-03-15 — Roadmap created; 7 phases defined with success criteria (Phase 8 nudges deferred)
 progress:
   total_phases: 7
   completed_phases: 0
   total_plans: 13
-  completed_plans: 1
+  completed_plans: 2
   percent: 0
 ---
 
@@ -51,6 +51,7 @@ Progress: [░░░░░░░░░░] 0%
 
 *Updated after each plan completion*
 | Phase 04-insights-schema-and-cron P01 | 2 | 1 tasks | 2 files |
+| Phase 04-insights-schema-and-cron P02 | 8 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -66,6 +67,8 @@ Recent decisions affecting current work:
 - [Phase 04-insights-schema-and-cron]: severity constrained to critical/warning/info via CHECK constraint (not enum) for extensibility
 - [Phase 04-insights-schema-and-cron]: module_tags as text[] native Postgres array — extensible without migration
 - [Phase 04-insights-schema-and-cron]: content-addressed PK: SHA256(rule_id + calendar_date) enables idempotent daily upserts
+- [Phase 04-insights-schema-and-cron]: SHA256 content-addressed IDs (ruleId-calendarDate) prevent duplicate insight rows across daily cron runs
+- [Phase 04-insights-schema-and-cron]: dismissed_at omitted from upsert payload to preserve dismissed state — Supabase only updates columns present in the payload
 
 ### Pending Todos
 
@@ -79,6 +82,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T12:32:03.659Z
-Stopped at: Completed 04-insights-schema-and-cron-04-01-PLAN.md
+Last session: 2026-03-15T12:33:27.404Z
+Stopped at: Completed 04-insights-schema-and-cron/04-02-PLAN.md
 Resume file: None

@@ -130,7 +130,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 1. Finance Migration | 0/3 | Not started | - |
 | 2. Unified Data Layer | 0/2 | Not started | - |
 | 3. Rule Engine | 0/3 | Not started | - |
-| 4. Insights Schema and Cron | 1/3 | In Progress|  |
+| 4. Insights Schema and Cron | 2/3 | In Progress|  |
 | 5. LLM Orchestrator | 0/TBD | Not started | - |
 | 6. Intelligence API Routes | 0/2 | Not started | - |
 | 7. Dashboard Intelligence Feed | 0/TBD | Not started | - |
