@@ -60,7 +60,7 @@ If a feature doesn't serve one of these four, it doesn't belong.
 - Shared services: Auth, Claude AI, Gmail scanner, Resend email
 - Gmail scanner is shared between Hiring and Sales — subject line routing splits traffic
 - Mock data in `/lib/mock-data.ts` — realistic, not lorem ipsum
-- localStorage used for client-side persistence (invoices, mind queue items)
+- localStorage used for client-side persistence (mind queue items only — all module data is in Supabase)
 - Mobile-responsive but desktop-first
 - Dark theme, editorial/magazine aesthetic
 
@@ -81,8 +81,9 @@ Every module and sub-feature carries a maturity label:
 |--------|---------|---------|
 | Today / Dashboard | `demo` | Morning brief is `production-ready` (real Claude API). Mind queue `semi-real` (localStorage). Decisions, signals: `demo`. |
 | Hire-OS | `production-ready` | Gmail scan, Claude eval, pipeline UI, Resend emails — all working. |
-| Sales-OS | `demo` | Pipeline UI with mock data. Lead table, drawer, detail page, AI analysis cards, activity timeline. Sidebar nav integrated. Gmail scan shared infra `production-ready`, Claude qualification `not-built`. |
-| Finance-OS | `semi-real` | Invoice creation + KDV calc `production-ready` (localStorage). Tax calendar `demo`. Runway `demo`. |
+| Sales-OS | `production-ready` | Gmail scan, Claude eval, lead table, drawer, detail page, AI analysis cards, activity timeline, email send — all working. |
+| Finance-OS | `production-ready` | Invoice CRUD, expenses, tax provisions, runway — all Supabase-backed. Tax calendar `demo`. |
+| Intelligence | `production-ready` | Data aggregator → 7 rules → persist → Claude narrative → dashboard feed. Daily cron. |
 | Onboarding | `not-built` | Critical for adoption. Spec in progress. |
 | Settings | `not-built` | Business context, API keys, module toggles. |
 
@@ -211,7 +212,7 @@ stats-bar, candidate-table, candidate-drawer, candidate-detail, evaluation-card,
 
 ### Sales-OS (`/sales`)
 
-AI-powered lead pipeline. Maturity: `demo`.
+AI-powered lead pipeline. Maturity: `production-ready`.
 
 **Flow:** Gmail scan (non-hiring emails) → Claude qualify → Score + draft reply → Founder decision → Email action
 
@@ -314,8 +315,8 @@ stats-bar, lead-table, lead-drawer, ai-analysis-card, activity-timeline, lead-ac
 | Feature | Maturity |
 |---------|----------|
 | Gmail scan (shared) | `production-ready` |
-| Claude qualification | `not-built` (new prompt) |
-| Pipeline UI | `demo` |
+| Claude qualification | `production-ready` |
+| Pipeline UI | `production-ready` |
 | Email send (Resend) | `production-ready` (shared) |
 | Kanban view | `not-built` (Faz 2) |
 | Deal value tracking | `not-built` (manual input) |
@@ -323,14 +324,14 @@ stats-bar, lead-table, lead-drawer, ai-analysis-card, activity-timeline, lead-ac
 
 ### Finance-OS (`/finance`)
 
-Turkish freelancer/solopreneur finance dashboard. Maturity: `semi-real`.
+Turkish freelancer/solopreneur finance dashboard. Maturity: `production-ready`.
 
-**Data:** Mock + localStorage. No real GİB/entegratör API calls.
+**Data:** Supabase-backed. No real GİB/entegratör API calls.
 
 #### Data Layer
-- Mock data in `lib/mock-data.ts`: `financeInvoices`, `financeKDVSummary`, `financeRunway`, `financeTaxDeadlines`, `financeTaxProvisions`, `financeExpenses`, `TCMB_USD_RATE`
-- localStorage key `"finance_invoices"` stores user-created invoices
-- Dashboard + tax calendar merge localStorage with mock data on mount
+- Supabase tables: `invoices`, `expenses`, `tax_provisions`, `runway_data`
+- API routes: GET/POST `/api/finance/invoices`, GET `/api/finance/expenses`, GET `/api/finance/tax-provisions`
+- Dashboard reads from Supabase via API routes
 
 #### Types (`lib/finance-types.ts`)
 - `Invoice` — id, client_name, client_vkn, description, gross_amount, kdv_rate, kdv_amount, stopaj_rate/amount, net_amount, invoice_type (e-arsiv/e-smm), status
@@ -352,6 +353,24 @@ senin_alacağın = gross - stopaj
 #### Components (`components/finance/`)
 invoice-form, invoice-list, stats-bar, kdv-summary, tax-calendar, deadline-card, dual-currency-card, tax-provision-card
 
+### Intelligence Layer
+
+Cross-module AI intelligence. Maturity: `production-ready`.
+
+**Pipeline:** Data aggregator → 7 deterministic rules → Persist insights → Claude narrative → Dashboard feed
+
+- `lib/intelligence/data-aggregator.ts` — queries all 3 modules into CrossModuleSnapshot
+- `lib/intelligence/rules/` — 7 rules: runway, pipeline health, hiring tension, invoice staleness, lead staleness, cross-module patterns
+- `lib/intelligence-pipeline.ts` — orchestrates full pipeline
+- `lib/claude-narrative.ts` — 2-sentence morning brief via Claude Haiku
+- `lib/persist-insights.ts` — writes to cross_module_insights table (content-addressed dedup)
+- Cron: `/api/cron/run-intelligence` — daily 04:00 UTC
+- API: `/api/intelligence/insights` (GET), `/api/intelligence/dismiss` (POST), `/api/intelligence/trigger` (POST)
+
+#### Components (`components/intelligence/`)
+- `insight-card.tsx` — severity badge, freshness timestamp, evidence, dismiss
+- `intelligence-feed.tsx` — stateful container with fetch, refresh/skeleton, empty state, AgentCardWrapper
+
 ## Auth
 
 - Supabase Auth (email/password) — login at `/login`
@@ -360,6 +379,21 @@ invoice-form, invoice-list, stats-bar, kdv-summary, tax-calendar, deadline-card,
   - `lib/supabase/client.ts` — browser client (anon key, cookie auth)
   - `lib/supabase/server.ts` — server component client (respects RLS)
   - `lib/supabase/admin.ts` — service role client (bypasses RLS, cron jobs ONLY)
+
+#### Supabase Tables (11)
+| Table | Module | Migration |
+|-------|--------|-----------|
+| `candidates` | Hire-OS | 001 |
+| `evaluations` | Hire-OS | 001 |
+| `roles` | Hire-OS | 001 |
+| `invoices` | Finance-OS | 002 |
+| `expenses` | Finance-OS | 002 |
+| `tax_provisions` | Finance-OS | 002 |
+| `leads` | Sales-OS | 003 |
+| `lead_activities` | Sales-OS | 003 |
+| `sales_templates` | Sales-OS | 003 |
+| `cross_module_insights` | Intelligence | 20260315 |
+| `runway_data` | Finance-OS | 005 |
 
 ## Environment Variables
 
@@ -416,14 +450,20 @@ soloPreneurOS/
 │       ├── auth/callback/route.ts
 │       ├── cron/
 │       │   ├── scan-gmail/route.ts      # Hiring emails (02:00)
-│       │   ├── evaluate/route.ts        # Hiring eval (03:00)
 │       │   ├── scan-sales-gmail/route.ts # Sales emails (02:30)
-│       │   └── evaluate-leads/route.ts  # Sales eval (03:30)
+│       │   ├── evaluate/route.ts        # Hiring eval (03:00)
+│       │   ├── evaluate-leads/route.ts  # Sales eval (03:30)
+│       │   └── run-intelligence/route.ts # Intelligence pipeline (04:00)
 │       ├── hiring/candidates/
 │       │   ├── route.ts
 │       │   └── [id]/
 │       │       ├── route.ts
 │       │       └── interview/route.ts
+│       ├── intelligence/
+│       │   ├── insights/route.ts        # GET insights
+│       │   ├── dismiss/route.ts         # POST dismiss insight
+│       │   ├── trigger/route.ts         # POST trigger pipeline
+│       │   └── nudges/route.ts          # GET nudges
 │       └── sales/leads/
 │           ├── route.ts                 # GET leads list
 │           └── [id]/
@@ -433,6 +473,7 @@ soloPreneurOS/
 │   ├── hiring/                          # All hiring UI components
 │   ├── sales/                           # All sales UI components
 │   ├── finance/                         # All finance UI components
+│   ├── intelligence/                    # Intelligence feed components
 │   ├── sidebar.tsx                      # Global navigation sidebar
 │   └── ... (dashboard components)
 ├── lib/
@@ -442,6 +483,15 @@ soloPreneurOS/
 │   │   └── admin.ts
 │   ├── claude-eval.ts                   # Hiring evaluation
 │   ├── claude-sales-eval.ts             # Sales qualification
+│   ├── claude-narrative.ts              # Intelligence narrative (Claude Haiku)
+│   ├── intelligence-pipeline.ts         # Full intelligence pipeline orchestrator
+│   ├── intelligence-types.ts            # InsightCandidate, CrossModuleInsight
+│   ├── persist-insights.ts              # Content-addressed insight persistence
+│   ├── intelligence/
+│   │   ├── types.ts                     # CrossModuleSnapshot, RuleInsight
+│   │   ├── data-aggregator.ts           # Unified data layer
+│   │   ├── rule-engine.ts               # (deprecated stub)
+│   │   └── rules/                       # 7 rule functions + barrel index
 │   ├── gmail.ts                         # Shared Gmail scanner + routing
 │   ├── email.ts                         # Resend (hiring + sales templates)
 │   ├── hiring-types.ts
