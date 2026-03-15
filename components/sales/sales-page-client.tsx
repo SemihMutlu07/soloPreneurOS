@@ -5,6 +5,7 @@ import type { SalesLead, SalesActivity } from "@/lib/sales-types";
 import { StatsBar } from "./stats-bar";
 import { LeadTable } from "./lead-table";
 import { LeadDrawer } from "./lead-drawer";
+import { ActionLogPanel } from "@/components/shared/action-log-panel";
 
 interface SalesPageClientProps {
   leads: SalesLead[];
@@ -29,19 +30,30 @@ export function SalesPageClient({ leads: initialLeads, activities }: SalesPageCl
     setSelectedId(null);
   }
 
+  const actionLogEntries = activities.slice(0, 15).map((a) => ({
+    id: a.id,
+    label: a.subject,
+    detail: a.body || "",
+    timestamp: a.created_at,
+    type: "sales",
+  }));
+
   return (
-    <>
-      <StatsBar leads={leads} />
-      <LeadTable
-        leads={leads}
-        onSelectLead={(id) => setSelectedId(id)}
-      />
+    <div className="flex gap-6">
+      <div className="flex-1 min-w-0 space-y-6">
+        <StatsBar leads={leads} />
+        <LeadTable
+          leads={leads}
+          onSelectLead={(id) => setSelectedId(id)}
+        />
+      </div>
+      <ActionLogPanel title="Sales Activity" actions={actionLogEntries} />
       <LeadDrawer
         lead={selectedLead}
         activities={activities}
         onClose={handleClose}
         onStatusChange={handleStatusChange}
       />
-    </>
+    </div>
   );
 }

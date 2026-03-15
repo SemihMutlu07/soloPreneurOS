@@ -33,7 +33,7 @@ export default function DashboardHeader() {
       <header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between pb-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-text-primary">
-            soloPreneur<span className="text-accent-orange">OS</span>
+            soloPreneur<span className="text-accent-primary">OS</span>
           </h1>
           <div className="flex items-center gap-1.5 mt-1.5">
             <span className="text-text-muted text-xs">soloPreneurOS</span>
@@ -56,7 +56,7 @@ export default function DashboardHeader() {
         {/* Metrics — bigger, more readable */}
         <div className="flex items-center gap-3 flex-wrap">
           <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-surface border border-border">
-            <Activity className="w-5 h-5 text-accent-orange" />
+            <Activity className="w-5 h-5 text-accent-primary" />
             <div className="flex flex-col">
               <span className="font-bold font-mono text-lg text-text-primary leading-none">{companyInfo.users.toLocaleString()}</span>
               <span className="text-text-secondary text-[11px]">users</span>
@@ -87,7 +87,7 @@ export default function DashboardHeader() {
               clearProfile();
               window.location.reload();
             }}
-            className="flex items-center gap-1.5 text-xs text-text-muted hover:text-accent-orange transition-colors p-2"
+            className="flex items-center gap-1.5 text-xs text-text-muted hover:text-accent-primary transition-colors p-2"
             title="Reset & Show Onboarding"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -98,7 +98,7 @@ export default function DashboardHeader() {
       {/* Sync bar + Hiring CTA */}
       <div className="flex items-center gap-3 flex-wrap">
         <div className="flex-1 flex items-center gap-3 px-4 py-2.5 rounded-xl bg-surface border border-border min-w-0">
-          <Radio className="w-3.5 h-3.5 text-accent-orange/50 shrink-0" />
+          <Radio className="w-3.5 h-3.5 text-accent-primary/50 shrink-0" />
           <p className="text-xs text-text-secondary leading-relaxed truncate">
             Last sync: <span className="text-text-primary font-medium">03:47 AM</span>
             <span className="mx-2 text-text-muted">&middot;</span>
@@ -109,7 +109,7 @@ export default function DashboardHeader() {
         </div>
         <Link
           href="/hiring"
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent-orange/15 border border-accent-orange/30 text-accent-orange font-semibold text-sm hover:bg-accent-orange/25 hover:border-accent-orange/50 transition-all shrink-0"
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent-primary/15 border border-accent-primary/30 text-accent-primary font-semibold text-sm hover:bg-accent-primary/25 hover:border-accent-primary/50 transition-all shrink-0"
         >
           <Users className="w-4 h-4" />
           Hiring Pipeline

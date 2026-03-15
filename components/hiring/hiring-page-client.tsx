@@ -6,6 +6,7 @@ import type { CandidateWithEvaluation } from "@/lib/hiring-types";
 import { StatsBar } from "./stats-bar";
 import { CandidateTable } from "./candidate-table";
 import { CandidateDrawer } from "./candidate-drawer";
+import { ActionLogPanel } from "@/components/shared/action-log-panel";
 
 interface HiringPageClientProps {
   candidates: CandidateWithEvaluation[];
@@ -26,8 +27,21 @@ export function HiringPageClient({ candidates }: HiringPageClientProps) {
   const pending = candidates.filter((c) => c.status !== "reviewed");
   const decided = candidates.filter((c) => c.status === "reviewed");
 
+  const actionLogEntries = candidates
+    .filter((c) => c.status === "reviewed" || c.status === "analyzed")
+    .sort((a, b) => new Date(b.applied_at).getTime() - new Date(a.applied_at).getTime())
+    .slice(0, 15)
+    .map((c) => ({
+      id: c.id,
+      label: c.name,
+      detail: c.status === "reviewed" ? `Decision: ${c.decision_result || "reviewed"}` : "Analyzed",
+      timestamp: c.applied_at,
+      type: "hiring",
+    }));
+
   return (
-    <>
+    <div className="flex gap-6">
+      <div className="flex-1 min-w-0 space-y-6">
       <StatsBar candidates={candidates} />
 
       <div className="flex gap-1 p-1 bg-surface-elevated rounded-xl w-fit">
@@ -86,10 +100,12 @@ export function HiringPageClient({ candidates }: HiringPageClientProps) {
         />
       )}
 
+      </div>
+      <ActionLogPanel title="Candidate Activity" actions={actionLogEntries} />
       <CandidateDrawer
         candidateId={selectedId}
         onClose={handleClose}
       />
-    </>
+    </div>
   );
 }

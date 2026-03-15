@@ -28,7 +28,7 @@ function formatLastRun(timestamp: string): string {
 
 const statusConfig = {
   idle: { label: "Ready", dotClass: "bg-text-muted" },
-  running: { label: "Running...", dotClass: "bg-accent-orange animate-soft-pulse" },
+  running: { label: "Running...", dotClass: "bg-accent-primary animate-soft-pulse" },
   success: { label: "Ready", dotClass: "bg-accent-green" },
   error: { label: "Error", dotClass: "bg-accent-red" },
   "coming-soon": { label: "Coming Soon", dotClass: "bg-text-muted" },
@@ -48,7 +48,7 @@ export default function AgentCardWrapper({
 
   return (
     <div
-      className={cn("card", comingSoon && "opacity-50")}
+      className={cn("card h-full flex flex-col", comingSoon && "opacity-50")}
       data-agent-id={agentId}
     >
       {/* Header */}
@@ -80,7 +80,7 @@ export default function AgentCardWrapper({
             <button
               onClick={onRun}
               disabled={status === "running"}
-              className="flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium rounded-lg bg-accent-orange/8 text-accent-orange hover:bg-accent-orange/15 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium rounded-lg bg-accent-primary/8 text-accent-primary hover:bg-accent-primary/15 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {status === "running" ? (
                 <Loader2 className="w-3 h-3 animate-spin" />
@@ -94,7 +94,7 @@ export default function AgentCardWrapper({
       </div>
 
       {/* Content */}
-      {children}
+      <div className="flex-1">{children}</div>
     </div>
   );
 }

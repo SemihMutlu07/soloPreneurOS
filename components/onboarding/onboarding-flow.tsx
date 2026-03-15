@@ -212,7 +212,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
     return (
       <div className="fixed inset-0 z-50 bg-bg flex items-center justify-center">
         <div className="max-w-md w-full mx-4 text-center">
-          <Sparkles className="w-8 h-8 text-accent-orange mx-auto mb-4 animate-gentle-spin" />
+          <Sparkles className="w-8 h-8 text-accent-primary mx-auto mb-4 animate-gentle-spin" />
           <h2 className="text-xl font-bold font-mono text-gray-100 mb-2">
             Setting up your OS...
           </h2>
@@ -231,7 +231,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-2",
                     agent.active
-                      ? "bg-surface border-accent-orange/20"
+                      ? "bg-surface border-accent-primary/20"
                       : "bg-surface/50 border-border"
                   )}
                 >
@@ -239,7 +239,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                     <IconComp
                       className={cn(
                         "w-4 h-4",
-                        agent.active ? "text-accent-orange" : "text-text-muted"
+                        agent.active ? "text-accent-primary" : "text-text-muted"
                       )}
                     />
                   )}
@@ -281,7 +281,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
           </div>
           <div className="h-1 bg-surface-elevated rounded-full overflow-hidden">
             <div
-              className="h-full bg-accent-orange rounded-full transition-all duration-500 ease-out"
+              className="h-full bg-accent-primary rounded-full transition-all duration-500 ease-out"
               style={{ width: `${(step / totalSteps) * 100}%` }}
             />
           </div>
@@ -310,7 +310,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                       setFormData((prev) => ({ ...prev, name: e.target.value }))
                     }
                     placeholder="Alex Chen"
-                    className="w-full px-3 py-2.5 rounded-xl bg-surface-elevated border border-border text-gray-100 text-sm placeholder:text-text-muted focus:outline-none focus:border-accent-orange/50 transition-colors"
+                    className="w-full px-3 py-2.5 rounded-xl bg-surface-elevated border border-border text-gray-100 text-sm placeholder:text-text-muted focus:outline-none focus:border-accent-primary/50 transition-colors"
                   />
                 </div>
                 <div>
@@ -324,7 +324,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                       setFormData((prev) => ({ ...prev, productName: e.target.value }))
                     }
                     placeholder="My SaaS Product"
-                    className="w-full px-3 py-2.5 rounded-xl bg-surface-elevated border border-border text-gray-100 text-sm placeholder:text-text-muted focus:outline-none focus:border-accent-orange/50 transition-colors"
+                    className="w-full px-3 py-2.5 rounded-xl bg-surface-elevated border border-border text-gray-100 text-sm placeholder:text-text-muted focus:outline-none focus:border-accent-primary/50 transition-colors"
                   />
                 </div>
                 <div>
@@ -341,7 +341,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                     }
                     placeholder="What does your product do?"
                     rows={3}
-                    className="w-full px-3 py-2.5 rounded-xl bg-surface-elevated border border-border text-gray-100 text-sm placeholder:text-text-muted focus:outline-none focus:border-accent-orange/50 transition-colors resize-none"
+                    className="w-full px-3 py-2.5 rounded-xl bg-surface-elevated border border-border text-gray-100 text-sm placeholder:text-text-muted focus:outline-none focus:border-accent-primary/50 transition-colors resize-none"
                   />
                 </div>
                 <div>
@@ -358,7 +358,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                         className={cn(
                           "flex-1 px-3 py-2 rounded-xl border text-sm font-medium transition-all",
                           formData.teamSize === size.value
-                            ? "bg-accent-orange/10 border-accent-orange/30 text-accent-orange"
+                            ? "bg-accent-primary/10 border-accent-primary/30 text-accent-primary"
                             : "bg-surface-elevated border-border text-text-secondary hover:border-border-strong"
                         )}
                       >
@@ -395,7 +395,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                         className={cn(
                           "px-4 py-4 rounded-xl border text-center transition-all",
                           formData.customerType === ct.value
-                            ? "bg-accent-orange/10 border-accent-orange/30"
+                            ? "bg-accent-primary/10 border-accent-primary/30"
                             : "bg-surface-elevated border-border hover:border-border-strong"
                         )}
                       >
@@ -403,7 +403,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                           className={cn(
                             "block text-sm font-semibold mb-0.5",
                             formData.customerType === ct.value
-                              ? "text-accent-orange"
+                              ? "text-accent-primary"
                               : "text-gray-100"
                           )}
                         >
@@ -429,7 +429,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                         className={cn(
                           "px-3 py-2 rounded-xl border text-sm font-medium transition-all",
                           formData.userCount === uc.value
-                            ? "bg-accent-orange/10 border-accent-orange/30 text-accent-orange"
+                            ? "bg-accent-primary/10 border-accent-primary/30 text-accent-primary"
                             : "bg-surface-elevated border-border text-text-secondary hover:border-border-strong"
                         )}
                       >
@@ -453,7 +453,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                         className={cn(
                           "px-3 py-2 rounded-xl border text-sm font-medium transition-all",
                           formData.revenue === rr.value
-                            ? "bg-accent-orange/10 border-accent-orange/30 text-accent-orange"
+                            ? "bg-accent-primary/10 border-accent-primary/30 text-accent-primary"
                             : "bg-surface-elevated border-border text-text-secondary hover:border-border-strong"
                         )}
                       >
@@ -489,7 +489,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                           className={cn(
                             "px-3 py-1.5 rounded-lg border text-sm transition-all",
                             formData.channels.includes(ch)
-                              ? "bg-accent-orange/10 border-accent-orange/30 text-accent-orange"
+                              ? "bg-accent-primary/10 border-accent-primary/30 text-accent-primary"
                               : "bg-surface-elevated border-border text-text-secondary hover:border-border-strong"
                           )}
                         >
@@ -510,7 +510,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
               </h2>
               <p className="text-text-secondary text-sm mb-6">
                 What challenges keep you up at night? Pick up to 3.
-                <span className="ml-2 text-accent-orange font-mono">
+                <span className="ml-2 text-accent-primary font-mono">
                   {formData.painPoints.length}/3
                 </span>
               </p>
@@ -527,7 +527,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                       className={cn(
                         "px-4 py-3 rounded-xl border text-left transition-all",
                         selected
-                          ? "bg-accent-orange/10 border-accent-orange/30"
+                          ? "bg-accent-primary/10 border-accent-primary/30"
                           : disabled
                             ? "bg-surface-elevated/50 border-border opacity-40 cursor-not-allowed"
                             : "bg-surface-elevated border-border hover:border-border-strong"
@@ -537,7 +537,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                       <span
                         className={cn(
                           "text-sm font-medium",
-                          selected ? "text-accent-orange" : "text-gray-100"
+                          selected ? "text-accent-primary" : "text-gray-100"
                         )}
                       >
                         {pp.label}
@@ -568,7 +568,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                       className={cn(
                         "px-4 py-3 rounded-xl border text-sm font-medium transition-all",
                         selected
-                          ? "bg-accent-orange/10 border-accent-orange/30 text-accent-orange"
+                          ? "bg-accent-primary/10 border-accent-primary/30 text-accent-primary"
                           : "bg-surface-elevated border-border text-text-secondary hover:border-border-strong"
                       )}
                     >
@@ -598,7 +598,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
               className={cn(
                 "flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-sm font-medium transition-all",
                 canProceed()
-                  ? "bg-accent-orange text-bg hover:bg-accent-orange/90"
+                  ? "bg-accent-primary text-bg hover:bg-accent-primary/90"
                   : "bg-surface-elevated text-text-muted cursor-not-allowed"
               )}
             >

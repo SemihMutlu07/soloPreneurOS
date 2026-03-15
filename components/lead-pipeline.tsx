@@ -7,7 +7,7 @@ import { leads, type LeadStage } from "@/lib/mock-data";
 const stageConfig: Record<LeadStage, { label: string; color: string; border: string }> = {
   new: { label: "New", color: "text-accent-blue", border: "border-accent-blue/20" },
   contacted: { label: "Contacted", color: "text-accent-amber", border: "border-accent-amber/20" },
-  demo: { label: "Demo", color: "text-accent-orange", border: "border-accent-orange/20" },
+  demo: { label: "Demo", color: "text-accent-primary", border: "border-accent-primary/20" },
   won: { label: "Won", color: "text-accent-green", border: "border-accent-green/20" },
   lost: { label: "Lost", color: "text-text-muted", border: "border-text-muted/20" },
 };
@@ -20,16 +20,16 @@ export default function LeadPipeline() {
     .reduce((sum, l) => sum + l.value, 0);
 
   return (
-    <div className="card">
+    <div className="card h-full flex flex-col">
       <div className="flex items-center gap-2.5 mb-1">
-        <DollarSign className="w-5 h-5 text-accent-orange" />
+        <DollarSign className="w-5 h-5 text-accent-primary" />
         <h2 className="text-sm font-semibold text-text-primary">Lead Pipeline</h2>
         <span className="text-[11px] text-text-muted ml-auto">
           <span className="font-mono">${totalValue.toLocaleString()}</span> pipeline
         </span>
       </div>
 
-      <div className="space-y-4 mt-4 card-scroll">
+      <div className="space-y-4 mt-4 card-scroll flex-1">
         {stages.map((stage) => {
           const stageLeads = leads.filter((l) => l.stage === stage);
           if (stageLeads.length === 0) return null;

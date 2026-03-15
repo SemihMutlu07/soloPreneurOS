@@ -73,7 +73,7 @@ export default function IntelligenceFeed() {
     <AgentCardWrapper
       agentId="intelligence-feed"
       agentName="Cross-Module Intelligence"
-      icon={<Brain className="w-5 h-5 text-accent-orange" />}
+      icon={<Brain className="w-5 h-5 text-accent-primary" />}
       status={status}
       lastRun={lastRun}
       onRun={handleRefresh}
@@ -109,11 +109,11 @@ export default function IntelligenceFeed() {
         <div className="space-y-4">
           {/* Narrative card — visually elevated */}
           {narrativeInsight && (
-            <div className="rounded-xl border border-accent-orange/20 bg-accent-orange/5 p-4">
+            <div className="rounded-xl border border-accent-primary/20 bg-accent-primary/5 p-4">
               <div className="flex items-start justify-between gap-2">
                 <div className="flex items-center gap-2 mb-2">
-                  <Brain className="w-4 h-4 text-accent-orange flex-shrink-0" />
-                  <span className="text-xs font-medium text-accent-orange uppercase tracking-wider">
+                  <Brain className="w-4 h-4 text-accent-primary flex-shrink-0" />
+                  <span className="text-xs font-medium text-accent-primary uppercase tracking-wider">
                     AI Summary
                   </span>
                 </div>

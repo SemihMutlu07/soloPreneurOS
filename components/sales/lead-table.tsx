@@ -146,7 +146,7 @@ export function LeadTable({ leads, onSelectLead }: LeadTableProps) {
                     needsAction(lead) && "border-l-2 border-l-accent-amber",
                   )}
                 >
-                  <td className="py-3 pr-4">
+                  <td className={`py-3 pr-4 ${needsAction(lead) ? "pl-3" : ""}`}>
                     <div>
                       <span className="text-text-primary">{lead.name}</span>
                       <p className="text-xs text-text-muted">{lead.company}</p>
@@ -202,7 +202,7 @@ export function LeadTable({ leads, onSelectLead }: LeadTableProps) {
               key={lead.id}
               onClick={() => onSelectLead?.(lead.id)}
               className={cn(
-                "p-3 rounded-xl bg-surface-hover/50 border border-border/50 hover:border-accent-orange/30 transition-colors cursor-pointer",
+                "p-3 rounded-xl bg-surface-hover/50 border border-border/50 hover:border-accent-primary/30 transition-colors cursor-pointer",
                 needsAction(lead) && "border-l-2 border-l-accent-amber",
               )}
             >

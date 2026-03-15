@@ -47,7 +47,7 @@ export function LoginForm({ redirect }: { redirect: string }) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full px-4 py-2.5 bg-surface border border-border rounded-lg text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-orange transition-colors"
+          className="w-full px-4 py-2.5 bg-surface border border-border rounded-lg text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary transition-colors"
           placeholder="you@company.com"
         />
       </div>
@@ -61,14 +61,14 @@ export function LoginForm({ redirect }: { redirect: string }) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="w-full px-4 py-2.5 bg-surface border border-border rounded-lg text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-orange transition-colors"
+          className="w-full px-4 py-2.5 bg-surface border border-border rounded-lg text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary transition-colors"
           placeholder="Enter password"
         />
       </div>
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-2.5 bg-accent-orange text-bg font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
+        className="w-full py-2.5 bg-accent-primary text-bg font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
       >
         {loading ? "Signing in..." : "Sign In"}
       </button>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { X, Mail, Building2, DollarSign, CalendarDays } from "lucide-react";
+import { X, Mail, Building2, DollarSign, CalendarDays, ChevronDown, ChevronRight } from "lucide-react";
 import { LEAD_STATUSES } from "@/lib/constants";
 import type { SalesLeadStage } from "@/lib/constants";
 import type { SalesLead, SalesActivity } from "@/lib/sales-types";
@@ -18,6 +18,7 @@ interface LeadDrawerProps {
 
 export function LeadDrawer({ lead, activities, onClose, onStatusChange }: LeadDrawerProps) {
   const [closing, setClosing] = useState(false);
+  const [aiOpen, setAiOpen] = useState(false);
 
   const handleClose = useCallback(() => {
     setClosing(true);
@@ -129,8 +130,32 @@ export function LeadDrawer({ lead, activities, onClose, onStatusChange }: LeadDr
                   )}
                 </div>
 
-                {/* AI Analysis */}
-                <AiAnalysisCard lead={lead} />
+                {/* AI Analysis — collapsible */}
+                <div className="card">
+                  <button
+                    onClick={() => setAiOpen(!aiOpen)}
+                    className="w-full flex items-center justify-between"
+                  >
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wide">
+                        AI Analysis
+                      </h3>
+                      <span className={`px-2 py-0.5 rounded text-xs font-semibold ${
+                        lead.ai_score >= 70 ? "text-green-400 bg-green-400/15" :
+                        lead.ai_score >= 40 ? "text-amber-400 bg-amber-400/15" :
+                        "text-red-400 bg-red-400/15"
+                      }`}>
+                        {lead.ai_score}/100
+                      </span>
+                    </div>
+                    {aiOpen ? <ChevronDown size={16} className="text-text-muted" /> : <ChevronRight size={16} className="text-text-muted" />}
+                  </button>
+                  {aiOpen && (
+                    <div className="mt-4">
+                      <AiAnalysisCard lead={lead} />
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Right column */}

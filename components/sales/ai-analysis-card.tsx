@@ -90,7 +90,7 @@ export function AiAnalysisCard({ lead }: AiAnalysisCardProps) {
       {/* Open questions — only if present */}
       {(lead.ai_signals.questions?.length ?? 0) > 0 && (
         <div>
-          <h4 className="text-xs font-medium text-accent-orange flex items-center gap-1.5 mb-2">
+          <h4 className="text-xs font-medium text-accent-primary flex items-center gap-1.5 mb-2">
             <HelpCircle size={14} />
             Open Questions
           </h4>
@@ -98,7 +98,7 @@ export function AiAnalysisCard({ lead }: AiAnalysisCardProps) {
             {lead.ai_signals.questions!.map((q, i) => (
               <li
                 key={i}
-                className="text-sm text-text-secondary pl-5 relative before:content-[''] before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:rounded-full before:bg-accent-orange/40"
+                className="text-sm text-text-secondary pl-5 relative before:content-[''] before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:rounded-full before:bg-accent-primary/40"
               >
                 {q}
               </li>

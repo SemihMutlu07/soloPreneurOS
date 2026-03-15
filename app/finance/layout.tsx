@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Wallet, Home } from "lucide-react";
+import AiAssistantBar from "@/components/shared/ai-assistant-bar";
 
 export default function FinanceLayout({
   children,
@@ -48,7 +49,8 @@ export default function FinanceLayout({
           </div>
         </div>
       </nav>
-      <main className="max-w-6xl mx-auto px-6 py-8">{children}</main>
+      <main className="max-w-6xl mx-auto px-6 py-8 pb-24">{children}</main>
+      <AiAssistantBar context="finance" />
     </div>
   );
 }

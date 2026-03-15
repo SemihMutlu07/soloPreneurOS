@@ -21,8 +21,8 @@ const sourceConfig: Record<
   Signal["source"],
   { icon: typeof Radar; color: string; label: string }
 > = {
-  "product-hunt": { icon: ArrowUpRight, color: "text-accent-orange", label: "Product Hunt" },
-  reddit: { icon: MessageCircle, color: "text-accent-orange", label: "Reddit" },
+  "product-hunt": { icon: ArrowUpRight, color: "text-accent-primary", label: "Product Hunt" },
+  reddit: { icon: MessageCircle, color: "text-accent-primary", label: "Reddit" },
   hackernews: { icon: Flame, color: "text-accent-amber", label: "Hacker News" },
 };
 
@@ -135,7 +135,7 @@ export default function MarketScout() {
     <AgentCardWrapper
       agentId="market-scout"
       agentName="Market Scout"
-      icon={<Radar className="w-5 h-5 text-accent-orange" />}
+      icon={<Radar className="w-5 h-5 text-accent-primary" />}
       status={status}
       lastRun={lastRun}
       onRun={fetchSignals}

@@ -59,7 +59,7 @@ export function ActivityTimeline({ activities }: ActivityTimelineProps) {
       <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wide mb-4">
         Activity
       </h3>
-      <div className="relative pl-6 border-l border-border space-y-5">
+      <div className="relative pl-8 border-l border-border space-y-5">
         {sorted.map((activity) => {
           const Icon = ACTIVITY_ICONS[activity.type] ?? Mail;
           return (
@@ -71,7 +71,7 @@ export function ActivityTimeline({ activities }: ActivityTimelineProps) {
 
               <div className="space-y-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-xs text-text-muted">{relativeTime(activity.created_at)}</span>
+                  <span className="text-xs text-text-secondary">{relativeTime(activity.created_at)}</span>
                   {activity.created_by && (
                     <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${CREATED_BY_STYLES[activity.created_by] ?? CREATED_BY_STYLES.system}`}>
                       {CREATED_BY_LABELS[activity.created_by] ?? activity.created_by}
@@ -80,7 +80,7 @@ export function ActivityTimeline({ activities }: ActivityTimelineProps) {
                 </div>
                 <p className="text-sm font-medium text-text-primary">{activity.subject}</p>
                 {activity.body && (
-                  <p className="text-xs text-text-secondary leading-relaxed">{activity.body}</p>
+                  <p className="text-sm text-text-secondary leading-relaxed">{activity.body}</p>
                 )}
               </div>
             </div>

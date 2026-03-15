@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronUp, ChevronDown } from "lucide-react";
+import { ChevronUp, ChevronDown, AlertCircle } from "lucide-react";
 import type { CandidateWithEvaluation } from "@/lib/hiring-types";
 import { RECOMMENDATION_COLORS, RECOMMENDATION_LABELS } from "@/lib/constants";
 import { DuplicateBadge } from "./duplicate-badge";
@@ -139,7 +139,7 @@ export function CandidateTable({ candidates, onSelectCandidate, decided = false 
                   !decided && needsDecision(c) ? "border-l-2 border-l-accent-amber" : ""
                 }`}
               >
-                <td className="py-3 pr-4">
+                <td className={`py-3 pr-4 ${!decided && needsDecision(c) ? "pl-3" : ""}`}>
                   <span className="text-text-primary">{c.name}</span>
                   {c.previous_application_id && <DuplicateBadge />}
                 </td>
@@ -159,9 +159,16 @@ export function CandidateTable({ candidates, onSelectCandidate, decided = false 
                   </td>
                 ) : (
                   <td className="py-3 pr-4">
-                    <span className="px-2 py-0.5 bg-surface-elevated rounded text-xs text-text-secondary">
-                      {c.status}
-                    </span>
+                    {needsDecision(c) ? (
+                      <span className="px-2 py-0.5 bg-accent-amber/15 rounded text-xs text-accent-amber font-semibold flex items-center gap-1 w-fit">
+                        <AlertCircle size={12} />
+                        Karar Bekliyor
+                      </span>
+                    ) : (
+                      <span className="px-2 py-0.5 bg-surface-elevated rounded text-xs text-text-secondary">
+                        {c.status}
+                      </span>
+                    )}
                   </td>
                 )}
                 <td className="py-3">
@@ -194,11 +201,11 @@ export function CandidateTable({ candidates, onSelectCandidate, decided = false 
           <div
             key={c.id}
             onClick={() => onSelectCandidate?.(c.id)}
-            className={`p-3 rounded-xl bg-surface-hover/50 border border-border/50 hover:border-accent-orange/30 transition-colors cursor-pointer ${rowMuted} ${
+            className={`p-3 rounded-xl bg-surface-hover/50 border border-border/50 hover:border-accent-primary/30 transition-colors cursor-pointer ${rowMuted} ${
               !decided && needsDecision(c) ? "border-l-2 border-l-accent-amber" : ""
             }`}
           >
-            <div className="flex items-center justify-between">
+            <div className={`flex items-center justify-between ${!decided && needsDecision(c) ? "pl-3" : ""}`}>
               <div className="flex items-center gap-2 min-w-0">
                 <span className="text-sm font-medium text-text-primary truncate">{c.name}</span>
                 {c.previous_application_id && <DuplicateBadge />}

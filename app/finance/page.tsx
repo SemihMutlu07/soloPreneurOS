@@ -7,6 +7,7 @@ import { InvoiceForm } from "@/components/finance/invoice-form";
 import { KDVSummaryCard } from "@/components/finance/kdv-summary";
 import { DualCurrencyCard } from "@/components/finance/dual-currency-card";
 import { TaxProvisionCard } from "@/components/finance/tax-provision-card";
+import { ActionLogPanel } from "@/components/shared/action-log-panel";
 import type {
   FinanceStats,
   Invoice,
@@ -99,22 +100,34 @@ export default function FinancePage() {
       )}
 
       {!loading && !error && (
-        <>
-          <StatsBar stats={stats} />
+        <div className="flex gap-6">
+          <div className="flex-1 min-w-0 space-y-6">
+            <StatsBar stats={stats} />
 
-          <InvoiceForm onSave={handleInvoiceSaved} />
+            <InvoiceForm onSave={handleInvoiceSaved} />
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="space-y-6">
-              <InvoiceList invoices={invoices} />
-              <KDVSummaryCard summary={kdvSummary} />
-            </div>
-            <div className="space-y-6">
-              <DualCurrencyCard runway={STATIC_RUNWAY} tcmbRate={TCMB_USD_RATE} />
-              <TaxProvisionCard provisions={STATIC_TAX_PROVISIONS} />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="space-y-6">
+                <InvoiceList invoices={invoices} />
+                <KDVSummaryCard summary={kdvSummary} />
+              </div>
+              <div className="space-y-6">
+                <DualCurrencyCard runway={STATIC_RUNWAY} tcmbRate={TCMB_USD_RATE} />
+                <TaxProvisionCard provisions={STATIC_TAX_PROVISIONS} />
+              </div>
             </div>
           </div>
-        </>
+          <ActionLogPanel
+            title="Finance Activity"
+            actions={invoices.slice(0, 15).map((inv) => ({
+              id: inv.id || String(Math.random()),
+              label: inv.client_name,
+              detail: `${inv.gross_amount.toLocaleString("tr-TR")} TL — ${inv.status}`,
+              timestamp: inv.created_at,
+              type: "finance",
+            }))}
+          />
+        </div>
       )}
     </div>
   );

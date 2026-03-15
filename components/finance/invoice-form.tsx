@@ -88,7 +88,7 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
   const govCredit = stopajAmount;
 
   const inputClass =
-    "w-full px-4 py-2.5 bg-surface border border-border-strong rounded-lg text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-orange focus:ring-2 focus:ring-accent-orange/20 transition-colors";
+    "w-full px-4 py-2.5 bg-surface border border-border-strong rounded-lg text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-colors";
 
   const handleSave = async () => {
     const payload = {
@@ -229,7 +229,7 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
                 setStopajEnabled(!stopajEnabled);
               }}
               className={`w-10 h-5 rounded-full transition-colors ${
-                stopajEnabled ? "bg-accent-orange" : "bg-surface-elevated"
+                stopajEnabled ? "bg-accent-primary" : "bg-surface-elevated"
               } ${invoiceType === "e-smm" ? "opacity-60 cursor-not-allowed" : ""}`}
             >
               <div
@@ -269,7 +269,7 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
                   value={type}
                   checked={invoiceType === type}
                   onChange={() => setInvoiceType(type)}
-                  className="accent-accent-orange"
+                  className="accent-accent-primary"
                 />
                 <span className="text-sm text-text-primary">
                   {type === "e-arsiv" ? "e-Arşiv" : "e-SMM"}
@@ -282,7 +282,7 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
           <button
             type="button"
             onClick={handleSave}
-            className="bg-accent-orange text-bg font-semibold rounded-lg px-4 py-2.5"
+            className="bg-accent-primary text-bg font-semibold rounded-lg px-4 py-2.5"
           >
             Kaydet
           </button>

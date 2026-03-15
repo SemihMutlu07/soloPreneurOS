@@ -8,9 +8,6 @@ export default function SalesPage() {
         <h1 className="text-2xl font-semibold text-text-primary">
           Lead Pipeline
         </h1>
-        <p className="text-sm text-text-secondary mt-1">
-          AI-powered lead qualification and tracking
-        </p>
       </div>
 
       <SalesPageClient leads={salesLeads} activities={salesActivities} />

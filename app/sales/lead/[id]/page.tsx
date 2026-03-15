@@ -18,7 +18,7 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
     return (
       <div className="text-center py-20">
         <p className="text-text-muted text-lg mb-4">Lead not found</p>
-        <Link href="/sales" className="text-accent-orange hover:underline text-sm">
+        <Link href="/sales" className="text-accent-primary hover:underline text-sm">
           Back to Pipeline
         </Link>
       </div>
@@ -86,7 +86,7 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
             {lead.ai_suggested_action && (
               <div className="border-t border-border pt-3">
                 <span className="text-xs text-text-muted">Suggested Action: </span>
-                <span className="text-sm text-accent-orange font-medium">
+                <span className="text-sm text-accent-primary font-medium">
                   {SUGGESTED_ACTIONS[lead.ai_suggested_action as keyof typeof SUGGESTED_ACTIONS] ?? lead.ai_suggested_action}
                 </span>
               </div>

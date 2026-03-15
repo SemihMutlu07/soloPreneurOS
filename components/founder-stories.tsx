@@ -16,7 +16,7 @@ export default function FounderStories() {
   }, []);
 
   return (
-    <div className="card">
+    <div className="card h-full flex flex-col">
       <div className="flex items-center gap-2.5 mb-4">
         <Quote className="w-5 h-5 text-text-muted" />
         <h2 className="text-sm font-semibold text-text-primary">Founder Stories</h2>
@@ -31,8 +31,8 @@ export default function FounderStories() {
         <p className="text-[11px] text-text-muted mt-0.5">{story.role}</p>
       </div>
 
-      <div className="p-3 rounded-xl bg-accent-orange/5 border border-accent-orange/8">
-        <p className="text-[11px] text-accent-orange leading-relaxed">
+      <div className="p-3 rounded-xl bg-accent-primary/5 border border-accent-primary/8">
+        <p className="text-[11px] text-accent-primary leading-relaxed">
           <span className="font-semibold">Takeaway:</span> {story.takeaway}
         </p>
       </div>

@@ -57,8 +57,8 @@ export function CandidateDetail({ candidate }: CandidateDetailProps) {
       {!candidate.evaluation && (
         <div className="card flex flex-col items-center gap-4 py-12">
           <div className="relative w-10 h-10">
-            <div className="absolute inset-0 rounded-full border-2 border-accent-orange/20" />
-            <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-accent-orange animate-gentle-spin" />
+            <div className="absolute inset-0 rounded-full border-2 border-accent-primary/20" />
+            <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-accent-primary animate-gentle-spin" />
           </div>
           <div className="text-center">
             <p className="text-text-secondary text-sm font-medium">Evaluation pending</p>

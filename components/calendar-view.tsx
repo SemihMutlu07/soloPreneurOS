@@ -13,12 +13,12 @@ const typeConfig: Record<CalendarEvent["type"], { color: string; bg: string }> =
 
 export default function CalendarView() {
   return (
-    <div className="card">
+    <div className="card h-full flex flex-col">
       <div className="flex items-center gap-2.5 mb-4">
         <Calendar className="w-5 h-5 text-accent-blue" />
         <h2 className="text-sm font-semibold text-text-primary">Today&apos;s Schedule</h2>
       </div>
-      <div className="space-y-1.5 card-scroll">
+      <div className="space-y-1.5 card-scroll flex-1">
         {calendarEvents.map((event) => {
           const config = typeConfig[event.type];
           return (

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Users, Home } from "lucide-react";
+import AiAssistantBar from "@/components/shared/ai-assistant-bar";
 
 export default function HiringLayout({
   children,
@@ -20,7 +21,7 @@ export default function HiringLayout({
             <span className="text-text-muted">/</span>
             <Link
               href="/hiring"
-              className="flex items-center gap-2 text-accent-orange font-medium"
+              className="flex items-center gap-2 text-accent-primary font-medium"
             >
               <Users size={18} />
               Hire-OS
@@ -28,7 +29,8 @@ export default function HiringLayout({
           </div>
         </div>
       </nav>
-      <main className="max-w-6xl mx-auto px-6 py-8">{children}</main>
+      <main className="max-w-6xl mx-auto px-6 py-8 pb-24">{children}</main>
+      <AiAssistantBar context="hiring" />
     </div>
   );
 }

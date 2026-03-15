@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { X, Loader2, Mail, FileText, Calendar } from "lucide-react";
 import type { CandidateWithEvaluation } from "@/lib/hiring-types";
 import { EvaluationCard } from "./evaluation-card";
@@ -63,7 +64,7 @@ export function CandidateDrawer({ candidateId, onClose }: CandidateModalProps) {
 
   const showDecision = candidate?.evaluation !== null && candidate?.evaluation !== undefined;
 
-  return (
+  const modalContent = (
     <>
       {/* Backdrop */}
       <div
@@ -113,7 +114,7 @@ export function CandidateDrawer({ candidateId, onClose }: CandidateModalProps) {
           <div className="overflow-y-auto flex-1 p-6 space-y-5">
             {loading && (
               <div className="flex items-center justify-center py-16">
-                <Loader2 className="w-5 h-5 animate-spin text-accent-orange" />
+                <Loader2 className="w-5 h-5 animate-spin text-accent-primary" />
               </div>
             )}
 
@@ -153,8 +154,8 @@ export function CandidateDrawer({ candidateId, onClose }: CandidateModalProps) {
                 {!candidate.evaluation && (
                   <div className="card flex flex-col items-center gap-4 py-12">
                     <div className="relative w-10 h-10">
-                      <div className="absolute inset-0 rounded-full border-2 border-accent-orange/20" />
-                      <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-accent-orange animate-gentle-spin" />
+                      <div className="absolute inset-0 rounded-full border-2 border-accent-primary/20" />
+                      <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-accent-primary animate-gentle-spin" />
                     </div>
                     <div className="text-center">
                       <p className="text-text-secondary text-sm font-medium">Evaluation pending</p>
@@ -186,4 +187,6 @@ export function CandidateDrawer({ candidateId, onClose }: CandidateModalProps) {
       </div>
     </>
   );
+
+  return createPortal(modalContent, document.body);
 }
