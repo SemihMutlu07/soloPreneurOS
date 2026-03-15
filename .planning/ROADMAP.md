@@ -128,7 +128,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Finance Migration | 2/3 | In Progress|  |
-| 2. Unified Data Layer | 0/2 | Not started | - |
+| 2. Unified Data Layer | 1/2 | In Progress|  |
 | 3. Rule Engine | 1/3 | In Progress|  |
 | 4. Insights Schema and Cron | 3/3 | Complete   | 2026-03-15 |
 | 5. LLM Orchestrator | 0/TBD | Not started | - |

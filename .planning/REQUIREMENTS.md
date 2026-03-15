@@ -11,8 +11,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **DATA-01**: Finance invoices, expenses, and tax data persist in Supabase instead of localStorage
 - [x] **DATA-02**: Finance-OS page reads and writes from Supabase with no localStorage dependency
-- [ ] **DATA-03**: Unified data aggregator reads Sales, Hire, and Finance from Supabase into a single CrossModuleSnapshot
-- [ ] **DATA-04**: CrossModuleSnapshot type captures lead pipeline, candidate pipeline, invoice/expense state, and runway metrics
+- [x] **DATA-03**: Unified data aggregator reads Sales, Hire, and Finance from Supabase into a single CrossModuleSnapshot
+- [x] **DATA-04**: CrossModuleSnapshot type captures lead pipeline, candidate pipeline, invoice/expense state, and runway metrics
 
 ### Rule Engine
 
@@ -85,8 +85,8 @@ Deferred to future release. Tracked but not in current roadmap.
 |-------------|-------|--------|
 | DATA-01 | Phase 1 | Complete |
 | DATA-02 | Phase 1 | Complete |
-| DATA-03 | Phase 2 | Pending |
-| DATA-04 | Phase 2 | Pending |
+| DATA-03 | Phase 2 | Complete |
+| DATA-04 | Phase 2 | Complete |
 | RULE-01 | Phase 3 | Complete |
 | RULE-02 | Phase 3 | Complete |
 | RULE-03 | Phase 3 | Complete |

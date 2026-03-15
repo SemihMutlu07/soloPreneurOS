@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-rule-engine/03-01-PLAN.md
-last_updated: "2026-03-15T12:38:04.290Z"
+stopped_at: Completed 02-unified-data-layer-02-01-PLAN.md
+last_updated: "2026-03-15T12:38:42.393Z"
 last_activity: "2026-03-15 — Executed 01-02: Finance seed script with stable UUID upsert pattern"
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 14
-  completed_plans: 6
+  completed_plans: 7
   percent: 23
 ---
 
@@ -56,6 +56,7 @@ Progress: [██░░░░░░░░] 23%
 | Phase 01-finance-migration P01 | 1 | 2 tasks | 3 files |
 | Phase 04-insights-schema-and-cron P03 | 165 | 1 tasks | 3 files |
 | Phase 03-rule-engine P01 | 4 | 2 tasks | 4 files |
+| Phase 02-unified-data-layer P01 | 4 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -83,6 +84,9 @@ Recent decisions affecting current work:
 - [Phase 04-insights-schema-and-cron]: CRON_SECRET bearer auth is always the first cron handler operation — 401 returned before any Supabase calls
 - [Phase 03-rule-engine]: RuleInsight is separate from InsightCandidate — rule engine outputs RuleInsight, cron maps to InsightCandidate for persistence
 - [Phase 03-rule-engine]: CrossModuleSnapshot fields renamed to hire/recent_activity/generated_at — canonical contract for all rule functions
+- [Phase 02-unified-data-layer]: CrossModuleSnapshot uses HireSnapshot/hire + recent_activity + generated_at field names consistent with Phase 03 parallel plan
+- [Phase 02-unified-data-layer]: errors: string[] always required on CrossModuleSnapshot (not optional) — callers never need to null-check
+- [Phase 02-unified-data-layer]: Vitest with node environment + @ alias — server-side intelligence tests have no DOM dependency
 
 ### Pending Todos
 
@@ -96,6 +100,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T12:38:04.288Z
-Stopped at: Completed 03-rule-engine/03-01-PLAN.md
+Last session: 2026-03-15T12:38:42.391Z
+Stopped at: Completed 02-unified-data-layer-02-01-PLAN.md
 Resume file: None
