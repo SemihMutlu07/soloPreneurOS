@@ -38,7 +38,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Dashboard Feed
 
-- [ ] **DASH-01**: Central intelligence feed on home dashboard shows insight cards from cross_module_insights
+- [x] **DASH-01**: Central intelligence feed on home dashboard shows insight cards from cross_module_insights
 - [x] **DASH-02**: Each insight card displays severity level (critical/warning/info) with visual badge
 - [x] **DASH-03**: Each insight card shows freshness timestamp ("generated X minutes ago")
 - [x] **DASH-04**: User can dismiss/acknowledge individual insight cards
@@ -100,7 +100,7 @@ Deferred to future release. Tracked but not in current roadmap.
 | INFRA-04 | Phase 4 | Complete |
 | LLM-01 | Phase 5 | Complete |
 | LLM-02 | Phase 5 | Complete |
-| DASH-01 | Phase 7 | Pending |
+| DASH-01 | Phase 7 | Complete |
 | DASH-02 | Phase 7 | Complete |
 | DASH-03 | Phase 7 | Complete |
 | DASH-04 | Phase 7 | Complete |
