@@ -100,7 +100,7 @@ export default function FinancePage() {
       )}
 
       {!loading && !error && (
-        <div className="flex gap-6">
+        <div className="flex flex-col lg:flex-row gap-6">
           <div className="flex-1 min-w-0 space-y-6">
             <StatsBar stats={stats} />
 

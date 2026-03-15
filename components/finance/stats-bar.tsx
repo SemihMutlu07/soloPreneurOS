@@ -18,12 +18,12 @@ export function StatsBar({ stats }: StatsBarProps) {
   ];
 
   return (
-    <div className="flex gap-3 flex-wrap">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
       {items.map((stat, i) => (
         <div
           key={stat.label}
-          className={`card flex flex-col items-center px-5 py-3 min-w-[100px] ${
-            i > 0 ? "border-l border-l-border/50" : ""
+          className={`card flex flex-col items-center px-3 md:px-5 py-3 ${
+            i > 0 ? "md:border-l md:border-l-border/50" : ""
           }`}
         >
           <span className={`text-2xl font-semibold font-mono ${stat.color}`}>

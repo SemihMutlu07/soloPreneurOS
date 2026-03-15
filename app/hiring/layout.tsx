@@ -10,7 +10,7 @@ export default function HiringLayout({
   return (
     <div className="min-h-screen">
       <nav className="border-b border-border bg-surface/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
               href="/"
@@ -29,7 +29,7 @@ export default function HiringLayout({
           </div>
         </div>
       </nav>
-      <main className="max-w-6xl mx-auto px-6 py-8 pb-24">{children}</main>
+      <main className="max-w-6xl mx-auto px-4 md:px-6 py-8 pb-24">{children}</main>
       <AiAssistantBar context="hiring" />
     </div>
   );

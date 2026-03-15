@@ -73,16 +73,15 @@ export function CandidateDrawer({ candidateId, onClose }: CandidateModalProps) {
       />
 
       {/* Centered modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="fixed inset-0 z-50 flex items-center justify-center md:p-4">
         <div
-          className={`bg-bg border border-border-strong rounded-2xl flex flex-col
-            w-[80vw] max-h-[85vh]
-            max-md:w-[95vw] max-md:max-h-[90vh]
+          className={`bg-bg border border-border-strong flex flex-col
+            w-full h-full md:w-[80vw] md:max-h-[85vh] md:rounded-2xl md:h-auto
             shadow-2xl shadow-black/40
             ${closing ? "animate-modal-out" : "animate-modal-in"}`}
         >
-          {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-border shrink-0">
+          {/* Header — sticky on mobile */}
+          <div className="flex items-center justify-between px-4 md:px-6 py-4 border-b border-border shrink-0 sticky top-0 bg-bg z-10">
             {candidate ? (
               <div className="flex items-center gap-3 min-w-0">
                 <h2 className="text-lg font-semibold text-text-primary truncate">
@@ -111,7 +110,7 @@ export function CandidateDrawer({ candidateId, onClose }: CandidateModalProps) {
           </div>
 
           {/* Body — scrollable */}
-          <div className="overflow-y-auto flex-1 p-6 space-y-5">
+          <div className="overflow-y-auto flex-1 p-4 md:p-6 space-y-5">
             {loading && (
               <div className="flex items-center justify-center py-16">
                 <Loader2 className="w-5 h-5 animate-spin text-accent-primary" />
@@ -173,9 +172,9 @@ export function CandidateDrawer({ candidateId, onClose }: CandidateModalProps) {
             )}
           </div>
 
-          {/* Fixed bottom decision bar */}
+          {/* Fixed bottom decision bar — sticky on mobile */}
           {!loading && candidate && showDecision && (
-            <div className="shrink-0 border-t border-border px-6 py-4">
+            <div className="shrink-0 border-t border-border px-4 md:px-6 py-4 sticky bottom-0 bg-bg z-10">
               <HumanDecision
                 candidateId={candidate.id}
                 candidateName={candidate.name}

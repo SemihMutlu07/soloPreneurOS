@@ -26,11 +26,11 @@ export function StatsBar({ candidates }: StatsBarProps) {
   ];
 
   return (
-    <div className="flex gap-3 flex-wrap">
+    <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className="card flex flex-col items-center px-5 py-3 min-w-[100px]"
+          className="card flex flex-col items-center px-3 md:px-5 py-3"
         >
           <span className={`text-2xl font-semibold font-mono ${stat.color}`}>
             {stat.value}

@@ -296,8 +296,8 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
         </div>
       </div>
 
-      {/* sticky calculation panel */}
-      <div className="card h-fit sticky top-6">
+      {/* Calculation panel — sticky on desktop, inline on mobile */}
+      <div className="card h-fit lg:sticky lg:top-6">
         <h3 className="text-sm font-medium text-text-secondary mb-4">
           Hesaplama
         </h3>

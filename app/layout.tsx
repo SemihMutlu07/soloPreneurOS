@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className="min-h-screen bg-bg antialiased">
         <Sidebar />
-        <div className="ml-14 lg:ml-48">
+        <div className="lg:ml-48">
           {children}
         </div>
       </body>
