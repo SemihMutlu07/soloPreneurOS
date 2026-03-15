@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Rule Engine** - Implement all 7 deterministic cross-module pattern rules (R1–R7) (completed 2026-03-15)
 - [x] **Phase 4: Insights Schema and Cron** - Create cross_module_insights table and wire daily intelligence cron pipeline (completed 2026-03-15)
 - [ ] **Phase 5: LLM Orchestrator** - Add Claude-powered narrative synthesis and insight deduplication on top of rule results
-- [ ] **Phase 6: Intelligence API Routes** - Expose persisted insights via GET/POST routes consumed by UI
+- [x] **Phase 6: Intelligence API Routes** - Expose persisted insights via GET/POST routes consumed by UI (completed 2026-03-15)
 - [ ] **Phase 7: Dashboard Intelligence Feed** - Central insight feed on home dashboard with severity, freshness, dismiss, and evidence
 
 ## Phase Details
@@ -136,5 +136,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 3. Rule Engine | 3/3 | Complete    | 2026-03-15 |
 | 4. Insights Schema and Cron | 3/3 | Complete   | 2026-03-15 |
 | 5. LLM Orchestrator | 1/2 | In Progress|  |
-| 6. Intelligence API Routes | 1/2 | In Progress|  |
+| 6. Intelligence API Routes | 1/2 | Complete    | 2026-03-15 |
 | 7. Dashboard Intelligence Feed | 0/TBD | Not started | - |
