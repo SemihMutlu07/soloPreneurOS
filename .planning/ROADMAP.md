@@ -92,7 +92,11 @@ Plans:
   1. After a cron run, a 2-sentence narrative insight record appears in cross_module_insights alongside rule-generated insights
   2. The narrative is generated from summarized module metrics (counts, totals) — not raw lead or invoice arrays — keeping token usage bounded
   3. If the Claude API call fails, rule-generated insights persist normally — no cron run data is lost due to LLM failure
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — Create lib/claude-narrative.ts: generateNarrative, buildMetricsText, narrativeInsightId, upsertNarrativeInsight (TDD)
+- [ ] 05-02-PLAN.md — Extend run-intelligence cron handler with conditional LLM step and end-to-end verification
 
 ### Phase 6: Intelligence API Routes
 **Goal**: Persisted insights are served to UI components via typed API endpoints
