@@ -52,7 +52,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Rules that span multiple modules (R1, R2, R3, R4, R6) correctly fire only when conditions across both modules are simultaneously true
   3. Rules that should not fire on a clean snapshot (no runway issues, no stalled pipeline) return null without errors
   4. All rule field references match live Supabase column names — no silent null returns due to field name mismatches
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Define RuleInsight type, CrossModuleSnapshot type, and isHotLead helper (types foundation)
+- [ ] 03-02-PLAN.md — Implement rules R1-R4: runway+hot-leads, hire+runway, deals+candidates, revenue silence
+- [ ] 03-03-PLAN.md — Implement rules R5-R7: candidate stall, invoice+payroll, hot-leads no-reply; wire barrel index with runAllRules
 
 ### Phase 4: Insights Schema and Cron
 **Goal**: Generated insights are persisted to Supabase and the daily cron pipeline runs end-to-end in production
@@ -106,7 +111,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 |-------|----------------|--------|-----------|
 | 1. Finance Migration | 0/TBD | Not started | - |
 | 2. Unified Data Layer | 0/TBD | Not started | - |
-| 3. Rule Engine | 0/TBD | Not started | - |
+| 3. Rule Engine | 0/3 | Not started | - |
 | 4. Insights Schema and Cron | 0/TBD | Not started | - |
 | 5. LLM Orchestrator | 0/TBD | Not started | - |
 | 6. Intelligence API Routes | 0/TBD | Not started | - |
