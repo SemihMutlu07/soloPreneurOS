@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-rule-engine-03-02-PLAN.md
-last_updated: "2026-03-15T12:43:25.667Z"
+stopped_at: Completed 02-unified-data-layer-02-02-PLAN.md
+last_updated: "2026-03-15T12:43:48.206Z"
 last_activity: "2026-03-15 — Executed 01-02: Finance seed script with stable UUID upsert pattern"
 progress:
   total_phases: 7
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 15
-  completed_plans: 9
+  completed_plans: 10
   percent: 23
 ---
 
@@ -91,6 +91,9 @@ Recent decisions affecting current work:
 - [Phase 02-unified-data-layer]: Vitest with node environment + @ alias — server-side intelligence tests have no DOM dependency
 - [Phase 03-rule-engine]: R1 severity is critical (runway + hot leads = cash-flow emergency signal)
 - [Phase 03-rule-engine]: R3 uses applied_at as proxy for candidate advancement — v1 limitation documented in source
+- [Phase 02-unified-data-layer]: Field names use hire/recent_activity/generated_at aligned with types.ts (not plan code samples which used old names)
+- [Phase 02-unified-data-layer]: fetchHiringModule fetches active roles (roles.active=true) — HireSnapshot.roles required by Phase 03 rule R3
+- [Phase 02-unified-data-layer]: Runway query is non-fatal (try/catch inside fetchFinanceModule) — runway: null does not cause finance module failure
 
 ### Pending Todos
 
@@ -104,6 +107,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T12:43:15.311Z
-Stopped at: Completed 03-rule-engine-03-02-PLAN.md
+Last session: 2026-03-15T12:43:48.205Z
+Stopped at: Completed 02-unified-data-layer-02-02-PLAN.md
 Resume file: None
