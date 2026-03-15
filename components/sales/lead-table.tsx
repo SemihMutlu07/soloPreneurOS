@@ -45,7 +45,7 @@ function scoreColor(score: number): string {
 }
 
 function needsAction(lead: SalesLead): boolean {
-  return (lead.stage === "qualified" || lead.stage === "mql" || lead.stage === "sql") && lead.ai_suggested_action !== undefined;
+  return lead.stage === "qualified" && lead.ai_suggested_action !== undefined;
 }
 
 export function LeadTable({ leads, onSelectLead }: LeadTableProps) {

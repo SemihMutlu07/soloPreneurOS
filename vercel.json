@@ -1,6 +1,8 @@
 {
   "crons": [
     { "path": "/api/cron/scan-gmail", "schedule": "0 2 * * *" },
-    { "path": "/api/cron/evaluate", "schedule": "0 3 * * *" }
+    { "path": "/api/cron/evaluate", "schedule": "0 3 * * *" },
+    { "path": "/api/cron/scan-sales-gmail", "schedule": "30 2 * * *" },
+    { "path": "/api/cron/evaluate-leads", "schedule": "30 3 * * *" }
   ]
 }

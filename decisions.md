@@ -136,26 +136,21 @@ Each decision follows this structure:
 
 ---
 
-### SD-003: Generic hiring tasks instead of role-specific challenges
-**Decision:** MVP uses generic evaluation tasks across all roles. Role-specific technical challenges are deferred.
+### SD-003: Role-specific tasks — partially complete
+**Decision:** Ship with the current task bank (3 tasks per role, 5 roles). Refine individually over time based on evaluation quality.
 
-**Context:** The hiring pipeline evaluates candidates against a rubric + task. Ideally, each role (engineer, designer, PM, marketer, ops) would have a unique, well-designed challenge that tests role-relevant skills. Designing 5 good challenges requires significant thought — what to test, how to evaluate, what's fair.
+**Context:** Originally planned to defer role-specific tasks and use generic prompts. During implementation, a task bank was created with scenario-based challenges: Engineer (debug, architecture, scope), Product (mixed signal, feature autopsy, roadmap defense), Content (underperformer diagnosis, distribution plan, strategy argument), Designer (drop-off problem, constraint design, system contribution), Sales (discovery audit, objection response, deal diagnosis).
 
-**Alternatives considered:**
-- Design all 5 role-specific tasks before launch
-- Use AI to generate role-specific tasks dynamically
-- Skip tasks entirely, evaluate on CV only
+**What's done:**
+- tasks_bank_v1.txt: 15 tasks across 5 roles, all in Turkish
+- 4 of 5 rubrics are complete and detailed (engineer, product, design, content/growth)
 
-**Rationale:** A generic task ("write a brief analysis of X") is better than no task and much better than a poorly designed role-specific one. Bad challenges (too easy, too hard, irrelevant, biased) actively harm hiring quality. This needs dedicated time with domain expertise for each role.
+**What's missing:**
+- Sales rubric is incomplete (only 9 lines of synthesis notes, no actual scoring criteria)
+- Tasks haven't been individually tested with real candidates to validate difficulty/signal quality
+- No A/B comparison between tasks within the same role
 
-**What "good" looks like for later:**
-- Engineer: debug a real code snippet or design a small system
-- Designer: redesign a specific screen with constraints
-- PM: write a PRD for a given problem
-- Marketer: draft a go-to-market plan for a specific scenario
-- Ops: create a process for a described operational challenge
-
-**Status:** `deferred` — requires dedicated design sprint per role
+**Status:** `partially-complete` — sales rubric needs finishing, all tasks need real-world validation
 
 ---
 
@@ -228,6 +223,17 @@ Each decision follows this structure:
 **Rationale:** "Solo" is in the product name. Multi-user adds: role-based access control, invitation flow, notification preferences per user, activity attribution, and conflict resolution. Each of these is a product in itself. Ship for one user first.
 
 **Status:** `deferred` — revisit only if product pivots toward team use
+
+---
+
+### SD-009: Sales rubric incomplete
+**Decision:** Ship without a complete sales rubric. Complete it before enabling sales hiring evaluations.
+
+**Context:** All other role rubrics (engineer, product, design, content/growth) are 167-213 lines with detailed scoring categories, weights, interview questions, and red flags. The sales rubric file contains only 9 lines of synthesis preamble — no scoring criteria, no interview questions, no evaluation framework.
+
+**Rationale:** A bad rubric is worse than no rubric. Claude evaluating sales candidates against an empty rubric will produce meaningless scores. Better to flag this as a known gap.
+
+**Status:** `accepted` — must be completed before sales hiring goes live
 
 ---
 

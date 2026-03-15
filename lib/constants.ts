@@ -35,27 +35,22 @@ export const LEAD_STATUSES = {
     color: "bg-green-900/30 text-green-400",
     description: "Yeni gelen, henüz değerlendirilmemiş lead",
   },
-  mql: {
-    label: "MQL",
+  qualified: {
+    label: "Nitelikli",
     color: "bg-blue-900/30 text-blue-400",
-    description: "Marketing Qualified Lead — pazarlama kriterleri karşılandı",
-  },
-  sql: {
-    label: "SQL",
-    color: "bg-blue-900/30 text-blue-300",
-    description: "Sales Qualified Lead — satış kriterleri karşılandı",
+    description: "Kriterleri karşılayan nitelikli lead",
   },
   contacted: {
     label: "İletişime Geçildi",
     color: "bg-amber-900/30 text-amber-400",
     description: "İlk iletişim kuruldu",
   },
-  demo_scheduled: {
+  demo: {
     label: "Demo Planlandı",
     color: "bg-purple-900/30 text-purple-400",
     description: "Demo toplantısı planlandı",
   },
-  proposal_sent: {
+  proposal: {
     label: "Teklif Gönderildi",
     color: "bg-orange-900/30 text-orange-400",
     description: "Teklif gönderildi, yanıt bekleniyor",
@@ -74,6 +69,11 @@ export const LEAD_STATUSES = {
     label: "Kaybedildi",
     color: "bg-red-900/30 text-red-400",
     description: "Fırsat kaybedildi",
+  },
+  nurture: {
+    label: "Besleniyor",
+    color: "bg-cyan-900/30 text-cyan-400",
+    description: "Uzun vadeli takip — potansiyel müşteri besleniyor",
   },
 } as const;
 

@@ -6,10 +6,10 @@ interface StatsBarProps {
 
 export function StatsBar({ leads }: StatsBarProps) {
   const total = leads.length;
-  const qualified = leads.filter((l) => l.stage === "qualified" || l.stage === "mql" || l.stage === "sql").length;
+  const qualified = leads.filter((l) => l.stage === "qualified").length;
   const hot = leads.filter((l) => l.ai_score >= 70).length;
   const closing = leads.filter(
-    (l) => l.stage === "negotiation" || l.stage === "proposal_sent",
+    (l) => l.stage === "negotiation" || l.stage === "proposal",
   ).length;
   const nonNew = leads.filter((l) => l.stage !== "new");
   const won = leads.filter((l) => l.stage === "won").length;

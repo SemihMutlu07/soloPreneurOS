@@ -23,7 +23,7 @@ const ACTIONS = [
     key: "schedule_demo",
     label: "Schedule Demo",
     icon: Calendar,
-    stage: "demo_scheduled",
+    stage: "demo",
     color: "text-blue-400",
     bg: "bg-blue-900/15 border border-blue-400/40 hover:bg-blue-900/25 hover:border-blue-400/60",
     activeBg: "bg-blue-500 text-bg border border-blue-500",
