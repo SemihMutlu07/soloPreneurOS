@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-rule-engine-03-03-PLAN.md
-last_updated: "2026-03-15T12:47:47.691Z"
+stopped_at: Completed 05-llm-orchestrator/05-01-PLAN.md
+last_updated: "2026-03-15T12:53:41.138Z"
 last_activity: "2026-03-15 — Executed 01-02: Finance seed script with stable UUID upsert pattern"
 progress:
   total_phases: 7
   completed_phases: 4
   total_plans: 15
-  completed_plans: 11
+  completed_plans: 12
   percent: 23
 ---
 
@@ -61,6 +61,7 @@ Progress: [██░░░░░░░░] 23%
 | Phase 02-unified-data-layer P02 | 2 | 2 tasks | 2 files |
 | Phase 01-finance-migration P03 | 5 | 3 tasks | 6 files |
 | Phase 03-rule-engine P03 | 3 | 3 tasks | 7 files |
+| Phase 05-llm-orchestrator P01 | 319 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -100,6 +101,9 @@ Recent decisions affecting current work:
 - [Phase 01-finance-migration]: Brief route Finance section is non-blocking — Supabase failure omits section rather than crashing the brief
 - [Phase 03-rule-engine]: R6 large invoice threshold set at 10000 TL — filters minor billing issues from cash-flow alerts
 - [Phase 03-rule-engine]: runAllRules catches individual rule errors to prevent one failing rule from blocking others
+- [Phase 05-llm-orchestrator]: NarrativeMetrics interface introduced — cron handler computes scalar counts from CrossModuleSnapshot before calling buildMetricsText, keeping narrative module free of raw array access
+- [Phase 05-llm-orchestrator]: Class-based Anthropic mock in Vitest tests — vi.fn() as constructor triggers Vitest warning and unreliable new Anthropic() behavior; class mock is stable across clearAllMocks
+- [Phase 05-llm-orchestrator]: claude-haiku-4-5-20251001 model for narrative generation — lighter/cheaper task than candidate evaluation (which uses Sonnet)
 
 ### Pending Todos
 
@@ -113,6 +117,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T12:47:47.689Z
-Stopped at: Completed 03-rule-engine-03-03-PLAN.md
+Last session: 2026-03-15T12:53:41.136Z
+Stopped at: Completed 05-llm-orchestrator/05-01-PLAN.md
 Resume file: None

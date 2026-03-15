@@ -33,8 +33,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### LLM Analysis
 
-- [ ] **LLM-01**: Claude generates a 2-sentence narrative summary synthesizing cross-module state after rules run
-- [ ] **LLM-02**: Narrative summary uses summarized module context (counts and key metrics), not raw records
+- [x] **LLM-01**: Claude generates a 2-sentence narrative summary synthesizing cross-module state after rules run
+- [x] **LLM-02**: Narrative summary uses summarized module context (counts and key metrics), not raw records
 
 ### Dashboard Feed
 
@@ -98,8 +98,8 @@ Deferred to future release. Tracked but not in current roadmap.
 | INFRA-02 | Phase 4 | Complete |
 | INFRA-03 | Phase 4 | Complete |
 | INFRA-04 | Phase 4 | Complete |
-| LLM-01 | Phase 5 | Pending |
-| LLM-02 | Phase 5 | Pending |
+| LLM-01 | Phase 5 | Complete |
+| LLM-02 | Phase 5 | Complete |
 | DASH-01 | Phase 7 | Pending |
 | DASH-02 | Phase 7 | Pending |
 | DASH-03 | Phase 7 | Pending |
