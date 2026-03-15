@@ -31,7 +31,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. The Finance-OS page loads its data from Supabase on every visit with no localStorage reads or writes
   3. Existing Finance data (invoices, expenses, KDV calculations) behaves identically after migration — no functional regression
   4. A server-side script or API route can read Finance records without a browser context
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Create Finance API routes (GET invoices/expenses/tax-provisions, POST invoice) using admin client
+- [ ] 01-02-PLAN.md — Seed script: insert mock Finance data into Supabase with idempotent upsert
+- [ ] 01-03-PLAN.md — Rewrite Finance page and invoice form to fetch from API; remove Finance exports from mock-data.ts
 
 ### Phase 2: Unified Data Layer
 **Goal**: A single typed snapshot of all three modules' state is available to any server-side intelligence logic
@@ -118,7 +123,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Finance Migration | 0/TBD | Not started | - |
+| 1. Finance Migration | 0/3 | Not started | - |
 | 2. Unified Data Layer | 0/TBD | Not started | - |
 | 3. Rule Engine | 0/3 | Not started | - |
 | 4. Insights Schema and Cron | 0/TBD | Not started | - |
