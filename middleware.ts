@@ -1,7 +1,15 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
+// DEMO_BYPASS: Set to true to skip auth checks for demo/preview purposes
+const DEMO_BYPASS = true;
+
 export async function middleware(request: NextRequest) {
+  // Skip all auth checks when demo bypass is enabled
+  if (DEMO_BYPASS) {
+    return NextResponse.next({ request });
+  }
+
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(
