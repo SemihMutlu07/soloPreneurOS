@@ -10,6 +10,7 @@ import {
   teacherInsightCommentary,
   leads,
 } from "@/lib/mock-data";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function POST(request: NextRequest) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -64,6 +65,89 @@ Pick the most important lead to follow up with. Reference their specific behavio
 Reference any decisions the founder made recently. If they decided something, connect it to a concrete action for today. If no previous decisions exist, skip this section entirely — do NOT make up decisions.
 
 Keep the entire brief under 400 words. Every sentence should be actionable or provide critical context. Cut anything that doesn't earn its place.`;
+
+  // Fetch live Finance data from Supabase
+  let financeSection = "";
+  try {
+    const supabase = createAdminClient();
+    const FINANCE_USER_ID = "00000000-0000-0000-0000-000000000001";
+
+    const [{ data: invoices }, { data: expenses }, { data: taxProvisions }] = await Promise.all([
+      supabase
+        .from("invoices")
+        .select("*")
+        .eq("user_id", FINANCE_USER_ID)
+        .order("created_at", { ascending: false })
+        .limit(10),
+      supabase
+        .from("expenses")
+        .select("*")
+        .eq("user_id", FINANCE_USER_ID)
+        .order("created_at", { ascending: false })
+        .limit(10),
+      supabase
+        .from("tax_provisions")
+        .select("*")
+        .eq("user_id", FINANCE_USER_ID)
+        .order("created_at", { ascending: false })
+        .limit(5),
+    ]);
+
+    const invoiceList = invoices ?? [];
+    const expenseList = expenses ?? [];
+    const taxList = taxProvisions ?? [];
+
+    const totalRevenue = invoiceList.reduce(
+      (s: number, i: { gross_amount: number }) => s + i.gross_amount,
+      0
+    );
+    const pendingRevenue = invoiceList
+      .filter((i: { status: string }) => i.status === "beklemede")
+      .reduce((s: number, i: { gross_amount: number }) => s + i.gross_amount, 0);
+    const kdvCollected = invoiceList.reduce(
+      (s: number, i: { kdv_amount: number }) => s + i.kdv_amount,
+      0
+    );
+
+    const recentInvoiceLines = invoiceList
+      .slice(0, 5)
+      .map(
+        (i: { client_name: string; gross_amount: number; status: string; invoice_type: string }) =>
+          `  - ${i.client_name}: ₺${i.gross_amount.toLocaleString("tr-TR")} (${i.status}, ${i.invoice_type})`
+      )
+      .join("\n");
+
+    const recentExpenseLines = expenseList
+      .slice(0, 5)
+      .map(
+        (e: { description: string; amount: number; category: string }) =>
+          `  - ${e.description}: ₺${e.amount.toLocaleString("tr-TR")} [${e.category}]`
+      )
+      .join("\n");
+
+    const taxLine =
+      taxList.length > 0
+        ? `  Provision ${taxList[0].period}: KDV ₺${taxList[0].kdv_payable.toLocaleString("tr-TR")}, ` +
+          `Gecici Vergi ₺${taxList[0].gecici_vergi_estimate.toLocaleString("tr-TR")}, ` +
+          `SGK ₺${taxList[0].sgk_amount.toLocaleString("tr-TR")}, ` +
+          `Total ₺${taxList[0].total_provision.toLocaleString("tr-TR")}`
+        : "  No tax provisions recorded.";
+
+    financeSection = `
+FINANCE SNAPSHOT:
+Total Revenue (all invoices): ₺${totalRevenue.toLocaleString("tr-TR")}
+Pending Receivables: ₺${pendingRevenue.toLocaleString("tr-TR")}
+KDV Collected: ₺${kdvCollected.toLocaleString("tr-TR")}
+Recent Invoices:
+${recentInvoiceLines || "  No invoices yet."}
+Recent Expenses:
+${recentExpenseLines || "  No expenses yet."}
+Tax Provision:
+${taxLine}`;
+  } catch {
+    // If Supabase is unavailable, omit Finance section from brief — non-blocking
+    financeSection = "";
+  }
 
   // Use agent context signals if provided, otherwise fetch live
   let signalsSection = "";
@@ -156,6 +240,7 @@ ${teacherInsightCommentary.map((c) => `- ${c}`).join("\n")}
 
 LEAD PIPELINE:
 ${leads.map((l) => `- ${l.name} | ${l.company} | $${l.value.toLocaleString()} | Stage: ${l.stage} | Last contact: ${l.lastContact}`).join("\n")}
+${financeSection}
 
 ${previousDecisions.length > 0 ? `PREVIOUS DECISIONS (made by the founder):\n${previousDecisions.map((d) => `- "${d.question}" → Chose: "${d.choice}" (decided: ${d.timestamp})`).join("\n")}` : "PREVIOUS DECISIONS: None yet."}
 
