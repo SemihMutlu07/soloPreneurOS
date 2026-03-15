@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
 
 Your tone:
 - Direct. No fluff. No "Great news!" or "Here's your update!". Just say it.
-- Opinionated. You have a take on everything. "Fix the iPad sync NOW — parent complaints kill school renewals faster than anything."
+- Opinionated. You have a take on everything. "Fix the sync bug NOW — user complaints kill renewals faster than anything."
 - Urgent when it matters, calm when it doesn't. You know the difference.
 - Never suggest tweeting, posting on social media, or writing blog posts as quick wins. Instead, surface real conversation opportunities: joining trending discussions, engaging with influencers who are already talking about the space, or responding to community threads.
 - Reference specific numbers, names, and data points. Never be vague.
@@ -133,7 +133,7 @@ Keep the entire brief under 400 words. Every sentence should be actionable or pr
 
   const contextData = `
 COMPANY: ${companyInfo.name} — ${companyInfo.tagline}
-Metrics: ${companyInfo.students} students, ${companyInfo.teachers} teachers, ${companyInfo.schools} schools, $${companyInfo.mrr} MRR
+Metrics: ${companyInfo.users} users, ${companyInfo.proUsers} pro users, ${companyInfo.teams} teams, $${companyInfo.mrr} MRR
 
 MIND QUEUE (founder's priorities):
 ${mindQueueItems.map((item) => `- [${item.priority.toUpperCase()}] [${item.category}] ${item.text}`).join("\n")}${agentTasksSection}
@@ -144,18 +144,18 @@ ${todaysDecisions.map((d) => `- ${d.question}\n  Options: ${d.options.join(" | "
 EXTERNAL SIGNALS:
 ${signalsSection}
 
-STUDENT METRICS:
+USER METRICS:
 ${studentMetrics.map((m) => `- ${m.label}: ${m.value.toLocaleString()}${m.unit} (${m.change >= 0 ? "+" : ""}${m.change}% change)`).join("\n")}
 AI Commentary:
 ${studentInsightCommentary.map((c) => `- ${c}`).join("\n")}
 
-TEACHER METRICS:
+ENGAGEMENT METRICS:
 ${teacherMetrics.map((m) => `- ${m.label}: ${m.value}/${m.total} (${Math.round((m.value / m.total) * 100)}%)`).join("\n")}
 AI Commentary:
 ${teacherInsightCommentary.map((c) => `- ${c}`).join("\n")}
 
 LEAD PIPELINE:
-${leads.map((l) => `- ${l.name} | ${l.school} | $${l.value.toLocaleString()} | Stage: ${l.stage} | Last contact: ${l.lastContact}`).join("\n")}
+${leads.map((l) => `- ${l.name} | ${l.company} | $${l.value.toLocaleString()} | Stage: ${l.stage} | Last contact: ${l.lastContact}`).join("\n")}
 
 ${previousDecisions.length > 0 ? `PREVIOUS DECISIONS (made by the founder):\n${previousDecisions.map((d) => `- "${d.question}" → Chose: "${d.choice}" (decided: ${d.timestamp})`).join("\n")}` : "PREVIOUS DECISIONS: None yet."}
 

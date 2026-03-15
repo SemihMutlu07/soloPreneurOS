@@ -14,13 +14,13 @@ const statusLabel: Record<string, string> = {
 };
 
 const statusColor: Record<string, string> = {
-  odendi: "bg-accent-green/15 text-accent-green",
-  beklemede: "bg-accent-amber/15 text-accent-amber",
-  gecmis: "bg-accent-red/15 text-accent-red",
+  odendi: "text-[#10B981] bg-[#022C22]",
+  beklemede: "text-[#F59E0B] bg-[#451A03]",
+  gecmis: "text-[#F87171] bg-[#450A0A]",
 };
 
 export function InvoiceList({ invoices }: InvoiceListProps) {
-  const recent = invoices.slice(0, 5);
+  const recent = invoices.slice(0, 6);
 
   return (
     <div className="card">
@@ -46,13 +46,18 @@ export function InvoiceList({ invoices }: InvoiceListProps) {
                 {fmt(inv.gross_amount)} ₺
               </span>
               <span
-                className={`text-xs px-2 py-0.5 rounded-full ${statusColor[inv.status]}`}
+                className={`text-xs px-2 py-0.5 rounded-full ${statusColor[inv.status] || ""}`}
               >
-                {statusLabel[inv.status]}
+                {statusLabel[inv.status] || inv.status}
               </span>
             </div>
           </div>
         ))}
+        {recent.length === 0 && (
+          <p className="py-4 text-center text-text-muted text-sm">
+            Henüz fatura yok
+          </p>
+        )}
       </div>
     </div>
   );

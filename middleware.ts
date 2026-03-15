@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user && (request.nextUrl.pathname.startsWith("/hiring") || request.nextUrl.pathname.startsWith("/finance"))) {
+  if (!user && (request.nextUrl.pathname.startsWith("/hiring") || request.nextUrl.pathname.startsWith("/sales") || request.nextUrl.pathname.startsWith("/finance"))) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("redirect", request.nextUrl.pathname);
@@ -40,5 +40,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/hiring/:path*", "/finance/:path*"],
+  matcher: ["/hiring/:path*", "/sales/:path*", "/finance/:path*"],
 };

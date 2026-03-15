@@ -58,8 +58,8 @@ export default function DashboardHeader() {
           <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-surface border border-border">
             <Activity className="w-5 h-5 text-accent-orange" />
             <div className="flex flex-col">
-              <span className="font-bold font-mono text-lg text-text-primary leading-none">{companyInfo.students.toLocaleString()}</span>
-              <span className="text-text-secondary text-[11px]">students</span>
+              <span className="font-bold font-mono text-lg text-text-primary leading-none">{companyInfo.users.toLocaleString()}</span>
+              <span className="text-text-secondary text-[11px]">users</span>
             </div>
           </div>
           <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-surface border border-border">

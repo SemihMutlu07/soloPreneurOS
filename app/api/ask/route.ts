@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
 
   const contextData = `
 COMPANY: ${companyInfo.name} — ${companyInfo.tagline}
-Metrics: ${companyInfo.students} students, ${companyInfo.teachers} teachers, ${companyInfo.schools} schools, $${companyInfo.mrr} MRR
+Metrics: ${companyInfo.users} users, ${companyInfo.proUsers} pro users, ${companyInfo.teams} teams, $${companyInfo.mrr} MRR
 
 MIND QUEUE (founder's priorities):
 ${mindQueueItems.map((item) => `- [${item.priority.toUpperCase()}] [${item.category}] ${item.text}`).join("\n")}
@@ -50,12 +50,12 @@ ${todaysDecisions.map((d) => `- ${d.question}\n  Options: ${d.options.join(" | "
 EXTERNAL SIGNALS:
 ${externalSignals.map((s) => `- [${s.source.toUpperCase()}] ${s.title} (score: ${s.score}, ${s.timestamp})\n  ${s.summary}`).join("\n")}
 
-STUDENT METRICS:
+USER METRICS:
 ${studentMetrics.map((m) => `- ${m.label}: ${m.value.toLocaleString()}${m.unit} (${m.change >= 0 ? "+" : ""}${m.change}% change)`).join("\n")}
 AI Commentary:
 ${studentInsightCommentary.map((c) => `- ${c}`).join("\n")}
 
-TEACHER METRICS:
+ENGAGEMENT METRICS:
 ${teacherMetrics.map((m) => `- ${m.label}: ${m.value}/${m.total} (${Math.round((m.value / m.total) * 100)}%)`).join("\n")}
 AI Commentary:
 ${teacherInsightCommentary.map((c) => `- ${c}`).join("\n")}
@@ -64,7 +64,7 @@ CALENDAR TODAY:
 ${calendarEvents.map((e) => `- ${e.time} ${e.title} (${e.duration}min, ${e.type})`).join("\n")}
 
 LEAD PIPELINE:
-${leads.map((l) => `- ${l.name} | ${l.school} | $${l.value.toLocaleString()} | Stage: ${l.stage} | Last contact: ${l.lastContact}`).join("\n")}
+${leads.map((l) => `- ${l.name} | ${l.company} | $${l.value.toLocaleString()} | Stage: ${l.stage} | Last contact: ${l.lastContact}`).join("\n")}
 
 FOUNDER STORIES:
 ${founderStories.map((f) => `- "${f.quote}" — ${f.author}, ${f.role}\n  Takeaway: ${f.takeaway}`).join("\n")}
@@ -82,7 +82,7 @@ ${previousDecisions.length > 0 ? `PREVIOUS DECISIONS:\n${previousDecisions.map((
       body: JSON.stringify({
         model: "claude-sonnet-4-20250514",
         max_tokens: 800,
-        system: `You are the AI co-pilot for an EdTech solopreneur running LearnLoop. Answer questions about the business using the dashboard data provided. Be direct, specific, reference actual names and numbers. Keep answers under 3 paragraphs. If asked about a lead, reference pipeline data. If asked about students, reference student metrics. If asked about what to do, reference mind queue priorities.`,
+        system: `You are the AI co-pilot for a solopreneur running LearnLoop. Answer questions about the business using the dashboard data provided. Be direct, specific, reference actual names and numbers. Keep answers under 3 paragraphs. If asked about a lead, reference pipeline data. If asked about users, reference user metrics. If asked about what to do, reference mind queue priorities.`,
         messages: [
           {
             role: "user",

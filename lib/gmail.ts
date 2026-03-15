@@ -87,3 +87,61 @@ export async function fetchEmailsWithPDFs(
 
   return results;
 }
+
+// ── Sales-OS types & helpers ──
+
+export interface GmailMessage {
+  messageId: string;
+  senderName: string;
+  senderEmail: string;
+  subject: string;
+  date: string;
+  bodySnippet: string;
+}
+
+export interface LeadInfo {
+  name: string;
+  email: string;
+  company: string | null;
+  subject: string;
+  snippet: string;
+  date: string;
+}
+
+const HIRING_PATTERNS = [/\[.+\]/, /role:\s*/i];
+
+export function classifyEmail(subject: string): "hiring" | "sales" {
+  for (const pattern of HIRING_PATTERNS) {
+    if (pattern.test(subject)) return "hiring";
+  }
+  return "sales";
+}
+
+const FREE_PROVIDERS = new Set([
+  "gmail.com",
+  "hotmail.com",
+  "outlook.com",
+  "yahoo.com",
+  "icloud.com",
+  "protonmail.com",
+  "yandex.com",
+  "live.com",
+  "aol.com",
+]);
+
+export function extractLeadInfo(email: GmailMessage): LeadInfo {
+  const domain = email.senderEmail.split("@")[1]?.toLowerCase();
+  const company =
+    domain && !FREE_PROVIDERS.has(domain)
+      ? domain.split(".")[0]
+      : null;
+
+  return {
+    name: email.senderName,
+    email: email.senderEmail,
+    company,
+    subject: email.subject,
+    snippet: email.bodySnippet.slice(0, 500),
+    date: email.date,
+  };
+}

@@ -1,14 +1,83 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Invoice, KDVRate, InvoiceType } from "@/lib/finance-types";
 
 interface InvoiceFormProps {
   onSave: (invoice: Invoice) => void;
 }
 
+const STORAGE_KEY = "finance_invoices";
+
 const fmt = (n: number) =>
   new Intl.NumberFormat("tr-TR").format(Math.round(n));
+
+function loadInvoices(): Invoice[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveInvoices(invoices: Invoice[]) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(invoices));
+}
+
+function generatePdfHtml(inv: {
+  clientName: string;
+  clientVkn: string;
+  description: string;
+  amount: number;
+  kdvRate: KDVRate;
+  kdvAmount: number;
+  stopajEnabled: boolean;
+  stopajRate: number;
+  stopajAmount: number;
+  customerPays: number;
+  youReceive: number;
+  govCredit: number;
+  invoiceType: InvoiceType;
+}): string {
+  const typeLabel = inv.invoiceType === "e-arsiv" ? "e-Arşiv" : "e-SMM";
+  const now = new Date().toLocaleDateString("tr-TR");
+  const line = "─".repeat(40);
+
+  return `<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Fatura</title>
+<style>
+  body { font-family: "Courier New", monospace; padding: 40px; color: #111; max-width: 600px; margin: 0 auto; }
+  .line { color: #666; margin: 12px 0; }
+  .row { display: flex; justify-content: space-between; margin: 6px 0; }
+  .row .label { color: #444; }
+  .row .value { font-weight: bold; text-align: right; }
+  .title { font-size: 24px; font-weight: bold; letter-spacing: 4px; margin-bottom: 16px; }
+  .footer { margin-top: 32px; text-align: center; color: #999; font-size: 12px; border: 1px dashed #ccc; padding: 8px; }
+  .section-title { font-size: 11px; color: #888; text-transform: uppercase; margin-top: 16px; margin-bottom: 4px; }
+</style></head><body>
+  <div class="title">FATURA</div>
+  <div class="line">${line}</div>
+  <div class="row"><span class="label">Müşteri:</span><span class="value">${inv.clientName || "—"}</span></div>
+  <div class="row"><span class="label">VKN:</span><span class="value">${inv.clientVkn || "—"}</span></div>
+  <div class="row"><span class="label">Tarih:</span><span class="value">${now}</span></div>
+  <div class="row"><span class="label">Fatura Tipi:</span><span class="value">${typeLabel}</span></div>
+  <div class="line">${line}</div>
+  <div class="row"><span class="label">Hizmet:</span><span class="value">${inv.description || "—"}</span></div>
+  <div class="line">${line}</div>
+  <div class="section-title">Hesaplama</div>
+  <div class="row"><span class="label">Brüt Tutar:</span><span class="value">${fmt(inv.amount)} ₺</span></div>
+  <div class="row"><span class="label">KDV (%${inv.kdvRate}):</span><span class="value">+${fmt(inv.kdvAmount)} ₺</span></div>
+  ${inv.stopajEnabled ? `<div class="row"><span class="label">Stopaj (%${inv.stopajRate}):</span><span class="value">-${fmt(inv.stopajAmount)} ₺</span></div>` : ""}
+  <div class="line">${line}</div>
+  <div class="row"><span class="label">Müşteri Öder:</span><span class="value">${fmt(inv.customerPays)} ₺</span></div>
+  <div class="row"><span class="label">Senin Alacağın:</span><span class="value">${fmt(inv.youReceive)} ₺</span></div>
+  ${inv.stopajEnabled ? `<div class="row"><span class="label">Devlet Kredisi:</span><span class="value">${fmt(inv.govCredit)} ₺</span></div>` : ""}
+  <div class="line">${line}</div>
+  <div class="footer">MOCK BELGE — Gerçek fatura değildir</div>
+</body></html>`;
+}
 
 export function InvoiceForm({ onSave }: InvoiceFormProps) {
   const [clientName, setClientName] = useState("");
@@ -20,6 +89,14 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
   const [stopajRate, setStopajRate] = useState(20);
   const [invoiceType, setInvoiceType] = useState<InvoiceType>("e-arsiv");
 
+  // FIX 2: e-SMM forces stopaj on
+  useEffect(() => {
+    if (invoiceType === "e-smm") {
+      setStopajEnabled(true);
+    }
+  }, [invoiceType]);
+
+  // FIX 2: correct calculations
   const kdvAmount = amount * (kdvRate / 100);
   const stopajAmount = stopajEnabled ? amount * (stopajRate / 100) : 0;
   const customerPays = amount + kdvAmount - stopajAmount;
@@ -46,7 +123,39 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
       status: "beklemede",
       created_at: new Date().toISOString(),
     };
+
+    // FIX 4: persist to localStorage
+    const existing = loadInvoices();
+    existing.unshift(invoice);
+    saveInvoices(existing);
+
     onSave(invoice);
+  };
+
+  // FIX 1: generate PDF via print window
+  const handlePdf = () => {
+    const html = generatePdfHtml({
+      clientName,
+      clientVkn,
+      description,
+      amount,
+      kdvRate,
+      kdvAmount,
+      stopajEnabled,
+      stopajRate,
+      stopajAmount,
+      customerPays,
+      youReceive,
+      govCredit,
+      invoiceType,
+    });
+
+    const printWindow = window.open("", "_blank", "width=700,height=900");
+    if (!printWindow) return;
+    printWindow.document.write(html);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
   };
 
   return (
@@ -113,31 +222,41 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
             <option value={0}>%0</option>
           </select>
         </div>
-        <div className="flex items-center gap-3">
-          <label className="text-sm text-text-secondary">Stopaj</label>
-          <button
-            type="button"
-            onClick={() => setStopajEnabled(!stopajEnabled)}
-            className={`w-10 h-5 rounded-full transition-colors ${
-              stopajEnabled ? "bg-accent-orange" : "bg-surface-elevated"
-            }`}
-          >
-            <div
-              className={`w-4 h-4 bg-white rounded-full transition-transform mx-0.5 ${
-                stopajEnabled ? "translate-x-5" : "translate-x-0"
-              }`}
-            />
-          </button>
-          {stopajEnabled && (
-            <select
-              className={`${inputClass} w-24`}
-              value={stopajRate}
-              onChange={(e) => setStopajRate(Number(e.target.value))}
+        <div>
+          <div className="flex items-center gap-3">
+            <label className="text-sm text-text-secondary">Stopaj</label>
+            <button
+              type="button"
+              onClick={() => {
+                if (invoiceType === "e-smm") return;
+                setStopajEnabled(!stopajEnabled);
+              }}
+              className={`w-10 h-5 rounded-full transition-colors ${
+                stopajEnabled ? "bg-accent-orange" : "bg-surface-elevated"
+              } ${invoiceType === "e-smm" ? "opacity-60 cursor-not-allowed" : ""}`}
             >
-              <option value={20}>%20</option>
-              <option value={15}>%15</option>
-              <option value={10}>%10</option>
-            </select>
+              <div
+                className={`w-4 h-4 bg-white rounded-full transition-transform mx-0.5 ${
+                  stopajEnabled ? "translate-x-5" : "translate-x-0"
+                }`}
+              />
+            </button>
+            {stopajEnabled && (
+              <select
+                className={`${inputClass} w-24`}
+                value={stopajRate}
+                onChange={(e) => setStopajRate(Number(e.target.value))}
+              >
+                <option value={20}>%20</option>
+                <option value={15}>%15</option>
+                <option value={10}>%10</option>
+              </select>
+            )}
+          </div>
+          {invoiceType === "e-smm" && (
+            <p className="text-xs text-accent-amber mt-1.5 ml-0.5">
+              e-SMM&apos;de stopaj zorunludur
+            </p>
           )}
         </div>
         <div>
@@ -172,7 +291,7 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
           </button>
           <button
             type="button"
-            onClick={() => alert("PDF hazırlanıyor...")}
+            onClick={handlePdf}
             className="border border-border text-text-secondary rounded-lg px-4 py-2.5 hover:border-border-strong"
           >
             PDF İndir
@@ -180,7 +299,8 @@ export function InvoiceForm({ onSave }: InvoiceFormProps) {
         </div>
       </div>
 
-      <div className="card h-fit">
+      {/* FIX 3: sticky calculation panel */}
+      <div className="card h-fit sticky top-6">
         <h3 className="text-sm font-medium text-text-secondary mb-4">
           Hesaplama
         </h3>

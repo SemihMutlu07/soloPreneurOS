@@ -53,7 +53,7 @@ export default function LeadPipeline() {
                   >
                     <div>
                       <p className="text-[13px] text-text-primary font-medium">{lead.name}</p>
-                      <p className="text-[11px] text-text-muted mt-0.5">{lead.school}</p>
+                      <p className="text-[11px] text-text-muted mt-0.5">{lead.company}</p>
                     </div>
                     <div className="text-right">
                       <p className="text-[13px] font-mono text-text-primary">

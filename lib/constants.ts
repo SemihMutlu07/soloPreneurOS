@@ -26,3 +26,71 @@ export const RECOMMENDATION_COLORS: Record<string, string> = {
   GEÇME: "text-accent-red",
   BEKLET: "text-accent-amber",
 };
+
+// --- Sales OS Constants ---
+
+export const LEAD_STATUSES = {
+  new: {
+    label: "Yeni",
+    color: "bg-green-900/30 text-green-400",
+    description: "Yeni gelen, henüz değerlendirilmemiş lead",
+  },
+  mql: {
+    label: "MQL",
+    color: "bg-blue-900/30 text-blue-400",
+    description: "Marketing Qualified Lead — pazarlama kriterleri karşılandı",
+  },
+  sql: {
+    label: "SQL",
+    color: "bg-blue-900/30 text-blue-300",
+    description: "Sales Qualified Lead — satış kriterleri karşılandı",
+  },
+  contacted: {
+    label: "İletişime Geçildi",
+    color: "bg-amber-900/30 text-amber-400",
+    description: "İlk iletişim kuruldu",
+  },
+  demo_scheduled: {
+    label: "Demo Planlandı",
+    color: "bg-purple-900/30 text-purple-400",
+    description: "Demo toplantısı planlandı",
+  },
+  proposal_sent: {
+    label: "Teklif Gönderildi",
+    color: "bg-orange-900/30 text-orange-400",
+    description: "Teklif gönderildi, yanıt bekleniyor",
+  },
+  negotiation: {
+    label: "Müzakere",
+    color: "bg-amber-900/30 text-amber-300",
+    description: "Fiyat ve koşullar müzakere ediliyor",
+  },
+  won: {
+    label: "Kazanıldı",
+    color: "bg-green-900/30 text-green-300",
+    description: "Anlaşma kapandı, müşteri kazanıldı",
+  },
+  lost: {
+    label: "Kaybedildi",
+    color: "bg-red-900/30 text-red-400",
+    description: "Fırsat kaybedildi",
+  },
+} as const;
+
+export type SalesLeadStage = keyof typeof LEAD_STATUSES;
+
+export const LEAD_SCORE_THRESHOLDS = { hot: 70, warm: 40, cold: 0 } as const;
+
+export const SUGGESTED_ACTIONS = {
+  send_demo: "Demo Gönder",
+  follow_up: "Takip Et",
+  nurture: "Besle",
+  disqualify: "Diskalifiye Et",
+} as const;
+
+export const SALES_TEMPLATE_NAMES = [
+  "ilk_yanit",
+  "demo_daveti",
+  "takip",
+  "teklif_gonderimi",
+] as const;
