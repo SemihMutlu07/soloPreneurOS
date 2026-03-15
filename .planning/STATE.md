@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 06-intelligence-api-routes/06-02-PLAN.md
-last_updated: "2026-03-15T12:57:50.319Z"
+stopped_at: Completed 05-llm-orchestrator/05-02-PLAN.md
+last_updated: "2026-03-15T12:58:55.716Z"
 last_activity: "2026-03-15 — Executed 01-02: Finance seed script with stable UUID upsert pattern"
 progress:
   total_phases: 7
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 15
-  completed_plans: 14
+  completed_plans: 15
   percent: 23
 ---
 
@@ -64,6 +64,7 @@ Progress: [██░░░░░░░░] 23%
 | Phase 05-llm-orchestrator P01 | 319 | 2 tasks | 2 files |
 | Phase 06-intelligence-api-routes P01 | 2 | 2 tasks | 2 files |
 | Phase 06-intelligence-api-routes P02 | 2 | 2 tasks | 4 files |
+| Phase 05-llm-orchestrator P02 | 5 | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -111,6 +112,8 @@ Recent decisions affecting current work:
 - [Phase 06-intelligence-api-routes]: runIntelligencePipeline extracted to lib/intelligence-pipeline.ts — cron route refactored to thin wrapper, prevents logic duplication
 - [Phase 06-intelligence-api-routes]: dismiss uses createClient() (user-facing RLS) not createAdminClient() — user should only dismiss their own insights
 - [Phase 06-intelligence-api-routes]: trigger uses fire-and-forget pattern (no await) so 202 is returned immediately regardless of pipeline duration
+- [Phase 05-llm-orchestrator]: Extended lib/intelligence-pipeline.ts (not route.ts) — Phase 6 had already extracted pipeline logic; extending shared module ensures both cron and trigger endpoints benefit from narrative generation
+- [Phase 05-llm-orchestrator]: NarrativeMetrics computed inline from CrossModuleSnapshot scalars before LLM call — overdue invoices detected via status==='gecmis', hotLeadCount via isHotLead filter, runwayDays as runway_months*30
 
 ### Pending Todos
 
@@ -124,6 +127,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T12:57:50.317Z
-Stopped at: Completed 06-intelligence-api-routes/06-02-PLAN.md
+Last session: 2026-03-15T12:58:55.714Z
+Stopped at: Completed 05-llm-orchestrator/05-02-PLAN.md
 Resume file: None
