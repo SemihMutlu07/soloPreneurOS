@@ -39,13 +39,13 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Dashboard Feed
 
 - [ ] **DASH-01**: Central intelligence feed on home dashboard shows insight cards from cross_module_insights
-- [ ] **DASH-02**: Each insight card displays severity level (critical/warning/info) with visual badge
-- [ ] **DASH-03**: Each insight card shows freshness timestamp ("generated X minutes ago")
-- [ ] **DASH-04**: User can dismiss/acknowledge individual insight cards
-- [ ] **DASH-05**: Each insight card shows evidence explanation ("why this?" with supporting data points)
-- [ ] **DASH-06**: User can manually trigger re-analysis via refresh button
-- [ ] **DASH-07**: Empty state shown when no cross-module patterns are detected
-- [ ] **DASH-08**: Intelligence feed extends existing agent card pattern (AgentCardWrapper)
+- [x] **DASH-02**: Each insight card displays severity level (critical/warning/info) with visual badge
+- [x] **DASH-03**: Each insight card shows freshness timestamp ("generated X minutes ago")
+- [x] **DASH-04**: User can dismiss/acknowledge individual insight cards
+- [x] **DASH-05**: Each insight card shows evidence explanation ("why this?" with supporting data points)
+- [x] **DASH-06**: User can manually trigger re-analysis via refresh button
+- [x] **DASH-07**: Empty state shown when no cross-module patterns are detected
+- [x] **DASH-08**: Intelligence feed extends existing agent card pattern (AgentCardWrapper)
 
 ## v2 Requirements
 
@@ -101,13 +101,13 @@ Deferred to future release. Tracked but not in current roadmap.
 | LLM-01 | Phase 5 | Complete |
 | LLM-02 | Phase 5 | Complete |
 | DASH-01 | Phase 7 | Pending |
-| DASH-02 | Phase 7 | Pending |
-| DASH-03 | Phase 7 | Pending |
-| DASH-04 | Phase 7 | Pending |
-| DASH-05 | Phase 7 | Pending |
-| DASH-06 | Phase 7 | Pending |
-| DASH-07 | Phase 7 | Pending |
-| DASH-08 | Phase 7 | Pending |
+| DASH-02 | Phase 7 | Complete |
+| DASH-03 | Phase 7 | Complete |
+| DASH-04 | Phase 7 | Complete |
+| DASH-05 | Phase 7 | Complete |
+| DASH-06 | Phase 7 | Complete |
+| DASH-07 | Phase 7 | Complete |
+| DASH-08 | Phase 7 | Complete |
 
 **Coverage:**
 - v1 requirements: 22 total
