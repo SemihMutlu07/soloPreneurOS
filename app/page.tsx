@@ -5,7 +5,7 @@ import DashboardHeader from "@/components/dashboard-header";
 import ChiefOfStaff from "@/components/agents/chief-of-staff";
 import DailyOps from "@/components/agents/daily-ops";
 import MarketScout from "@/components/agents/market-scout";
-import ComingSoonAgents from "@/components/agents/coming-soon-agents";
+import IntelligenceFeed from "@/components/intelligence/intelligence-feed";
 import CalendarView from "@/components/calendar-view";
 import LeadPipeline from "@/components/lead-pipeline";
 import FounderStories from "@/components/founder-stories";
@@ -58,14 +58,9 @@ export default function Home() {
             <FounderStories />
           </div>
 
-          {/* Coming Soon — full width, 2x2 grid inside */}
+          {/* Intelligence Feed — full width */}
           <div className="col-span-full opacity-0 animate-fade-in stagger-7 mt-2">
-            <h3 className="text-xs font-medium text-text-muted uppercase tracking-wider mb-3">
-              More agents coming soon
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <ComingSoonAgents />
-            </div>
+            <IntelligenceFeed />
           </div>
         </div>
 
