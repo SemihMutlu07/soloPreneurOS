@@ -20,9 +20,9 @@ export function StatsBar({ candidates }: StatsBarProps) {
   const stats = [
     { label: "Total", value: total, color: "text-text-primary" },
     { label: "Pending", value: pending, color: "text-accent-blue" },
-    { label: "GÖRÜŞ", value: gorus, color: "text-accent-green" },
-    { label: "GEÇME", value: gecme, color: "text-accent-red" },
-    { label: "BEKLET", value: beklet, color: "text-accent-amber" },
+    { label: "Interview", value: gorus, color: "text-accent-green" },
+    { label: "Pass", value: gecme, color: "text-accent-red" },
+    { label: "Hold", value: beklet, color: "text-accent-amber" },
   ];
 
   return (

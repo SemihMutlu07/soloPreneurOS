@@ -1,5 +1,5 @@
 import type { Evaluation } from "@/lib/hiring-types";
-import { RECOMMENDATION_COLORS } from "@/lib/constants";
+import { RECOMMENDATION_COLORS, RECOMMENDATION_LABELS } from "@/lib/constants";
 import { CheckCircle, AlertTriangle, HelpCircle } from "lucide-react";
 
 interface EvaluationCardProps {
@@ -17,7 +17,7 @@ export function EvaluationCard({ evaluation }: EvaluationCardProps) {
           AI Evaluation
         </h3>
         <span className={`text-lg font-bold ${recColor}`}>
-          {evaluation.recommendation}
+          {RECOMMENDATION_LABELS[evaluation.recommendation] || evaluation.recommendation}
         </span>
       </div>
 

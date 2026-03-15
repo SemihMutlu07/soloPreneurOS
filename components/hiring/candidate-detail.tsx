@@ -68,7 +68,7 @@ export function CandidateDetail({ candidate }: CandidateDetailProps) {
             Your Decision
           </h3>
           <p className="text-xs text-text-muted mb-4">
-            GÖRÜŞ AL sends an interview email automatically. GEÇME and BEKLET update the status only.
+            Interview moves the candidate forward. Pass and Hold update the status only.
           </p>
           <HumanDecision
             candidateId={candidate.id}

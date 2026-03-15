@@ -15,6 +15,12 @@ export const EVAL_BATCH_SIZE = parseInt(
   10,
 );
 
+export const RECOMMENDATION_LABELS: Record<string, string> = {
+  GÖRÜŞ: "Interview",
+  GEÇME: "Pass",
+  BEKLET: "Hold",
+};
+
 export const RECOMMENDATION_COLORS: Record<string, string> = {
   GÖRÜŞ: "text-accent-green",
   GEÇME: "text-accent-red",

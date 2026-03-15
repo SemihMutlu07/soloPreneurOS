@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import type { CandidateWithEvaluation } from "@/lib/hiring-types";
-import { RECOMMENDATION_COLORS } from "@/lib/constants";
+import { RECOMMENDATION_COLORS, RECOMMENDATION_LABELS } from "@/lib/constants";
 import { DuplicateBadge } from "./duplicate-badge";
 
 interface CandidateTableProps {
@@ -65,6 +65,16 @@ export function CandidateTable({ candidates, onSelectCandidate }: CandidateTable
     );
   };
 
+  const CHIP_STYLES: Record<string, string> = {
+    GÖRÜŞ: "bg-accent-green/15 text-accent-green",
+    GEÇME: "bg-accent-red/15 text-accent-red",
+    BEKLET: "bg-accent-amber/15 text-accent-amber",
+  };
+
+  function needsDecision(c: CandidateWithEvaluation) {
+    return c.status === "analyzed" && !!c.evaluation;
+  }
+
   return (
     <div className="card">
       <div className="flex gap-3 mb-4 flex-wrap">
@@ -125,7 +135,7 @@ export function CandidateTable({ candidates, onSelectCandidate }: CandidateTable
                 className="pb-3 cursor-pointer hover:text-text-primary"
                 onClick={() => handleSort("recommendation")}
               >
-                Rec. <SortIcon col="recommendation" />
+                AI Rec. <SortIcon col="recommendation" />
               </th>
             </tr>
           </thead>
@@ -134,7 +144,9 @@ export function CandidateTable({ candidates, onSelectCandidate }: CandidateTable
               <tr
                 key={c.id}
                 onClick={() => handleSelect(c.id)}
-                className="border-b border-border/50 hover:bg-surface-hover transition-colors cursor-pointer"
+                className={`border-b border-border/50 hover:bg-surface-hover transition-colors cursor-pointer ${
+                  needsDecision(c) ? "border-l-2 border-l-accent-amber" : ""
+                }`}
               >
                 <td className="py-3 pr-4">
                   <span className="text-text-primary">
@@ -154,9 +166,9 @@ export function CandidateTable({ candidates, onSelectCandidate }: CandidateTable
                 <td className="py-3">
                   {c.evaluation?.recommendation ? (
                     <span
-                      className={`font-semibold text-xs ${RECOMMENDATION_COLORS[c.evaluation.recommendation] || ""}`}
+                      className={`px-2 py-0.5 rounded-full font-semibold text-xs ${CHIP_STYLES[c.evaluation.recommendation] || ""}`}
                     >
-                      {c.evaluation.recommendation}
+                      {RECOMMENDATION_LABELS[c.evaluation.recommendation] || c.evaluation.recommendation}
                     </span>
                   ) : (
                     <span className="text-text-muted text-xs">—</span>
@@ -184,7 +196,9 @@ export function CandidateTable({ candidates, onSelectCandidate }: CandidateTable
           <div
             key={c.id}
             onClick={() => handleSelect(c.id)}
-            className="p-3 rounded-xl bg-surface-hover/50 border border-border/50 hover:border-accent-orange/30 transition-colors cursor-pointer"
+            className={`p-3 rounded-xl bg-surface-hover/50 border border-border/50 hover:border-accent-orange/30 transition-colors cursor-pointer ${
+              needsDecision(c) ? "border-l-2 border-l-accent-amber" : ""
+            }`}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 min-w-0">
@@ -195,9 +209,9 @@ export function CandidateTable({ candidates, onSelectCandidate }: CandidateTable
               </div>
               {c.evaluation?.recommendation ? (
                 <span
-                  className={`font-semibold text-xs shrink-0 ${RECOMMENDATION_COLORS[c.evaluation.recommendation] || ""}`}
+                  className={`px-2 py-0.5 rounded-full font-semibold text-xs shrink-0 ${CHIP_STYLES[c.evaluation.recommendation] || ""}`}
                 >
-                  {c.evaluation.recommendation}
+                  {RECOMMENDATION_LABELS[c.evaluation.recommendation] || c.evaluation.recommendation}
                 </span>
               ) : (
                 <span className="text-text-muted text-xs shrink-0">—</span>

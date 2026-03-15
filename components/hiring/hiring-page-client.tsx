@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import type { CandidateWithEvaluation } from "@/lib/hiring-types";
 import { StatsBar } from "./stats-bar";
 import { CandidateTable } from "./candidate-table";
@@ -12,6 +13,12 @@ interface HiringPageClientProps {
 
 export function HiringPageClient({ candidates }: HiringPageClientProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const router = useRouter();
+
+  function handleClose() {
+    setSelectedId(null);
+    router.refresh();
+  }
 
   return (
     <>
@@ -22,7 +29,7 @@ export function HiringPageClient({ candidates }: HiringPageClientProps) {
       />
       <CandidateDrawer
         candidateId={selectedId}
-        onClose={() => setSelectedId(null)}
+        onClose={handleClose}
       />
     </>
   );
