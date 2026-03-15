@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 06-intelligence-api-routes/06-01-PLAN.md
-last_updated: "2026-03-15T12:56:51.414Z"
+stopped_at: Completed 06-intelligence-api-routes/06-02-PLAN.md
+last_updated: "2026-03-15T12:57:50.319Z"
 last_activity: "2026-03-15 — Executed 01-02: Finance seed script with stable UUID upsert pattern"
 progress:
   total_phases: 7
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 15
-  completed_plans: 13
+  completed_plans: 14
   percent: 23
 ---
 
@@ -63,6 +63,7 @@ Progress: [██░░░░░░░░] 23%
 | Phase 03-rule-engine P03 | 3 | 3 tasks | 7 files |
 | Phase 05-llm-orchestrator P01 | 319 | 2 tasks | 2 files |
 | Phase 06-intelligence-api-routes P01 | 2 | 2 tasks | 2 files |
+| Phase 06-intelligence-api-routes P02 | 2 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -107,6 +108,9 @@ Recent decisions affecting current work:
 - [Phase 05-llm-orchestrator]: claude-haiku-4-5-20251001 model for narrative generation — lighter/cheaper task than candidate evaluation (which uses Sonnet)
 - [Phase 06-intelligence-api-routes]: Severity sort done in JS (not SQL) — Supabase JS client lacks ORDER BY CASE; stable sort preserves DB-ordered created_at within each tier
 - [Phase 06-intelligence-api-routes]: No auth check on intelligence routes — middleware protects calling pages per existing project pattern
+- [Phase 06-intelligence-api-routes]: runIntelligencePipeline extracted to lib/intelligence-pipeline.ts — cron route refactored to thin wrapper, prevents logic duplication
+- [Phase 06-intelligence-api-routes]: dismiss uses createClient() (user-facing RLS) not createAdminClient() — user should only dismiss their own insights
+- [Phase 06-intelligence-api-routes]: trigger uses fire-and-forget pattern (no await) so 202 is returned immediately regardless of pipeline duration
 
 ### Pending Todos
 
@@ -120,6 +124,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T12:56:51.411Z
-Stopped at: Completed 06-intelligence-api-routes/06-01-PLAN.md
+Last session: 2026-03-15T12:57:50.317Z
+Stopped at: Completed 06-intelligence-api-routes/06-02-PLAN.md
 Resume file: None
