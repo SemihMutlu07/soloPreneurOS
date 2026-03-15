@@ -100,20 +100,23 @@ Deferred to future release. Tracked but not in current roadmap.
 | INFRA-04 | Phase 4 | Pending |
 | LLM-01 | Phase 5 | Pending |
 | LLM-02 | Phase 5 | Pending |
-| DASH-01 | Phase 6 | Pending |
-| DASH-02 | Phase 6 | Pending |
-| DASH-03 | Phase 6 | Pending |
-| DASH-04 | Phase 6 | Pending |
-| DASH-05 | Phase 6 | Pending |
-| DASH-06 | Phase 6 | Pending |
-| DASH-07 | Phase 6 | Pending |
-| DASH-08 | Phase 6 | Pending |
+| DASH-01 | Phase 7 | Pending |
+| DASH-02 | Phase 7 | Pending |
+| DASH-03 | Phase 7 | Pending |
+| DASH-04 | Phase 7 | Pending |
+| DASH-05 | Phase 7 | Pending |
+| DASH-06 | Phase 7 | Pending |
+| DASH-07 | Phase 7 | Pending |
+| DASH-08 | Phase 7 | Pending |
 
 **Coverage:**
 - v1 requirements: 22 total
 - Mapped to phases: 22
 - Unmapped: 0 ✓
 
+**Note on Phase 6 and Phase 8:**
+Phase 6 (Intelligence API Routes) is an infrastructure delivery phase. The API routes are a necessary dependency for DASH-01 through DASH-08 but do not carry their own requirement IDs — they are the delivery mechanism. Phase 8 (In-Module Contextual Nudges) delivers the PROJECT.md Active requirement for "in-module contextual nudges" which was intentionally not broken into numbered requirements (it depends on Phase 7 being stable first). Both phases are required for v1 delivery.
+
 ---
 *Requirements defined: 2026-03-15*
-*Last updated: 2026-03-15 after initial definition*
+*Last updated: 2026-03-15 after roadmap creation — DASH requirements moved to Phase 7; Phase 6 (API Routes) and Phase 8 (Nudges) noted as infrastructure/dependency phases*
