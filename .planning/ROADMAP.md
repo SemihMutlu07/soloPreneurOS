@@ -68,7 +68,12 @@ Plans:
   2. Running the intelligence cron endpoint twice with the same input does not create duplicate insight rows (content-addressed IDs are stable)
   3. The cron endpoint returns 401 for requests without a valid CRON_SECRET bearer token
   4. After a successful cron run, at least one insight row appears in the cross_module_insights table when rule conditions are met in the snapshot
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — Create cross_module_insights Supabase table migration (DDL, indexes, severity CHECK constraint)
+- [ ] 04-02-PLAN.md — Define InsightCandidate types and implement persistInsights with SHA256 content-addressed upsert
+- [ ] 04-03-PLAN.md — Wire GET /api/cron/run-intelligence endpoint: CRON_SECRET auth, aggregate → rules → persist pipeline
 
 ### Phase 5: LLM Orchestrator
 **Goal**: Claude generates a narrative summary synthesizing cross-module state, layered on top of rule results
